@@ -41,20 +41,21 @@ Documentation for the Bay Area Biotech Map dataset.
 
 ---
 
-## Planned Columns (Phase 2 Enrichment)
+## Phase 2 Enhancement (In Progress)
 
-These columns will be added in Phase 2:
+**Focus**: Enhancing the "Hiring" column with direct careers page URLs
 
-| Column | Type | Description | Example Values | Source |
-|--------|------|-------------|----------------|--------|
-| **Description** | Text (1-2 sentences) | Company overview | "Develops CRISPR-based gene therapies for rare diseases" | Company website, Google |
-| **Company Size** | Category | Employee count range | "Startup (<20)", "Small (20-100)", "Medium (100-500)", "Large (500+)" | LinkedIn, Crunchbase |
-| **Founded** | Year | Year company was founded | "2015" | Crunchbase, company website |
-| **Funding Status** | Text | Notable funding or acquisition status | "Series B ($50M)", "Bootstrapped", "IPO (NASDAQ: GINK)" | Crunchbase, press releases |
-| **Technology Focus** | Text/Tags | Primary technology areas | "Gene Therapy", "Antibody Discovery", "Diagnostics" | Company website, manual categorization |
-| **Careers Link** | URL | Direct link to jobs/careers page | "https://company.com/careers" | Company website |
-| **Latitude** | Decimal | Geographic coordinate | "37.8324" | Geocoding service |
-| **Longitude** | Decimal | Geographic coordinate | "-122.2854" | Geocoding service |
+| Enhancement | Type | Description | Example Values | Source |
+|-------------|------|-------------|----------------|--------|
+| **Hiring** (enhanced) | URL | Direct link to jobs/careers page | "https://boards.greenhouse.io/ginkgo" or "https://company.com/careers" | ATS platforms, company websites |
+
+**Why We're Not Adding Other Columns**:
+- ❌ **Latitude/Longitude**: Addresses auto-geocode in Google My Maps or Leaflet.js (no manual work needed)
+- ❌ **Description**: Already have "Notes" field with excellent descriptions
+- ❌ **Technology Focus**: Redundant with "Notes" field; hard to standardize
+- ❌ **Company Size**: Overlaps with "Company Stage"; requires LinkedIn/Crunchbase access
+- ❌ **Founded Year**: Low utility for job seekers
+- ❌ **Funding Status**: Requires paid Crunchbase subscription; data goes stale quickly
 
 ---
 
@@ -92,15 +93,12 @@ All information is from publicly available sources:
 4. Removed personal ranking column ("Relevance to Profile")
 5. Output: `data/working/companies_merged.csv`
 
-### Phase 2: Enrichment (Planned)
-1. Add Description field (from company websites)
-2. Add Company Size (from LinkedIn/Crunchbase)
-3. Add Founded year
-4. Add Funding Status
-5. Add Technology Focus tags
-6. Add Careers Link
-7. Geocode all addresses → add Latitude/Longitude
-8. Output: `data/final/companies.csv`
+### Phase 2: Enhancement (In Progress)
+1. Enhance "Hiring" column with direct careers page URLs
+2. Search ATS platforms (Greenhouse, Lever, Workday, SmartRecruiters)
+3. Search company careers pages
+4. Validate URLs are accessible
+5. Output: `data/final/companies.csv`
 
 ### Phase 3: Validation (Planned)
 1. Validate all URLs (check for 404s)

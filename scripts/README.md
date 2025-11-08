@@ -113,14 +113,110 @@ All scripts require:
 **Output files**:
 - `east_bay_biotech_with_addresses.csv` - Company list with addresses added
 
-## Future Scripts (Planned)
+---
 
-See `PROJECT_PLAN.md` for upcoming scripts:
-- `geocode_addresses.py` - Add latitude/longitude coordinates
-- `fetch_descriptions.py` - Scrape company descriptions from websites
-- `fetch_company_size.py` - Gather employee count data
-- `find_careers_pages.py` - Locate careers/jobs page URLs
-- `merge_csv_files.py` - Consolidate multiple CSV versions
+### 6. `analyze_csv_differences.py`
+**Purpose**: Analyze differences between multiple CSV versions
+
+**What it does**:
+- Compares v2.csv, with_addresses.csv, and pseudofinal.csv
+- Reports on file sizes, column differences, geographic coverage
+- Identifies company overlap and unique entries
+- Provides merge recommendations
+
+**Usage**:
+```bash
+python3 analyze_csv_differences.py
+```
+
+**Output**: Console analysis report with merge strategy recommendations
+
+---
+
+### 7. `merge_csv_files.py`
+**Purpose**: Merge multiple CSV files into single dataset
+
+**What it does**:
+- Uses east_bay_biotech_v2.csv as base (171 companies)
+- Merges better address data from with_addresses.csv
+- Removes personal "Relevance to Profile" column
+- Creates clean, consolidated dataset
+
+**Usage**:
+```bash
+python3 merge_csv_files.py
+```
+
+**Output**: `data/working/companies_merged.csv` (171 companies, all Bay Area)
+
+---
+
+### 8. `fetch_careers_urls.py` ⭐ **PHASE 2 SCRIPT**
+**Purpose**: Find careers page URLs for all companies
+
+**What it does**:
+- Searches Applicant Tracking Systems (Greenhouse, Lever, Workday, SmartRecruiters)
+- Searches company career pages
+- Updates "Hiring" column with direct URLs
+- Saves progress incrementally (every 25 companies)
+- Generates detailed search log
+
+**Usage**:
+```bash
+python3 fetch_careers_urls.py
+```
+
+**Output**:
+- `data/working/companies_with_careers.csv` (updated CSV)
+- `data/working/careers_search_log.txt` (progress log)
+
+**Note**: This is a TEMPLATE script. You'll need to implement WebSearch logic or conduct manual research for each company. See `docs/WORKFLOW.md` for detailed procedures.
+
+---
+
+### 9. `validate_urls.py` ⭐ **PHASE 2 SCRIPT**
+**Purpose**: Validate all careers URLs are accessible
+
+**What it does**:
+- Tests each URL in the "Hiring" column
+- Makes HTTP requests to check accessibility
+- Reports: Valid (200), Redirects (3xx), Broken (4xx/5xx)
+- Generates detailed validation report
+
+**Prerequisites**:
+```bash
+pip install requests
+```
+
+**Usage**:
+```bash
+python3 validate_urls.py
+```
+
+**Output**:
+- `data/working/url_validation_report.txt` (detailed report)
+- Console summary of broken/working URLs
+
+---
+
+## Current Phase Scripts
+
+**Phase 1 (Data Consolidation)**: ✅ Complete
+- `analyze_csv_differences.py`
+- `merge_csv_files.py`
+
+**Phase 2 (Careers URL Enhancement)**: 🔄 In Progress
+- `fetch_careers_urls.py` - Template created, needs implementation
+- `validate_urls.py` - Template created, needs implementation
+
+---
+
+## Workflow
+
+For the complete workflow and step-by-step procedures, see:
+- **`docs/WORKFLOW.md`** - Detailed data collection procedures
+- **`PROJECT_PLAN.md`** - Overall project roadmap
+- **`docs/DATA_DICTIONARY.md`** - Data structure and column definitions
 
 ---
 

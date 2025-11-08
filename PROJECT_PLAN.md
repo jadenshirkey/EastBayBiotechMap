@@ -86,99 +86,92 @@ Currently visualizing: `east_bay_biotech_pseudofinal.csv` and/or `east_bay_biote
 
 ## Project Phases
 
-### ✅ Phase 0: Foundation (CURRENT)
+### ✅ Phase 0: Foundation (COMPLETE)
 - [x] Initialize git repository
 - [x] Create README and LICENSE
-- [ ] **Create organized folder structure**
-  - [ ] `/data/` - All CSV files
-    - [ ] `/data/final/` - Production data file
-    - [ ] `/data/archive/` - Old versions for reference
-  - [ ] `/scripts/` - Python data processing scripts
-  - [ ] `/docs/` - Documentation
-- [ ] **Update .gitignore** to showcase scripts but hide personal files
-- [ ] **Document this plan** (this file!)
+- [x] **Create organized folder structure**
+  - [x] `/data/` - All CSV files
+    - [x] `/data/final/` - Production data file
+    - [x] `/data/archive/` - Old versions for reference (gitignored)
+    - [x] `/data/working/` - Active work files
+  - [x] `/scripts/` - Python data processing scripts
+  - [x] `/docs/` - Documentation
+- [x] **Update .gitignore** to showcase scripts but hide personal files
+- [x] **Document this plan** (this file!)
 
 ---
 
-### 📊 Phase 1: Data Consolidation & Cleaning
+### ✅ Phase 1: Data Consolidation & Cleaning (COMPLETE)
 
-**Goal**: Create single, clean CSV with all 172+ Bay Area companies
+**Goal**: Create single, clean CSV with all Bay Area companies
 
-#### Step 1.1: Merge and Deduplicate
-- [ ] Start with `east_bay_biotech_v2.csv` (172 companies) as base
-- [ ] Cross-reference with `with_addresses.csv` for better East Bay addresses
-- [ ] Remove duplicate entries
-- [ ] Standardize column names and formats
-- [ ] Remove personal ranking columns (Tier/Relevance)
-- [ ] **Output**: `data/working/companies_merged.csv`
+#### Step 1.1: Merge and Deduplicate ✓
+- [x] Start with `east_bay_biotech_v2.csv` (172 companies) as base
+- [x] Cross-reference with `with_addresses.csv` for better East Bay addresses
+- [x] Remove duplicate entries
+- [x] Standardize column names and formats
+- [x] Remove personal ranking columns (Tier/Relevance)
+- [x] **Output**: `data/working/companies_merged.csv`
 
-#### Step 1.2: Address Completion
-- [ ] Identify companies with missing/incomplete addresses
-- [ ] Research and fill in complete addresses (street, city, state, zip)
-- [ ] Validate address formats
-- [ ] **Tool**: Python script or manual lookup
+#### Step 1.2: Address Validation ✓
+- [x] All 171 companies have addresses (100% coverage)
+- [x] Addresses are in full street format
+- [x] Ready for geocoding (when needed for map)
 
-#### Step 1.3: Geocoding
-- [ ] Add Latitude and Longitude columns
-- [ ] Use geocoding service (geopy, Google Maps API, or batch service)
-- [ ] Validate coordinates are in Bay Area
-- [ ] **Script**: `scripts/geocode_addresses.py` (to be created)
-
-**Deliverable**: Clean CSV with name, website, city, full address, lat/lon for 172+ companies
+**Deliverable**: ✅ `data/working/companies_merged.csv` with 171 Bay Area companies
 
 ---
 
-### 📝 Phase 2: Data Enrichment
+### 📝 Phase 2: Enhance Careers Links (CURRENT PHASE)
 
-**Goal**: Add company descriptions, size, funding, and focus areas
+**Goal**: Replace "Check Website" placeholders with direct careers page URLs
 
-#### Approach Options:
+**Why This Matters**:
+- Job seekers need ONE-CLICK access to job postings
+- This is the highest-value enhancement for our target audience
+- Showcases systematic data collection and web research skills
 
-**Option A: Automated (faster, less accurate)**
-- Write Python scripts to scrape data from:
-  - Company websites (description, careers link)
-  - Crunchbase API (funding, size, founded year)
-  - LinkedIn Company Pages (size, description)
-- Requires API keys or web scraping
-- May have gaps/errors
+**What We're NOT Adding** (Simplified from original plan):
+- ❌ Latitude/Longitude (addresses auto-geocode in mapping tools)
+- ❌ Description field (already have "Notes" field with good descriptions)
+- ❌ Technology Focus tags (redundant with Notes)
+- ❌ Company Size (overlaps with "Company Stage"; not easily obtainable)
+- ❌ Founded Year (low value for job seekers)
+- ❌ Funding Status (requires paid Crunchbase; goes stale quickly)
 
-**Option B: Manual Curation (slower, more accurate)**
-- Create spreadsheet template with new columns
-- Research top ~50 most important companies first
-- Fill in data from company websites, Crunchbase, LinkedIn
-- Expand to full list over time
+**Current Column Schema** (finalized):
+```
+✓ Company Name
+✓ Website
+✓ City
+✓ Address
+✓ Company Stage
+✓ Notes
+→ Hiring (TO BE ENHANCED)
+```
 
-**Option C: Hybrid (recommended)**
-- Use automated scripts to gather what's available
-- Manually verify and fill gaps for major companies
-- Community contribution for long tail
+#### Step 2.1: Collect Careers URLs for All 171 Companies
+- [ ] For each company, search for careers pages in this priority order:
+  1. **Applicant Tracking Systems (ATS)**: Greenhouse, Lever, Workday, SmartRecruiters
+  2. **Company careers page**: Search "[Company Name] careers jobs apply"
+  3. **General company website**: Use main website as fallback
+- [ ] Update "Hiring" column with direct URL or leave "Check Website" if none found
+- [ ] **Script**: `scripts/fetch_careers_urls.py` (to be created)
+- [ ] **Workflow**: See `docs/WORKFLOW.md` for detailed procedures
 
-#### Step 2.1: Add Description Field
-- [ ] Extract 1-2 sentence descriptions from company websites
-- [ ] Store in Description column
-- [ ] **Script idea**: `scripts/fetch_descriptions.py`
+#### Step 2.2: Validate and Clean URLs
+- [ ] Test that URLs are accessible (not 404)
+- [ ] Ensure URLs are direct (not requiring multiple clicks)
+- [ ] Standardize format (full URLs, not shortened links)
+- [ ] **Script**: `scripts/validate_urls.py` (to be created)
 
-#### Step 2.2: Add Company Size
-- [ ] Categorize as: Startup (<20), Small (20-100), Medium (100-500), Large (500+)
-- [ ] Source: LinkedIn, Crunchbase, company websites
-- [ ] **Script idea**: `scripts/fetch_company_size.py`
+#### Step 2.3: Save Final Dataset
+- [ ] Review completed data
+- [ ] Copy to `data/final/companies.csv`
+- [ ] Update DATA_DICTIONARY.md with completion date
+- [ ] Tag as v1.0
 
-#### Step 2.3: Add Funding Information
-- [ ] Research funding stage and notable amounts
-- [ ] Format: "Series B ($50M)", "Bootstrapped", "IPO (NASDAQ: TICK)"
-- [ ] Source: Crunchbase, press releases, company announcements
-
-#### Step 2.4: Add Technology Focus & Stage
-- [ ] Categorize technology areas (can be multiple)
-- [ ] Determine development stage
-- [ ] May require manual curation/validation
-
-#### Step 2.5: Add Careers Links
-- [ ] Find direct careers/jobs page URLs
-- [ ] Test that links work
-- [ ] **Script idea**: `scripts/find_careers_pages.py`
-
-**Deliverable**: `data/final/companies.csv` with all enriched fields
+**Deliverable**: `data/final/companies.csv` with working careers links for all companies
 
 ---
 
