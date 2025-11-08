@@ -72,7 +72,7 @@ Company Name, Website, City, Address, Company Stage, Focus Areas
 | **Website** | Valid HTTPS URL | `https://www.gene.com` |
 | **City** | Must be in Bay Area whitelist | `South San Francisco` |
 | **Address** | Full street address with ZIP | `1 DNA Way, South San Francisco, CA 94080` |
-| **Company Stage** | One of 6 defined categories | `Large Pharma` |
+| **Company Stage** | One of 8 defined categories | `Large Pharma` |
 | **Focus Areas** | 1-3 sentences from company website | See examples below |
 
 ### Address Validation Process
@@ -88,51 +88,205 @@ Company Name, Website, City, Address, Company Stage, Focus Areas
 
 ### Company Stage Categories
 
-**1. Large Pharma**
-- Multi-billion dollar revenue
-- Global operations
-- Diversified pipeline
-- **Examples:** Genentech, Amgen, AbbVie, Novartis
+The following 8 categories are mutually exclusive and easily verifiable using the criteria below.
 
-**2. Commercial Biotech**
-- ≥1 approved product generating revenue
-- Smaller than Big Pharma
-- **Examples:** BioMarin, Exelixis, Dynavax
+---
 
-**3. Clinical-Stage Biotech**
-- ≥1 asset in Phase I/II/III trials
-- No approved products yet
-- **Examples:** Alector, Arsenal Biosciences, Caribou
+#### 1. Large Pharma
 
-**4. Preclinical Biotech**
-- Pipeline in research/preclinical stage
-- No clinical trials yet
-- **Examples:** Profluent, Scribe Therapeutics, Metagenomi
+**Definition:** Major pharmaceutical corporations with global operations and multi-billion dollar revenue.
 
-**5. Platform/Tools**
-- Primary business: tools, services, instruments, CDMO
-- Not developing own therapeutics
-- **Examples:** ATUM, Catalent, Unchained Labs
+**Verification Criteria (check in order):**
+1. **Public market cap** >$50B (check Google Finance, Yahoo Finance)
+2. **OR** Annual revenue >$5B (check latest 10-K, annual report, or Wikipedia)
+3. **AND** Global presence (operations in multiple continents)
 
-**6. Research Institute**
-- Academic, government, or non-profit
-- **Examples:** Gladstone Institutes, JBEI, IGI
+**How to verify:**
+- Search: `[Company name] revenue` → Check financial reports
+- Check Wikipedia infobox for revenue/market cap
+- Look for "Locations" or "Global" page on website
+
+**Examples:** Genentech, Amgen, AbbVie, Novartis, Bayer
+
+---
+
+#### 2. Commercial Biotech
+
+**Definition:** Biotechnology companies with ≥1 FDA-approved product generating revenue, but smaller than Large Pharma.
+
+**Verification Criteria:**
+1. Website mentions "FDA approved" product OR "commercial" product
+2. **OR** Check FDA.gov Drugs@FDA database for approved products
+3. **AND** Revenue <$5B (not Large Pharma threshold)
+
+**How to verify:**
+- Visit company website → Look for "Products" or "Pipeline" page
+- Search: `[Company name] FDA approval`
+- Check [FDA Drugs@FDA](https://www.accessdata.fda.gov/scripts/cder/daf/)
+
+**Examples:** BioMarin, Exelixis, Dynavax, Codexis
+
+---
+
+#### 3. Clinical-Stage Biotech
+
+**Definition:** Companies with ≥1 therapeutic asset in Phase I, II, or III clinical trials, but no approved products yet.
+
+**Verification Criteria:**
+1. Website mentions "clinical trial" or "Phase I/II/III"
+2. **OR** Check [ClinicalTrials.gov](https://clinicaltrials.gov/) for active/recruiting trials
+3. **AND** No FDA-approved products
+
+**How to verify:**
+- Visit company website → Check "Pipeline" or "Programs" page
+- Search ClinicalTrials.gov for company name
+- Look for press releases about trial initiation/results
+
+**Examples:** Alector, Arsenal Biosciences, Caribou Biosciences
+
+---
+
+#### 4. Preclinical Biotech
+
+**Definition:** Companies developing therapeutics in discovery or preclinical stage, with no active clinical trials.
+
+**Verification Criteria:**
+1. Website describes therapeutic pipeline OR drug discovery platform
+2. **AND** No mention of clinical trials or FDA approvals
+3. **AND** Not primarily a tools/services provider
+
+**How to verify:**
+- Check website "Technology" or "Pipeline" page
+- Look for terms: "preclinical," "discovery," "research stage," "platform"
+- Verify NO clinical trials on ClinicalTrials.gov
+
+**Examples:** Profluent, Scribe Therapeutics, Metagenomi
+
+---
+
+#### 5. Platform/Tools
+
+**Definition:** Companies whose primary business is providing tools, services, instruments, or contract services (CDMO/CRO), not developing their own therapeutics.
+
+**Verification Criteria:**
+1. Website emphasizes "services," "tools," "platform," "CDMO," or "CRO"
+2. Business model is B2B (selling to other biotech/pharma companies)
+3. May have technology but not developing own drugs
+
+**How to verify:**
+- Check website → Look for "Services," "Products," or "Solutions"
+- Look for customer testimonials or case studies
+- Check if they offer contract services, instruments, or reagents
+
+**Examples:** ATUM, Catalent, Unchained Labs, Bio-Rad
+
+---
+
+#### 6. Academic
+
+**Definition:** University-affiliated research organizations or academic institutes.
+
+**Verification Criteria:**
+1. Website domain is `.edu`
+2. **OR** Explicitly states university affiliation (e.g., "UC Berkeley," "Stanford")
+3. Primary mission is research and education
+
+**How to verify:**
+- Check website domain
+- Look for "About" page mentioning university affiliation
+- Check for academic publications, faculty listings
+
+**Examples:** Innovative Genomics Institute (IGI), QB3 institutes
+
+---
+
+#### 7. Government
+
+**Definition:** Federal, state, or local government research labs and facilities.
+
+**Verification Criteria:**
+1. Website domain is `.gov`
+2. **OR** Explicitly run by government agency (DOE, NIH, USDA, etc.)
+3. Funded by government appropriations
+
+**How to verify:**
+- Check website domain
+- Look for "About" page mentioning DOE, NIH, USDA, etc.
+- Check for government logos/seals
+
+**Examples:** Joint BioEnergy Institute (DOE), USDA Western Regional Research Center, Lawrence Berkeley National Lab facilities
+
+---
+
+#### 8. Nonprofit
+
+**Definition:** Non-profit research organizations that are neither academic nor government.
+
+**Verification Criteria:**
+1. Website states "non-profit," "501(c)(3)," or "foundation"
+2. **OR** Domain is `.org` AND explicitly non-commercial mission
+3. Not affiliated with university or government
+
+**How to verify:**
+- Check website "About" page for nonprofit status
+- Look for 501(c)(3) designation or "non-profit" statement
+- Check funding sources (grants, donations vs. commercial revenue)
+
+**Examples:** Gladstone Institutes, Arcadia Science
+
+---
 
 ### Classification Decision Tree
 
+Use this flowchart to classify companies:
+
 ```
-Is it a research institute? → Research Institute
-Is revenue >$5B and global? → Large Pharma
-Has approved products? → Commercial Biotech
-Has active clinical trials? → Clinical-Stage Biotech
-Has therapeutics pipeline (preclinical)? → Preclinical Biotech
-Provides services/tools only? → Platform/Tools
+1. Check domain:
+   - .edu → Academic
+   - .gov → Government
+
+2. Check website "About" page:
+   - States "non-profit" or "501(c)(3)" → Nonprofit
+   - University affiliation → Academic
+   - Government agency → Government
+
+3. Check business model:
+   - Primary business is services/tools/CDMO → Platform/Tools
+
+4. Check revenue/market cap:
+   - Revenue >$5B OR market cap >$50B → Large Pharma
+
+5. Check products:
+   - Has FDA-approved product → Commercial Biotech
+
+6. Check clinical trials:
+   - Active clinical trials (ClinicalTrials.gov) → Clinical-Stage Biotech
+
+7. Check pipeline:
+   - Therapeutic pipeline but no trials → Preclinical Biotech
+
+8. If still unclear → Default to Preclinical Biotech or Platform/Tools
 ```
 
 ### Special Cases
-- **Acquired companies:** Classify by original business, note acquisition in Focus Areas
-- **Pivoted companies:** Use current business model
-- **Uncertain stage:** Default to most conservative (e.g., Clinical → Preclinical if trials unclear)
+
+**Acquired Companies:**
+- Classify by original business category
+- Add "(Acquired by [Parent Company])" to Focus Areas
+- If operations ceased entirely, consider excluding from list
+
+**Pivoted Companies:**
+- Use current business model for classification
+- Note pivot in Focus Areas if significant
+
+**Multi-Business Companies:**
+- Classify by primary/majority business
+- If 50/50 split, use higher stage (e.g., Clinical over Preclinical)
+
+**Uncertain Cases:**
+- Default to most conservative category
+- Platform/Tools if business model unclear
+- Preclinical if development stage unclear
 
 ---
 
@@ -275,7 +429,9 @@ San Rafael, Novato, Mill Valley, Larkspur, Corte Madera, Tiburon, Sausalito
 - Initial methodology document
 - Ultra-simplified discovery process (70/10 rule)
 - Primary sources: Wikipedia (3 lists), BioPharmGuy, LinkedIn only
-- Defined 6 company stage categories
+- Defined 8 company stage categories with verification criteria
+- Separated Academic, Government, and Nonprofit categories
+- Added step-by-step verification process for each category
 - Established QC checklist
 
 **V2.0** - Manual curation, basic CSV
