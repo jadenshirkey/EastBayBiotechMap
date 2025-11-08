@@ -9,15 +9,15 @@ Engineered viral capsids & delivery; protein design/structural virology relevant
 ARMO BioSciences,https://www.lilly.com,Redwood City,"575 Chesapeake Drive, Redwood City, CA 94063",Acquired,Immuno-oncology company developing cytokine-based therapies. Acquired by Eli Lilly.
 ATUM,https://www.atum.bio,Newark,"37950 Central Court, Newark, CA 94560",Tools/Services/CDMO,"Gene & protein design/synthesis; enzyme engineering.
 Core protein engineering & expression & purification workflows."
-Abalone Bio,https://www.abalonebio.com,Emeryville,"1250 45th St, Suite 520, Emeryville, CA 94608",Pre-clinical/Startup,Functional Antibody Discovery for GPCRs & AI
+Abalone Bio,https://www.abalonebio.com,Emeryville,"1250 45th St, Suite 520, Emeryville, CA 94608",Pre-clinical/Startup,Function-activating antibodies for GPCRs. FAST platform enables parallel screening powered by AI-guided design.
 AbbVie,https://www.abbvie.com,South San Francisco,"1000 Gateway Boulevard, South San Francisco, CA 94080",Large Pharma,"Large pharma with significant biologics pipeline (oncology, immunology). Protein sciences and engineering roles."
 Accelero Biostructures,https://accelerobio.com,San Francisco,"156 2ND ST, San Francisco, CA, 94105",Tools/Services/CDMO,High-throughput X-ray crystallography and cryo-EM services for structure-based drug discovery. Direct skill alignment.
-Acepodia,https://www.acepodia.com,Alameda,"1600 Harbor Bay Pkwy, Suite 140, Alameda, CA 94502",Clinical-Stage Biotech,Antibody-Cell Conjugation (ACC™) Technology
-Acrigen Biosciences,https://www.acrigen.com,Berkeley,"626 Bancroft Way, Berkeley, CA 94702",Pre-clinical/Startup,Precision CRISPR Gene Editing & Anti-CRISPR Proteins
-Actym Therapeutics,https://www.actym.com,Berkeley,"717 Market St, San Francisco, CA 94103",Pre-clinical/Startup,Microbial-based Immunotherapy Platform
+Acepodia,https://www.acepodia.com,Alameda,"1600 Harbor Bay Pkwy, Suite 140, Alameda, CA 94502",Clinical-Stage Biotech,Off-the-shelf cell therapies using proprietary biorthogonal chemistry (ACC™) to link antibodies to immune cells.
+Acrigen Biosciences,https://www.acrigen.com,Berkeley,"626 Bancroft Way, Berkeley, CA 94702",Pre-clinical/Startup,"Advanced CRISPR platform combining engineered nucleases (αCas, μCas) with anti-CRISPR proteins for specificity."
+Actym Therapeutics,https://www.actym.com,San Francisco,"717 Market St, San Francisco, CA 94103",Pre-clinical/Startup,Microbial-based Immunotherapy Platform
 AcureX Biosciences,https://www.acurex.com,San Carlos,"930 Brittan Avenue, San Carlos, CA 94070",Pre-clinical/Startup,Therapeutics targeting mitochondrial dysfunction in neurodegenerative diseases.
 Adanate,https://www.adanate.com,Alameda,"1010 Atlantic Avenue, Suite 102, Alameda, CA 94501",Clinical-Stage Biotech,Antibody Therapeutics for Immuno-oncology
-Addition Therapeutics,https://www.additiontx.com,Berkeley,"2630 Bancroft Way, Berkeley, CA 94704",Pre-clinical/Startup,RNA-mediated Transgene Insertion
+Addition Therapeutics,https://www.additiontx.com,Berkeley,"2630 Bancroft Way, Berkeley, CA 94704",Pre-clinical/Startup,RNA-only therapeutics using PRINT™ technology for precise transgene insertion without CRISPR machinery.
 Advanced Biofuels and Bioproducts Process Development Unit,https://abpdu.lbl.gov,Emeryville,"5885 Hollis St, Emeryville, CA 94608",Academic/Gov't,"Scale-up/process;
 fermentation and downstream"
 Advanced Light Source,https://als.lbl.gov,Berkeley,"1 Cyclotron Rd, Berkeley, CA 94720",Academic/Gov't,"Synchrotron for Structural Biology.
@@ -26,17 +26,16 @@ Alector,https://alector.com,South San Francisco,"131 Oyster Point Blvd, Suite 60
 AllCells,https://www.allcells.com,Alameda,"1301 Harbor Bay Pkwy, Suite 200, Alameda, CA 94502",Tools/Services/CDMO,"Human primary cells for CGT.
 Supports cell therapy R&D; GMP-adjacent lab operations."
 Allogene Therapeutics,https://www.allogene.com,South San Francisco,"210 East Grand Avenue, South San Francisco, CA 94080",Clinical-Stage Biotech,Allogeneic CAR T (AlloCAR T™) therapies. Protein engineering of CAR constructs is critical.
-Altay Therapeutics,https://www.altaytherapeutics.com,San Francisco,"113 Piccadilly Pl # A, San Bruno, CA 94066",Pre-clinical/Startup,Small molecule therapies targeting transcription factors for inflammation and cancer. Structure-based design focus.
+Altay Therapeutics,https://www.altaytherapeutics.com,San Bruno,"113 Piccadilly Pl # A, San Bruno, CA 94066",Pre-clinical/Startup,Small molecule therapies targeting transcription factors for inflammation and cancer. Structure-based design focus.
 Alumis,https://www.alumis.com,South San Francisco,"280 E Grand Ave, South San Francisco, CA 94080",Clinical-Stage Biotech,Oral small molecule therapies for immune-mediated diseases (TYK2 inhibitors).
 AmMax Bio,https://www.ammaxbio.com,Redwood City,"333 Twin Dolphin Drive, Suite 370, Redwood City, CA 94065",Clinical-Stage Biotech,Antibody-based oncology pipeline targeting CSF1R (mAbs and ADCs).
-Amber Bio,https://www.amberbio.com,Berkeley,"953 Indiana Street, San Francisco, CA 94107",Pre-clinical/Startup,RNA Writing & Multi-kilobase Gene Editing
+Amber Bio,https://www.amberbio.com,San Francisco,"953 Indiana Street, San Francisco, CA 94107",Pre-clinical/Startup,RNA writing platform for multi-kilobase genetic edits addressing diverse mutations with single therapeutic.
 Ambys Medicines,https://www.ambys.com,South San Francisco,"131 Oyster Point Blvd, Suite 200, South San Francisco, CA 94080",Pre-clinical/Startup,Regenerative medicine and cell therapies for liver disease. Acquired by Cytotheryx.
 Amphivena Therapeutics,https://amphivena.com,South San Francisco,"2 Tower Place, South San Francisco, CA 94080",Clinical-Stage Biotech,T-cell engaging bispecific antibodies for immuno-oncology. Core antibody engineering.
 Amunix Pharmaceuticals,https://www.amunix.com,South San Francisco,"2 Tower Plaza, Suite 1100, South San Francisco, CA 94080",Acquired,"Masked T-cell engagers and cytokines (XPAT®, XPAC™ platforms). Acquired by Sanofi. Strong protein engineering."
 Ancora Biotech,https://ancorabiotech.com,Palo Alto,"953 Roble Ridge Road, Palo Alto, CA 94306",Pre-clinical/Startup,Develops multi-specific antibodies for oncology and inflammatory diseases.
 Annexon Biosciences,https://annexonbio.com,South San Francisco,"180 Kimball Way, 2nd Floor, Suite 200, South San Francisco, CA 94080",Clinical-Stage Biotech,Antibody-based therapies targeting classical complement pathway (C1q) for autoimmune and neurodegenerative diseases.
-Ansa Biotechnologies,https://www.ansabio.com,Emeryville,"1198 65th Street, Suite 250, Emeryville, CA 94608",Pre-clinical/Startup,"Enzymatic DNA Synthesis & Enzyme Engineering.
-Enzyme engineering & computational chemistry; direct protein engineering relevance."
+Ansa Biotechnologies,https://www.ansabio.com,Emeryville,"1198 65th Street, Suite 250, Emeryville, CA 94608",Pre-clinical/Startup,"Enzymatic DNA synthesis technology for writing long, complex DNA strands with unprecedented speed and accuracy."
 Apertor Pharmaceuticals,https://www.apertorpharma.com,Alameda,"1640 South Loop Road, Suite 200, Alameda, CA 94502",Pre-clinical/Startup,Molecular Glues & Protein-Protein Interaction Disruption
 Arcadia Science,https://www.arcadiascience.com,Emeryville,"6401 Hollis St, Suite 100, Emeryville, CA 94608",Non-Profit/Research,"Discovery Biology & Open Science Platform.
 Discovery biology + toolkits; computational/structural adjacent"
@@ -45,7 +44,7 @@ pharma development alignment."
 Arsenal Biosciences,https://arsenalbio.com,South San Francisco,"329 Oyster Point Blvd, South San Francisco, CA 94080",Clinical-Stage Biotech,Programmable cell therapies for solid tumors. Advanced protein and genetic engineering of T-cells.
 Asher Biotherapeutics,https://asherbio.com,South San Francisco,"650 Gateway Blvd, Suite 100, South San Francisco, CA 94080",Clinical-Stage Biotech,Cis-targeted immunotherapies (engineered cytokines). Highly selective protein engineering platform.
 Ashvattha Therapeutics,https://avttx.com,Redwood City,"1235 Radio Road, Suite 200, Redwood City, CA 94065",Clinical-Stage Biotech,Targeted nanomedicine therapeutics (hydroxyl dendrimers) for inflammatory diseases. Drug delivery focus.
-Atreca,http://atreca.com,San Carlos,"835 Industrial Road, Suite 400, San Carlos, CA 94070",Clinical-Stage Biotech,Antibody discovery based on active human immune responses. Note: Company has undergone significant restructuring.
+Atreca,https://atreca.com,San Carlos,"835 Industrial Road, Suite 400, San Carlos, CA 94070",Clinical-Stage Biotech,Antibody discovery based on active human immune responses. Note: Company has undergone significant restructuring.
 AvidBiotics Corp,https://www.avidbiotics.com,South San Francisco,"100 Kimball Way, South San Francisco, CA 94080",Acquired,Non-antibody protein therapeutics. Split into Xyphos (immuno-oncology) and Pylum (antibacterials).
 Bayer,https://www.bayer.com,Berkeley,"800 Dwight Way, Berkeley, CA 94710",Large Pharma,"Biologics & Cell & Gene Therapy & Manufacturing.
 Biologics & CGT; process/analytical development"
@@ -60,10 +59,9 @@ Fermentation scale protein expression & engineering."
 Boost Biomes,https://www.boostbiomes.com,South San Francisco,"329 Oyster Point Boulevard, 3rd Floor, South San Francisco, CA 94080",Pre-clinical/Startup,Microbiome discovery platform for agriculture and food. Less focus on protein biochemistry.
 Calico Life Sciences,https://www.calicolabs.com,South San Francisco,"1170 Veterans Blvd, South San Francisco, CA 94080",Pre-clinical/Startup,"Aging and age-related diseases.
 Fundamental biology of aging research"
-Caribou Biosciences,https://www.cariboubio.com,Berkeley,"2929 7th Street, Suite 105, Berkeley, CA 94710",Clinical-Stage Biotech,"Next-Gen CRISPR Allogeneic Cell Therapies.
-Cas protein engineering & genome editing; strong structural biology links."
+Caribou Biosciences,https://www.cariboubio.com,Berkeley,"2929 7th Street, Suite 105, Berkeley, CA 94710",Clinical-Stage Biotech,Next-generation CRISPR allogeneic cell therapies using hybrid RNA-DNA guides for superior specificity.
 Cartography Biosciences,https://cartography.bio,South San Francisco,"230 E Grand Avenue, Suite 250, South San Francisco, CA 94080",Pre-clinical/Startup,Antigen atlas for precision immuno-oncology. Computational and proteomics focus.
-Catalent,https://www.catalent.com,Emeryville,"5959 Horton St, Suite 400, Emeryville, CA 94608",Tools/Services/CDMO,Antibody-Drug Conjugates (ADCs) & Bioconjugation
+Catalent,https://www.catalent.com,Emeryville,"5959 Horton St, Suite 400, Emeryville, CA 94608",Tools/Services/CDMO,CDMO with SMARTag® precision protein-chemical engineering platform for site-specific ADC development.
 Catena Biosciences,https://www.catenabio.com,Berkeley,"820 Heinz Ave, Berkeley, CA 94710",Clinical-Stage Biotech,"Protein conjugation therapeutics (ADCs).
 Engineered enzyme for site-specific conjugation; structural enzymology fit."
 CellFE,https://www.cellfe.com,Alameda,"1000 Atlantic Ave #104, Alameda, CA 94501",Pre-clinical/Startup,Microfluidics for Intracellular Delivery
@@ -79,23 +77,20 @@ Dynavax Technologies,https://www.dynavax.com,Emeryville,"2100 Powell St, Suite 7
 Adjuvant biology; protein production for vaccine antigens."
 Eikon Therapeutics,https://www.eikontx.com,Hayward,"3929 Point Eden Way, Hayward, CA 94545",Clinical-Stage Biotech,"Live-cell single-molecule imaging drug discovery. Protein dynamics & quantitative imaging;
 structural insights valuable."
-Eureka Therapeutics,https://www.eurekatherapeutics.com,Emeryville,"5858 Horton St, Suite 370, Emeryville, CA 94608",Clinical-Stage Biotech,"T-Cell Therapies & Antibody Discovery & Structural Bio.
-T-cell therapies/antibody discovery; structural/biochem"
+Eureka Therapeutics,https://www.eurekatherapeutics.com,Emeryville,"5858 Horton St, Suite 370, Emeryville, CA 94608",Clinical-Stage Biotech,T-cell therapies for solid tumors using ARTEMIS® antibody and TCR platforms with structural biology focus.
 Exact Sciences,https://www.exactsciences.com,Redwood City,"101 Galveston Drive, Redwood City, CA 94063",Commercial-Stage Biotech,"Cancer diagnostics (Cologuard, Oncotype DX). Genomics and diagnostics focus."
 Exelixis,https://www.exelixis.com,Alameda,"1851 Harbor Bay Parkway, Alameda, CA 94502",Commercial-Stage Biotech,"Oncology Drug Development (Small Molecule & Biologics).
 Oncology drug developer; small-molecule discovery/dev"
-FibroGen,Inc.,https://www.fibrogen.com,San Francisco,"350 Bay St, Ste 100, San Francisco, CA 94133",Commercial-Stage Biotech
+FibroGen,Inc.,https://www.fibrogen.com,South San Francisco,"350 Bay St, Ste 100, South San Francisco, CA 94080",Commercial-Stage Biotech
 Freenome,https://www.freenome.com,Brisbane,"3300 Marina Blvd, Brisbane, CA 94005",Clinical-Stage Biotech,"Multi-omics for early cancer detection.
 Liquid biopsy and machine learning for diagnostics"
 GeneFab,https://www.genefab.com,Alameda,"1430 Harbor Bay Parkway, Alameda, CA 94502",Tools/Services/CDMO,CRDMO for Cell & Gene Therapies
-Ginkgo Bioworks,https://www.ginkgobioworks.com,Emeryville,"5858 Horton Street, Suite 400, Emeryville, CA 94608",Commercial-Stage Biotech,"High-Throughput Organism Engineering.
-High-throughput protein expression & computational design."
+Ginkgo Bioworks,https://www.ginkgobioworks.com,Emeryville,"5858 Horton Street, Suite 400, Emeryville, CA 94608",Commercial-Stage Biotech,Automated foundry for organism engineering using robotics and high-throughput screening for synthetic biology applications.
 Gladstone Institutes,https://gladstone.org,San Francisco,"1650 Owens Street, San Francisco, CA 94158",Academic/Gov't,"Non-profit research institute; strong in data science, immunology, and neurology. Direct structural/comp bio fit."
-Glyphic Biotechnologies,https://www.glyphicbio.com,Berkeley,"3100 San Pablo Avenue, Suite 201, Berkeley, CA 94702",Pre-clinical/Startup,Single-Molecule Protein Sequencing Platform
+Glyphic Biotechnologies,https://www.glyphicbio.com,Berkeley,"3100 San Pablo Avenue, Suite 201, Berkeley, CA 94702",Pre-clinical/Startup,Next-generation protein sequencing platform to analyze human proteome at single-molecule resolution.
 Graybug Vision,https://www.graybug.vision,Redwood City,"203 Shoreline Shores Parkway, Suite 620, Redwood City, CA 94065",Acquired,Ophthalmic drug delivery technologies. Acquired by CalciMedica.
 Greenstone Biosciences,https://greenstonebio.com,Palo Alto,"3160 Porter Drive, Suite 140, Palo Alto, CA 94304",Pre-clinical/Startup,Drug discovery using AI/ML and human iPSC-derived organoids. Computational and cell biology focus.
-Gritstone bio,https://www.gritstonebio.com,Emeryville,"5959 Horton St, Suite 300, Emeryville, CA 94608",Clinical-Stage Biotech,"Immuno-oncology & AI-based Antigen Discovery.
-Immuno-oncology/infectious disease; AI + antigen discovery"
+Gritstone bio,https://www.gritstonebio.com,Emeryville,"5959 Horton St, Suite 300, Emeryville, CA 94608",Clinical-Stage Biotech,Personalized cancer immunotherapies using GRITSTONE EDGE™ to identify tumor neoantigens for patient-specific vaccines.
 HepaTx Corporation,https://hepatx.com,Palo Alto,"2627 Hanover Street, Palo Alto, CA 94304",Pre-clinical/Startup,Off-the-shelf cell therapies for liver disease based on regenerative medicine.
 IGM Biosciences,https://www.igmbio.com,Mountain View,"325 E Middlefield Rd, Mountain View, CA 94043",Clinical-Stage Biotech,"Engineered IgM antibodies.
 Novel antibody engineering platform"
@@ -107,7 +102,7 @@ Joint BioEnergy Institute,https://www.jbei.org,Emeryville,"5885 Hollis St, Emery
 high-throughput strain/protein work"
 Joint Genome Institute,https://jgi.doe.gov,Berkeley,"1 Cyclotron Road, Berkeley, CA 94720",Academic/Gov't,"Large-scale genomics;
 comp biology & sequencing"
-Kimia Therapeutics,https://www.kimiatx.com,Berkeley,"740 Heinz Avenue, Berkeley, CA 94710",Pre-clinical/Startup,AI/ML Drug Discovery Platform
+Kimia Therapeutics,https://www.kimiatx.com,Berkeley,"740 Heinz Avenue, Berkeley, CA 94710",Pre-clinical/Startup,ATLAS platform merges ML with automated chemical synthesis and screening to map structure-to-protein function.
 Kyverna Therapeutics,https://www.kyvernatx.com,Emeryville,"5980 Horton Street, Suite 550, Emeryville, CA 94608",Clinical-Stage Biotech,"Autoimmune cell therapy (CAR-Treg). Gene & protein engineering;
 translational cell therapy."
 Lonza,https://www.lonza.com,Hayward,"21075 Alexander Court, Hayward, CA 94545",Tools/Services/CDMO,"CDMO; biologics & CGT manufacturing. CDMO;
@@ -120,36 +115,34 @@ CRISPR-based diagnostics and in vivo gene editing"
 Medable,https://www.medable.com,Palo Alto,"525 University Ave, Suite A70, Palo Alto, CA 94301",Commercial-Stage Biotech,Decentralized clinical trial software platform. Digital health focus.
 Metagenomi,https://www.metagenomi.co,Emeryville,"1545 Park Avenue, Emeryville, CA 94608",Pre-clinical/Startup,"Next-generation gene editing systems.
 Novel CRISPR systems and base editors"
-Nanotein,https://www.nanotein.com,Berkeley,"2950 San Pablo Ave, Berkeley, CA 94702",Pre-clinical/Startup,Protein-based Reagents for Cell Therapy
+Nanotein,https://www.nanotein.com,Berkeley,"2950 San Pablo Ave, Berkeley, CA 94702",Pre-clinical/Startup,NanoSpark™ platform develops engineered protein activators improving manufacturing of cell therapies like CAR-T.
 Nektar Therapeutics,https://www.nektar.com,San Francisco,"455 Mission Bay Boulevard South, San Francisco, CA 94158",Clinical-Stage Biotech,Polymer conjugate technology to modify biologics (PEGylation). Protein engineering adjacent.
 Novartis,https://www.novartis.com,Emeryville,"5959 Horton Street, Emeryville, CA 94608",Large Pharma,"Infectious disease & global health R&D. Multidisciplinary drug discovery;
 potential structural biology roles."
 Nurix Therapeutics,https://www.nurixtx.com,San Francisco,"1700 Owens St # 205, San Francisco, CA 94158",Clinical-Stage Biotech,"Targeted protein degradation (degraders, DACs). Deep mechanistic and structural understanding required."
 Nutcracker Therapeutics,https://www.nutcrackerx.com,Emeryville,"5858 Horton Street, Suite 540, Emeryville, CA 94608",Clinical-Stage Biotech,"mRNA therapeutics platform.
 Protein/RNA engineering & automated GMP workflows."
-OmniAb,https://www.omniab.com,Emeryville,"5980 Horton Street, Suite 600, Emeryville, CA 94608",Tools/Services/CDMO,Transgenic Platforms for Antibody Discovery
+OmniAb,https://www.omniab.com,Emeryville,"5980 Horton Street, Suite 600, Emeryville, CA 94608",Tools/Services/CDMO,"Transgenic animal platforms (OmniRat®, OmniMouse®, OmniChicken®) with high-throughput screening for antibody discovery."
 Pearl Therapeutics,https://www.pearlpathways.com,Redwood City,"200 Saginaw Drive, Redwood City, CA 94063",Acquired,Inhaled therapies for respiratory diseases. Acquired by AstraZeneca. Formulation focus.
-Phyllom BioProducts,https://www.phyllom.com,Oakland,"484 Lake Park Ave, Suite 23, Oakland, CA 94610",Commercial-Stage Biotech,Microbial Biopesticides & Protein Engineering
-Pivot Bio,https://www.pivotbio.com,Berkeley,"2910 7th St, Berkeley, CA 94710",Commercial-Stage Biotech,"Engineered Microbes & Computational Protein Design.
-Engineered microbes; computational protein/genome design"
+Phyllom BioProducts,https://www.phyllom.com,Oakland,"484 Lake Park Ave, Suite 23, Oakland, CA 94610",Commercial-Stage Biotech,Microbial biopesticides with engineered Cry proteins replacing chemical insecticides for agriculture.
+Pivot Bio,https://www.pivotbio.com,Berkeley,"2910 7th St, Berkeley, CA 94710",Commercial-Stage Biotech,Engineered nitrogen-fixing microbes replacing synthetic fertilizers for sustainable agriculture.
 Pliant Therapeutics,https://pliantrx.com,Redwood City,"260 Littlefield Avenue, South San Francisco, 94080",Clinical-Stage Biotech,Small molecule therapies targeting integrins for fibrotic diseases. Structure-based drug design relevance.
-Prellis Biologics,https://www.prellisbio.com,Berkeley,"999 Anthony Street, Berkeley, CA 94710",Pre-clinical/Startup,3D Organoids for Antibody Discovery & AI
+Prellis Biologics,https://www.prellisbio.com,Berkeley,"999 Anthony Street, Berkeley, CA 94710",Pre-clinical/Startup,EXIS™ platform uses two-photon laser bioprinting to create 3D lymph node organoids for antibody discovery.
 Procept BioRobotics,https://www.procept-biorobotics.com,Redwood City,"900 Island Dr, Redwood City, CA 94065",Commercial-Stage Biotech,Surgical robotics for urology (Aquablation therapy). Medical device focus.
-Profluent,https://www.profluent.bio,Emeryville,"1480 64th Street, Emeryville, CA 94608",Pre-clinical/Startup,AI-first Protein Design & Generative Models
+Profluent,https://www.profluent.bio,Emeryville,"1480 64th Street, Emeryville, CA 94608",Pre-clinical/Startup,"AI-first protein design using generative models combined with experimental validation (crystallography, ITC)."
 Prolific Machines,https://www.prolific-machines.com,Emeryville,"6400 Hollis Street, Suite 1, Emeryville, CA 94608",Pre-clinical/Startup,Optogenetic Control of Protein Production
 Ray Therapeutics,https://www.raytx.com,Berkeley,"2607 7th Street, Suite B, Berkeley, CA 94710",Pre-clinical/Startup,Optogenetic Gene Therapy & Protein Engineering
 Regel Therapeutics,https://www.regel.bio,Berkeley,"2630 Bancroft Way, Berkeley, CA 94704",Pre-clinical/Startup,Targeted EpiEditing & dCAS Fusion Proteins
-ResVita Bio,https://www.resvitabio.com,Berkeley,"2625 Durant Avenue, Berkeley, CA 94720",Pre-clinical/Startup,Engineered Skin Probiotics & Protein Delivery
+ResVita Bio,https://www.resvitabio.com,Berkeley,"2625 Durant Avenue, Berkeley, CA 94720",Pre-clinical/Startup,Engineered skin probiotics producing therapeutic proteins to treat chronic skin diseases like Netherton Syndrome.
 Revolution Medicines,https://www.revmed.com,Redwood City,"700 Saginaw Drive, Redwood City, CA 94063",Clinical-Stage Biotech,Small molecule inhibitors of RAS(ON) oncogenes. Strong focus on protein-small molecule interactions and structural biology.
 Rigel Pharmaceuticals,https://www.rigel.com,San Francisco,"1180 Veterans Blvd, San Francisco, CA 94080",Commercial-Stage Biotech,"Small molecule drugs for hematologic disorders and cancer (SYK, IRAK1/4 inhibitors)."
-Sampling Human,https://www.samplinghuman.com,Berkeley,"2625 Durant Avenue, Berkeley, CA 94720",Pre-clinical/Startup,Synthetic Biology & Single-Cell Biomarkers
+Sampling Human,https://www.samplinghuman.com,Berkeley,"2625 Durant Avenue, Berkeley, CA 94720",Pre-clinical/Startup,Synthetic biology for single-cell measurement and creation of single-cell biomarkers. Protein-based tools focus.
 Sangamo Therapeutics,https://www.sangamo.com,Brisbane,"7000 Marina Boulevard, Brisbane, CA 94005",Clinical-Stage Biotech,"Zinc finger nucleases & gene therapy.
 Genomic medicines using zinc finger technology"
-Santa Ana Bio,https://www.santaanabio.com,Alameda,"1105 Atlantic Ave, Alameda, CA 94501",Pre-clinical/Startup,Precision Immunology & Antibody Engineering
+Santa Ana Bio,https://www.santaanabio.com,Alameda,"1105 Atlantic Ave, Alameda, CA 94501",Pre-clinical/Startup,Precision immunology leveraging multi-omics and antibody engineering for autoimmune and inflammatory diseases.
 Santen,https://www.santen.com,Emeryville,"6401 Hollis Street, Suite 125, Emeryville, CA 94608",Large Pharma,"Ophthalmology drug development;
 translational. Ophthalmology drug development; translational"
-Scribe Therapeutics,https://www.scribetx.com,Alameda,"1150 Marina Village Parkway, Suite 100, Alameda, CA 94501",Pre-clinical/Startup,"CRISPR Enzyme Engineering for In Vivo Therapies.
-Protein engineering of nucleases; strong structural fit."
+Scribe Therapeutics,https://www.scribetx.com,Alameda,"1150 Marina Village Parkway, Suite 100, Alameda, CA 94501",Pre-clinical/Startup,Engineering bespoke CRISPR enzymes and delivery systems for disease-specific genetic therapies.
 Seer,https://seer.bio,Redwood City,"3800 Bridge Pkwy, Redwood City, CA 94065",Commercial-Stage Biotech,Proteomics platform (Proteograph™ Product Suite) for large-scale protein analysis. Strong proteomics and data analysis fit.
 Soleno Therapeutics,https://soleno.life,Redwood City,"100 Marine Parkway, Suite 400, Redwood City, CA 94065",Clinical-Stage Biotech,Small molecule therapeutics for rare diseases (Prader-Willi syndrome).
 Sutro Biopharma,https://www.sutrobio.com,South San Francisco,"111 Oyster Point Blvd, South San Francisco, CA 94080",Clinical-Stage Biotech,Cell-free protein synthesis platform (XpressCF™) for ADCs and cytokine-based therapeutics. Direct protein synthesis/engineering fit.
@@ -162,7 +155,7 @@ Ultragenyx Pharmaceutical,https://www.ultragenyx.com,Novato,"60 Leveroni Court, 
 Gene therapy and enzyme replacement therapy"
 Unchained Labs,https://www.unchainedlabs.com,Pleasanton,"4747 Willow Road, Pleasanton, CA 94588",Tools/Services/CDMO,"Biologics analytics instruments.
 Protein stability & characterization tools; applications science roles."
-Valitor,https://www.valitorbio.com,Berkeley,"820 Heinz Avenue, Berkeley, CA 94710",Pre-clinical/Startup,Protein Therapeutics & Multivalent Biopolymers
+Valitor,https://www.valitorbio.com,Berkeley,"820 Heinz Avenue, Berkeley, CA 94710",Pre-clinical/Startup,MVP technology platform for ophthalmic medicines using multivalent biopolymers for potency and durability control.
 Vir Biotechnology,https://www.vir.bio,San Francisco,"1800 Owens Street Suite 900, San Francisco, CA 94158",Clinical-Stage Biotech,Antibody-based therapies for infectious diseases. Strong protein engineering and immunology focus.
 XOMA Corporation,https://www.xoma.com,Emeryville,"2200 Powell Street, Suite 310, Emeryville, CA 94608",Commercial-Stage Biotech,"Royalty aggregator; legacy antibody discovery.
 Antibody/biologics royalty aggregator; legacy protein eng; minimal in-house R&D today"
@@ -182,7 +175,7 @@ ASI Bio (ashibio),https://ashibio.com,Burlingame,,Pre-clinical/Startup,Bone/conn
 ATUM (DNA2.0),https://atum.bio,Newark,,Tools/Services/CDMO,Gene synthesis & protein engineering
 Aarvik Therapeutics,https://aarviktx.com,Hayward,,Pre-clinical/Startup,Antibody-drug conjugates
 Aayam Therapeutics,https://aayamtx.com,San Jose,,Pre-clinical/Startup,505(b)(2) drug repurposing
-Ab Studio,https://antibodystudio.com,Hayward,,Tools/Services/CDMO,Antibody humanization services
+Ab Studio,https://antibodystudio.com,Hayward,,Tools/Services/CDMO,Service provider specializing in humanization of antibodies to reduce immunogenicity for therapeutic development.
 AbTherx,https://abtherx.com,Mountain View,,Pre-clinical/Startup,Therapeutic antibody discovery
 AbboMax,https://abbomax.com,San Jose,,Tools/Services/CDMO,Antibody peptide & assay products
 Abbott (Bay Area),https://abbott.com,Alameda,"1360 South Loop Road, Alameda, CA 94502",Large Pharma,Diabetes care products
@@ -199,7 +192,7 @@ Acepix Biosciences,https://acepixbio.com,Union City,,Pre-clinical/Startup,Cell-b
 Achelois BioPharma,https://achelois.bio,Redwood City,,Pre-clinical/Startup,Antiviral (molecular velcro)
 Achira,https://achira.ai,San Francisco,,Pre-clinical/Startup,Atomistic simulation drug discovery
 Acme Bioscience,https://acmeca.com,Palo Alto,,Tools/Services/CDMO,Medicinal chemistry services
-Acrobat Genomics,https://acrobatgenomics.com,San Carlos,,Pre-clinical/Startup,CRISPR-based drug discovery
+Acrobat Genomics,https://acrobatgenomics.com,San Carlos,,Pre-clinical/Startup,"Platform utilizing CRISPR technology to identify and validate novel drug targets, with focus on systematic target discovery approaches."
 AcureX Therapeutics,https://acurex.com,San Carlos,,Pre-clinical/Startup,Neurodegenerative disease treatments
 Adaptyx Biosciences,https://adaptyx.bio,Menlo Park,,Pre-clinical/Startup,Biosensor technology
 Adari Cell Science,https://adaricell.com,Oakland,,Tools/Services/CDMO,Cell-based assays
@@ -217,7 +210,7 @@ Aelan Cell Technologies,https://aelanct.com,San Francisco,"665 3rd St Ste 280, S
 Aeovian Pharmaceuticals,https://aeovian.com,Berkeley,"2930 Domingo Ave Ste 145, Berkeley, CA 94705",Pre-clinical/Startup,Small-molecule therapeutics
 Aequita Bioworks,https://aequitabioworks.com,San Carlos,"1068 Washington St Suite B, San Carlos, CA 94070",Pre-clinical/Startup,Muscle loss antibody therapies
 Aerin Medical,https://aerinmedical.com,Mountain View,"2565 Leghorn St, Mountain View, CA 94043",Pre-clinical/Startup,Nasal obstruction device
-Aether Biomachines,https://aetherbio.com,Menlo Park,,Pre-clinical/Startup,Enzyme engineering (automation)
+Aether Biomachines,https://aetherbio.com,Menlo Park,,Pre-clinical/Startup,Automating enzyme engineering processes through high-throughput approaches to develop novel enzymes for industrial biotechnology applications.
 AfaSci,https://afasci.com,Redwood City,"522 Second Avenue, Redwood City, CA 94063",Pre-clinical/Startup,Small-molecule CNS drugs
 Agilent Technologies (Bio Division),https://agilent.com,Santa Clara,,Commercial-Stage Biotech,Lab instruments & screening
 Aikium,https://aikium.com,Berkeley,,Pre-clinical/Startup,AI-driven drug discovery
@@ -246,7 +239,7 @@ Aluda Pharmaceuticals,https://aludapharm.com,Menlo Park,,Pre-clinical/Startup,Sm
 Aluna,https://alunacare.com,San Francisco,,Pre-clinical/Startup,Digital asthma monitoring
 Alveo Technologies,https://alveotechnologies.com,Alameda,"1000 Atlantic Ave, Suite 114, Alameda, CA 94501",Commercial-Stage Biotech,Diagnostic devices (infectious diseases)
 Amador Bioscience,https://amadorbioscience.com,Pleasanton,,Tools/Services/CDMO,Consulting & CRO (clinical trials)
-Amaros,https://amaros.ai,Menlo Park,,Pre-clinical/Startup,Ophthalmology data platform (AI)
+Amaros,https://amaros.ai,Menlo Park,,Pre-clinical/Startup,AI-powered platform for ophthalmology data analysis and clinical insights.
 Amgen (Bay Area),https://amgen.com,South San Francisco,"750 Gateway Blvd., Suite 100, South San Francisco, CA 94080",Large Pharma,Biologics & small-molecule drugs
 AmplifiDx,https://amplifidx.com,Newark,,Pre-clinical/Startup,Molecular diagnostics (point-of-care)
 Amprion,https://ampriondx.com,San Francisco,,Pre-clinical/Startup,Brain health diagnostics (prions)
@@ -295,13 +288,13 @@ Asieris Pharmaceuticals,https://asieris.com,Palo Alto,,Pre-clinical/Startup,Smal
 Aspa Therapeutics,https://aspatx.com,Palo Alto,,Pre-clinical/Startup,Gene therapy (Canavan disease)
 Assay Biotechnology,https://assaybiotechnology.com,San Jose,,Tools/Services/CDMO,Antibodies & ELISA kits
 Assembly Biosciences,https://assemblybio.com,South San Francisco,"Two Tower Place, 7th floor, South San Francisco, CA 94080",Pre-clinical/Startup,Antiviral small molecules (HBV)
-AstraZeneca (Bay Area),https://astrazeneca.com,South San Francisco,"121 Oyster Point Blvd, South San Francisco, CA",Large Pharma,Biologics & vaccines R&D
+AstraZeneca (Bay Area),https://astrazeneca.com,South San Francisco,"121 Oyster Point Blvd, South San Francisco, CA 94080",Large Pharma,Biologics & vaccines R&D
 Astraea Therapeutics,https://astraeatherapeutics.com,Mountain View,,Pre-clinical/Startup,Small-molecule antivirals
 atHeart Medical,https://atheartmedical.com,Santa Clara,,Pre-clinical/Startup,Atrial septal defect device
 Athelas,https://athelas.com,Mountain View,"1300 Terra Bella Ave, Suite 200, Mountain View, CA 94043",Pre-clinical/Startup,Point-of-care immune monitoring
 Atia Vision,https://atiavision.com,Campbell,,Pre-clinical/Startup,Presbyopia-correcting intraocular lens
 Atila Biosystems,https://atilabiosystems.com,Sunnyvale,,Pre-clinical/Startup,Nucleic acid amplification chemistry
-Atomic AI,https://atomic.ai,South San Francisco,"329 Oyster Point Blvd, South San Francisco, CA 94080",Pre-clinical/Startup,AI-driven RNA drug discovery
+Atomic AI,https://atomic.ai,South San Francisco,"329 Oyster Point Blvd, South San Francisco, CA 94080",Pre-clinical/Startup,Using AI to discover and design novel RNA-based therapeutic molecules.
 Atonarp,https://atonarp.com,Pleasanton,,Pre-clinical/Startup,Mass spec molecular analysis
 AtriCure,https://atricure.com,Pleasanton,"3875 Hopyard Road, Unit 160, Pleasanton, CA 94588",Commercial-Stage Biotech,Cardiovascular surgical devices
 Atropos Therapeutics,https://atroposthera.com,San Carlos,,Pre-clinical/Startup,Senescence-targeting small molecules
