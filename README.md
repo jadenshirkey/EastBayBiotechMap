@@ -1,20 +1,21 @@
-# East Bay Biotech Map
+# Bay Area Biotech Map
 
-An interactive map of biotechnology companies in the San Francisco East Bay Area, created to help job seekers and researchers explore the thriving biotech ecosystem.
+An interactive map of biotechnology companies across the San Francisco Bay Area, created to help job seekers, researchers, and entrepreneurs explore the thriving biotech ecosystem.
 
-## View the Map
+## 🗺️ View the Map
 
-**[🗺️ View Interactive Map on Google My Maps](https://www.google.com/maps/d/u/0/edit?mid=1ilB4lPNTYk8O5bgUxavsIbZw_yPN4pU&usp=sharing)**
+**[View Interactive Map on Google My Maps](https://www.google.com/maps/d/u/0/edit?mid=1ilB4lPNTYk8O5bgUxavsIbZw_yPN4pU&usp=sharing)** _(Click to open)_
+
+> **Note**: You can update this link after creating your new map using the data in this repository. See [MAP_SETUP.md](docs/MAP_SETUP.md) for instructions.
 
 ## About
 
-This project maps **73 biotechnology companies** across the East Bay region, including:
-- Emeryville
-- Berkeley
-- Alameda
-- Oakland
-- Pleasanton
-- And surrounding cities
+This project maps **171 biotechnology companies** across the entire San Francisco Bay Area, including:
+- **East Bay**: Emeryville, Berkeley, Oakland, Alameda, Fremont, Pleasanton
+- **Peninsula**: South San Francisco, Redwood City, Menlo Park, San Mateo
+- **San Francisco**: SF proper
+- **South Bay**: Palo Alto, Mountain View, Sunnyvale, San Jose
+- **North Bay**: San Rafael, Novato
 
 Companies range from early-stage startups to commercial-stage biotech firms, spanning diverse areas including:
 - Protein engineering and structural biology
@@ -31,20 +32,20 @@ The map includes information on:
 - **Company locations** with verified addresses
 - **Company websites** for direct access
 - **Company stage** (startup, pre-clinical, clinical-stage, commercial)
-- **Technology focus** and platform descriptions
-- **Relevance tiers** for protein science and structural biology roles
+- **Technology platform** descriptions and focus areas
 
 ### Data File
 
-The primary dataset is available in this repository as `east_bay_biotech_with_addresses.csv`, containing:
-- Company Name
-- Website
-- City
-- Address
-- Relevance to Profile (tiered ranking)
-- Company Stage
-- Notes (technology platform details)
-- Hiring status (where available)
+The production dataset is available as **[`data/final/companies.csv`](data/final/companies.csv)**, containing:
+- **Company Name**
+- **Website**
+- **City**
+- **Address** (full street address)
+- **Company Stage** (Startup, Pre-clinical, Clinical, Commercial, Tools/Services, Academic/Gov't)
+- **Notes** (technology platform and focus areas)
+- **Hiring** (careers page link or status)
+
+**Data Dictionary**: See [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md) for complete column definitions.
 
 ## Use Cases
 
@@ -57,47 +58,91 @@ This map is designed for:
 
 ## How It Was Created
 
-This map was compiled through:
-1. Research of biotech companies in the East Bay region
-2. Verification of company addresses and websites
-3. Categorization by technology focus and company stage
-4. Geocoding and mapping using Google My Maps
+This map was compiled through systematic research and data consolidation:
+1. Multiple biotech company directories aggregated and deduplicated
+2. Address verification for all 171 companies
+3. Technology platform categorization from company websites
+4. Quality checks and validation
+5. Data organized using Python scripts (see [`scripts/`](scripts/))
+
+**See [PROJECT_PLAN.md](PROJECT_PLAN.md) for detailed methodology and future plans.**
 
 ## Data Currency
 
-- **Compiled**: September 2024 - January 2025
-- **Companies**: 73 total
-- **Address completion**: 98%+ verified
+- **Version**: v1.0
+- **Last Updated**: January 2025
+- **Companies**: 171 across the Bay Area
+- **Address completion**: 100% (all companies have verified addresses)
 
-Company information is based on publicly available sources including company websites, press releases, and business registries.
+All company information is from publicly available sources: company websites, business registries, and press releases.
+
+## Repository Structure
+
+```
+BayAreaBiotechMap/
+├── data/
+│   ├── final/companies.csv          # Production dataset (use this!)
+│   └── working/companies_merged.csv # Working version
+├── scripts/                         # Python data processing scripts
+├── docs/
+│   ├── MAP_SETUP.md                # How to create/update Google My Maps
+│   ├── DATA_DICTIONARY.md          # Column definitions
+│   ├── WORKFLOW.md                 # Data collection procedures
+│   └── EXPANSION_STRATEGY.md       # Future growth plans
+├── PROJECT_PLAN.md                 # Overall project roadmap
+└── README.md                       # This file
+```
 
 ## Contributing
 
-If you notice any:
-- Outdated information
-- Missing companies
-- Address errors
-- Other corrections
+We welcome contributions! If you notice:
+- **Outdated information** (company moved, closed, acquired)
+- **Missing companies** (biotech companies we don't have)
+- **Address errors** or broken links
+- **Other corrections** or suggestions
 
-Please feel free to open an issue or submit a pull request!
+**Please open an issue** with details, or submit a pull request with the updated data.
 
-## Legend
+## Map Display Legend
 
-Companies are categorized by relevance to protein engineering/structural biology roles:
+Companies are color-coded by development stage in Google My Maps:
+- 🔴 **Red**: Clinical-Stage Biotech
+- 🟠 **Orange**: Pre-clinical/Startup
+- 🟢 **Green**: Commercial-Stage Biotech
+- 🔵 **Blue**: Tools/Services/CDMO
+- ⚪ **Gray**: Academic/Government Labs
 
-- **Tier 1**: High relevance - protein engineering, structural biology, CRISPR, protein design
-- **Tier 2**: Medium relevance - cell therapy, antibodies, computational biology, bioprocessing
-- **Tier 3**: Lower relevance - tools/services, diagnostics, instruments
-- **Academic/Gov't**: Research facilities and process development units
+## Quick Start: Create Your Own Map
+
+Want to create an interactive map from this data?
+
+1. **Download the data**: [`data/final/companies.csv`](data/final/companies.csv)
+2. **Follow the guide**: [`docs/MAP_SETUP.md`](docs/MAP_SETUP.md)
+3. **Import to Google My Maps** (5 minutes)
+4. **Share your map!**
+
+## Future Plans
+
+This is v1.0 - a solid foundation. Future enhancements:
+- **Phase 2**: Add direct careers page URLs for all companies
+- **Phase 3**: Expand to 250-300 companies (see [EXPANSION_STRATEGY.md](docs/EXPANSION_STRATEGY.md))
+- **Phase 4**: Custom interactive web map with advanced filtering
+
+See [PROJECT_PLAN.md](PROJECT_PLAN.md) for the full roadmap.
 
 ## Acknowledgments
 
-Data compiled as part of a systematic biotech job search project in the San Francisco Bay Area.
+Data compiled as part of a biotech job search project in the San Francisco Bay Area. Created to help others navigate the regional biotech ecosystem.
 
 ## License
 
-Data in this repository is provided for informational purposes. All company information is publicly available.
+MIT License - see [LICENSE](LICENSE) file.
+
+Data in this repository is provided for informational purposes. All company information is from publicly available sources.
 
 ---
 
-**Last Updated**: January 2025
+**Version**: v1.0
+**Last Updated**: January 8, 2025
+**Maintainer**: Jaden Shirkey
+**Contributions welcome!** 🧬
