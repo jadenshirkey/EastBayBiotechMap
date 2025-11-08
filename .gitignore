@@ -3,6 +3,22 @@ Resumes/
 ProfessionalSummary.txt
 .claude/
 
+# Internal project management files (AI context, not for public)
+CLAUDE.md
+GITHUB_SETUP.md
+
+# Legacy/intermediate data files (archived, not needed in git)
+# Keep Python scripts visible to showcase computational skills!
+data/archive/
+east_bay_biotech_MASTER_*.csv
+east_bay_biotech_cleaned.csv
+east_bay_biotech_combined_notes.csv
+east_bay_biotech_googlemaps.csv
+east_bay_biotech_googlemaps_no_source.csv
+east_bay_biotech_tiered_corrected.csv
+east_bay_biotech_pseudofinal.csv
+east_bay_biotech_v2.csv
+
 # System files
 .DS_Store
 *.swp
