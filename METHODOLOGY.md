@@ -413,6 +413,162 @@ Before adding company to master CSV, verify:
 
 ---
 
+## V3 Workflow: Batch Discovery & Enrichment
+
+### Workflow Overview
+
+This workflow is optimized for efficiency by **deduplicating early** to avoid wasting resources on companies already in the master list.
+
+```
+STAGE 1: Discovery (30 min)
+┌─────────────────┐
+│ Wikipedia Agent │──┐
+└─────────────────┘  │
+┌─────────────────┐  │
+│BioPharmGuy Agent│──┤──→ [Merge & Dedupe] ──→ raw.csv
+└─────────────────┘  │       (by name)
+┌─────────────────┐  │
+│ LinkedIn Agent  │──┘
+└─────────────────┘
+
+STAGE 1.5: Early Deduplication (10 min) ⚡ CRITICAL OPTIMIZATION
+┌──────────────┐   ┌───────────────────────┐
+│   raw.csv    │ + │ master companies.csv  │
+└──────────────┘   └───────────────────────┘
+         │                    │
+         └────────┬───────────┘
+                  ↓
+      [Dedupe by website domain + company name]
+                  ↓
+         new_companies.csv
+      (ONLY companies not in master)
+
+STAGE 2: Address Acquisition (1-2 hr)
+Process ONLY new_companies.csv
+┌──────────────────────┐
+│ Batch 1: Cos 1-50    │──┐
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Batch 2: Cos 51-100  │──┤──→ addresses_added.csv
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Batch 3: Cos 101-150 │──┘
+└──────────────────────┘
+
+STAGE 3: Classification (1-2 hr)
+Each batch visits website once to determine stage
+┌──────────────────────┐
+│ Classifier Batch 1   │──┐
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Classifier Batch 2   │──┤──→ classified.csv
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Classifier Batch 3   │──┘
+└──────────────────────┘
+
+STAGE 4: Focus Areas Extraction (1-2 hr)
+Each batch extracts focus areas from same website
+┌──────────────────────┐
+│ Extractor Batch 1    │──┐
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Extractor Batch 2    │──┤──→ enriched.csv
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Extractor Batch 3    │──┘
+└──────────────────────┘
+
+STAGE 5: Merge to Master (5 min)
+┌──────────────────┐
+│  enriched.csv    │──┐
+└──────────────────┘  │
+┌──────────────────┐  │──→ [Append] ──→ master companies.csv (UPDATED)
+│ master companies │──┘
+│      .csv        │
+└──────────────────┘
+```
+
+### Why Early Deduplication Matters
+
+**Without early deduplication:**
+- 500 companies discovered in Stage 1
+- 300 already in master list
+- **Waste:** 300 × 3 stages = 900 redundant operations
+
+**With early deduplication (Stage 1.5):**
+- 500 companies discovered in Stage 1
+- **Immediately filter to 200 new companies**
+- Only process 200 × 3 stages = 600 operations
+- **Savings:** 300 operations avoided + faster execution
+
+### Stage Details
+
+#### Stage 1: Discovery (Parallel)
+- **Input:** None
+- **Output:** `raw.csv` (columns: Company Name, Website)
+- **Parallelization:** 3 agents run simultaneously
+- **Agent 1:** Scrape Wikipedia lists
+- **Agent 2:** Extract BioPharmGuy directory
+- **Agent 3:** LinkedIn company search
+- **Merge:** Combine all sources, dedupe by name/website
+
+#### Stage 1.5: Early Deduplication
+- **Input:** `raw.csv` + `master companies.csv`
+- **Output:** `new_companies.csv`
+- **Process:**
+  1. Extract domains from raw.csv websites
+  2. Extract domains from master companies.csv websites
+  3. Remove any raw.csv companies where domain matches master
+  4. Remove any raw.csv companies where name matches master (fuzzy match)
+  5. Result = ONLY truly new companies
+
+#### Stage 2: Address Acquisition (Batched)
+- **Input:** `new_companies.csv`
+- **Output:** `addresses_added.csv`
+- **Batch size:** 50-100 companies per agent
+- **Process:** Each agent visits company websites, extracts addresses, validates with Google Maps
+
+#### Stage 3: Classification (Batched by Column)
+- **Input:** `addresses_added.csv`
+- **Output:** `classified.csv`
+- **Batch size:** 50-100 companies per agent
+- **Process:** Each agent determines Company Stage using decision tree from Phase 3
+
+#### Stage 4: Focus Areas (Batched by Column)
+- **Input:** `classified.csv`
+- **Output:** `enriched.csv`
+- **Batch size:** 50-100 companies per agent
+- **Process:** Each agent extracts 1-3 sentence descriptions from websites
+
+#### Stage 5: Merge to Master
+- **Input:** `enriched.csv` + `master companies.csv`
+- **Output:** Updated `master companies.csv`
+- **Process:** Append new companies to master, sort by city/name
+
+### Estimated Timeline
+
+| Stage | Duration | Parallelization | Total Time |
+|-------|----------|-----------------|------------|
+| Stage 1: Discovery | 30 min | 3 agents | 30 min |
+| Stage 1.5: Deduplication | 10 min | 1 process | 10 min |
+| Stage 2: Addresses | 2 hr | 3 agents | 40 min |
+| Stage 3: Classification | 2 hr | 3 agents | 40 min |
+| Stage 4: Focus Areas | 2 hr | 3 agents | 40 min |
+| Stage 5: Merge | 5 min | 1 process | 5 min |
+| **TOTAL** | | | **~3 hours** |
+
+### Success Metrics
+
+After workflow completion:
+- [ ] `raw.csv` has 200-500 companies
+- [ ] `new_companies.csv` has <50% of raw.csv (good deduplication)
+- [ ] `enriched.csv` has 100% complete data (all columns filled)
+- [ ] `master companies.csv` increased by size of `new_companies.csv`
+- [ ] All new companies pass QC checklist (Phase 6)
+
+---
+
 ## Incremental Updates
 
 ### Adding New Companies
