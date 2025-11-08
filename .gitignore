@@ -7,8 +7,9 @@ ProfessionalSummary.txt
 CLAUDE.md
 GITHUB_SETUP.md
 
-# Legacy/intermediate data files (will organize into data/archive/)
+# Legacy/intermediate data files (archived, not needed in git)
 # Keep Python scripts visible to showcase computational skills!
+data/archive/
 east_bay_biotech_MASTER_*.csv
 east_bay_biotech_cleaned.csv
 east_bay_biotech_combined_notes.csv
