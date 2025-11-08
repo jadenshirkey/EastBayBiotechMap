@@ -30,7 +30,7 @@ Companies must be located in recognized Bay Area cities. [See full list in appen
 
 ## Phase 1: Company Discovery
 
-### Primary Sources (High-Yield)
+### Primary Sources (Simple & Fast)
 
 #### 1. Wikipedia Lists (~30 min)
 - [List of biotechnology companies](https://en.wikipedia.org/wiki/List_of_biotechnology_companies)
@@ -38,34 +38,14 @@ Companies must be located in recognized Bay Area cities. [See full list in appen
 - [Companies based in the San Francisco Bay Area](https://en.wikipedia.org/wiki/Category:Companies_based_in_the_San_Francisco_Bay_Area)
 - **Action:** Extract company names → validate location → add to staging list
 
-#### 2. Google Maps Search (~1-2 hours)
-**Search Queries by City:**
-```
-"biotech [city name]"
-"pharmaceutical [city name]"
-"biologics [city name]"
-"life sciences [city name]"
-```
-
-**Priority Cities:**
-- South San Francisco
-- San Francisco
-- Berkeley / Emeryville
-- Redwood City
-- Alameda / Oakland
-- Hayward
-- Mountain View / Palo Alto
-
-**Action:** For each result, record: Name, Address, Website (from Google Business Profile)
-
-#### 3. BioPharmGuy Directory (~30 min)
+#### 2. BioPharmGuy Directory (~30 min)
 - Visit [BioPharmGuy California listings](http://www.biopharmguy.com)
 - Filter by Bay Area counties
 - **Action:** Copy table → filter by city → deduplicate
 
-#### 4. LinkedIn Company Search (optional, ~30 min)
-- Search: Company type "biotech" OR "pharmaceutical" + Location filters
-- **Action:** Extract company names → verify via Google → add if Bay Area
+#### 3. LinkedIn Company Search (~30 min)
+- **Search:** Industry filter = "Biotechnology" OR "Pharmaceuticals" + Location filters (San Francisco Bay Area)
+- **Action:** Extract company names → verify website via Google → add if valid Bay Area location
 
 ### Secondary Sources (Lower Priority)
 - Industry conference attendee lists
@@ -293,7 +273,8 @@ San Rafael, Novato, Mill Valley, Larkspur, Corte Madera, Tiburon, Sausalito
 
 **V3.0 (2025-11-08)**
 - Initial methodology document
-- Simplified discovery process (70/10 rule)
+- Ultra-simplified discovery process (70/10 rule)
+- Primary sources: Wikipedia (3 lists), BioPharmGuy, LinkedIn only
 - Defined 6 company stage categories
 - Established QC checklist
 
