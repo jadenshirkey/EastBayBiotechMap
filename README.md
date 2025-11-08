@@ -4,7 +4,9 @@ An interactive map of biotechnology companies across the San Francisco Bay Area,
 
 ## 🗺️ View the Map
 
-**[View Interactive Map on Google My Maps](https://www.google.com/maps/d/u/0/edit?mid=1ywFxIIbkxvmyBVD2unuQ-1DCAR8eKi8&usp=sharing)** _(Click to open)_
+**[🌐 Explore Full-Screen Map](https://jadenshirkey.github.io/EastBayBiotechMap/)** | **[📍 Open in Google My Maps](https://www.google.com/maps/d/u/0/edit?mid=1ywFxIIbkxvmyBVD2unuQ-1DCAR8eKi8&usp=sharing)**
+
+> Full-screen interactive experience with embedded map, or open directly in Google My Maps for editing and sharing.
 
 ## About
 
@@ -86,6 +88,7 @@ BayAreaBiotechMap/
 │   ├── DATA_DICTIONARY.md          # Column definitions
 │   ├── WORKFLOW.md                 # Data collection procedures
 │   └── EXPANSION_STRATEGY.md       # Future growth plans
+├── index.html                       # GitHub Pages site (full-screen map)
 ├── PROJECT_PLAN.md                 # Overall project roadmap
 └── README.md                       # This file
 ```
