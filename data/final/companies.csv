@@ -81,11 +81,10 @@ Eureka Therapeutics,https://www.eurekatherapeutics.com,Emeryville,"5858 Horton S
 Exact Sciences,https://www.exactsciences.com,Redwood City,"101 Galveston Drive, Redwood City, CA 94063",Commercial-Stage Biotech,"Cancer diagnostics (Cologuard, Oncotype DX). Genomics and diagnostics focus."
 Exelixis,https://www.exelixis.com,Alameda,"1851 Harbor Bay Parkway, Alameda, CA 94502",Commercial-Stage Biotech,"Oncology Drug Development (Small Molecule & Biologics).
 Oncology drug developer; small-molecule discovery/dev"
-FibroGen,Inc.,https://www.fibrogen.com,South San Francisco,"350 Bay St, Ste 100, South San Francisco, CA 94080",Commercial-Stage Biotech,First-in-class medicines for oncology and anemia. HIF-PHI inhibitors (roxadustat) and antibody-drug conjugates (ADCs).
+FibroGen,Inc.,https://www.fibrogen.com,South San Francisco,"350 Bay St, Ste 100, South San Francisco, CA 94080",Commercial-Stage Biotech
 Freenome,https://www.freenome.com,Brisbane,"3300 Marina Blvd, Brisbane, CA 94005",Clinical-Stage Biotech,"Multi-omics for early cancer detection.
 Liquid biopsy and machine learning for diagnostics"
 GeneFab,https://www.genefab.com,Alameda,"1430 Harbor Bay Parkway, Alameda, CA 94502",Tools/Services/CDMO,CRDMO for Cell & Gene Therapies
-Genentech,https://www.gene.com,South San Francisco,"1 DNA Way, South San Francisco, CA 94080",Large Pharma,"Pioneering biotechnology company developing treatments for serious diseases. Major focus on oncology, immunology, and ophthalmology with extensive protein engineering and biologics development."
 Ginkgo Bioworks,https://www.ginkgobioworks.com,Emeryville,"5858 Horton Street, Suite 400, Emeryville, CA 94608",Commercial-Stage Biotech,Automated foundry for organism engineering using robotics and high-throughput screening for synthetic biology applications.
 Gladstone Institutes,https://gladstone.org,San Francisco,"1650 Owens Street, San Francisco, CA 94158",Academic/Gov't,"Non-profit research institute; strong in data science, immunology, and neurology. Direct structural/comp bio fit."
 Glyphic Biotechnologies,https://www.glyphicbio.com,Berkeley,"3100 San Pablo Avenue, Suite 201, Berkeley, CA 94702",Pre-clinical/Startup,Next-generation protein sequencing platform to analyze human proteome at single-molecule resolution.
@@ -171,6 +170,7 @@ ALLInBio,https://allinbio.com,San Francisco,"3445 Woodside Road, Woodside, CA 94
 ALX Oncology,https://alxoncology.com,South San Francisco,"323 Allerton Avenue, South San Francisco, CA 94080",Clinical-Stage Biotech,Immuno-oncology (cancer)
 AN2 Therapeutics,https://an2therapeutics.com,Menlo Park,"1300 El Camino Real, Suite 100, Menlo Park, CA 94025",Clinical-Stage Biotech,Infectious disease therapeutics
 APstem Therapeutics,https://apstemtx.com,Fremont,"48371 Fremont Blvd, Suite 103, Fremont, CA 94538",Pre-clinical/Startup,Stem cell therapies
+ARIZ Precision Medicine,https://arizbio.com,Davis,"630 Pena Drive, Suite 400, Davis, CA 95618",Pre-clinical/Startup,Small-molecule therapeutics
 ASI Bio (ashibio),https://ashibio.com,Burlingame,,Pre-clinical/Startup,Bone/connective disorder therapies
 ATUM (DNA2.0),https://atum.bio,Newark,,Tools/Services/CDMO,Gene synthesis & protein engineering
 Aarvik Therapeutics,https://aarviktx.com,Hayward,"31363 Medallion Drive, Hayward, CA 94544",Pre-clinical/Startup,Antibody-drug conjugates
@@ -255,6 +255,7 @@ Angarus Therapeutics,https://angarustx.com,South San Francisco,,Pre-clinical/Sta
 Anixa Biosciences,https://anixa.com,San Jose,"3150 Almaden Expressway, Suite 250, San Jose, CA 95118",Pre-clinical/Startup,Cancer diagnostics & CAR-T
 Antares Therapeutics,https://antaresrx.com,South San Francisco,,Pre-clinical/Startup,Small-molecule drug technologies
 Antheia,https://antheia.bio,Menlo Park,"1430 Obrien Drive, Suite A, Menlo Park, CA 94025",Pre-clinical/Startup,Yeast fermentation-based API production
+Antibodies Incorporated,https://antibodiesinc.com,Davis,"25242 County Road 95, Davis, CA 95616",Tools/Services/CDMO,Custom antibodies & assay services
 Antibody Solutions,https://antibody.com,Santa Clara,"3033 Scott Boulevard, Santa Clara, CA 95054",Tools/Services/CDMO,Antibody discovery services
 Antiva Biosciences,https://antivabio.com,Redwood City,"555 Twin Dolphin Drive, Suite 620, Redwood City, CA 94065",Pre-clinical/Startup,Antiviral therapeutics (HPV)
 Anwita Biosciences,https://anwitabio.com,San Carlos,"300 Industrial Road, San Carlos, CA 94070",Pre-clinical/Startup,Antibodies & fusion proteins

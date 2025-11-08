@@ -1,0 +1,308 @@
+================================================================================
+BIOTECH COMPANY DATASET COMPARISON REPORT
+================================================================================
+CSV (Final): /home/user/EastBayBiotechMap/data/final/companies.csv
+TXT (V2):    /home/user/EastBayBiotechMap/data/working/biotech_companies_A.txt
+================================================================================
+
+EXECUTIVE SUMMARY
+================================================================================
+- Total companies in CSV:       124
+- Total companies in TXT:       181
+- Companies in BOTH datasets:   25
+- NET-NEW companies to add:     156
+
+Key Findings:
+1. The TXT file is significantly more comprehensive with 57 additional companies
+2. Of the 25 overlapping companies, 24 have CONFLICTS (mostly missing addresses in TXT)
+3. All new companies in TXT file are missing street addresses
+4. Website format variations exist (https:// vs plain domain)
+5. Focus area descriptions in TXT are more concise than Notes in CSV
+
+================================================================================
+DETAILED NEW COMPANIES LIST (156 companies)
+================================================================================
+
+Sorted alphabetically with complete data from biotech_companies_A.txt:
+
+1. 1Cell.Ai | Cupertino | 1cell.ai | Cancer diagnostics
+2. 1cBio | San Francisco | www.1cbio.com | Small molecule drug discovery
+3. 64x Bio | San Francisco | 64xbio.com | High‐throughput cell line engineering
+4. 92Bio | Hayward | 92biotech.com | Multispecific biologics (oncology)
+5. AAT Bioquest | Pleasanton | aatbio.com | Bioanalytical reagents & kits
+6. ALLInBio | San Francisco | allinbio.com | Precision immunology solutions
+7. ALX Oncology | South San Francisco | alxoncology.com | Immuno-oncology (cancer)
+8. AN2 Therapeutics | Menlo Park | an2therapeutics.com | Infectious disease therapeutics
+9. APstem Therapeutics | Fremont | apstemtx.com | Stem cell therapies
+10. ARIZ Precision Medicine | Davis | arizbio.com | Small-molecule therapeutics
+11. ASI Bio (ashibio) | Burlingame | ashibio.com | Bone/connective disorder therapies
+12. ATUM (DNA2.0) | Newark | atum.bio | Gene synthesis & protein engineering
+13. Aarvik Therapeutics | Hayward | aarviktx.com | Antibody–drug conjugates
+14. Aayam Therapeutics | San Jose | aayamtx.com | 505(b)(2) drug repurposing
+15. Ab Studio | Hayward | antibodystudio.com | Antibody humanization services
+16. AbTherx | Mountain View | abtherx.com | Therapeutic antibody discovery
+17. AbboMax | San Jose | abbomax.com | Antibody, peptide & assay products
+18. Abbott (Bay Area) | Alameda | abbott.com | Diabetes care products
+19. Abcam | Fremont | abcam.com | Antibodies & reagents
+20. Abiosciences | South San Francisco | abiosciences.com | Single-cell sequencing & AI design
+21. Abram Scientific | South San Francisco | abramscientific.com | Hemostasis diagnostic devices
+22. AccuraGen | San Jose | accuragen.com | Liquid biopsy (cancer)
+23. Accuray | Sunnyvale | accuray.com | Targeted radiation therapy
+24. Accurus Biosciences | Richmond | accurusbio.com | Cellular & antibody services
+25. Accuryn Medical | Hayward | accuryn.com | Patient monitoring devices
+26. AceLink Therapeutics | Newark | acelinktherapeutics.com | Rare disease drug development
+27. Acelot | South San Francisco | acelot.com | Neurodegenerative disease therapies
+28. Acepix Biosciences | Union City | acepixbio.com | Cell-based pathology products
+29. Achelois BioPharma | Redwood City | achelois.bio | Antiviral ("molecular velcro")
+30. Achira | San Francisco | achira.ai | Atomistic simulation drug discovery
+31. Acme Bioscience | Palo Alto | acmeca.com | Medicinal chemistry services
+32. Acrobat Genomics | San Carlos | acrobatgenomics.com | CRISPR-based drug discovery
+33. AcureX Therapeutics | San Carlos | acurex.com | Neurodegenerative disease treatments
+34. Adaptyx Biosciences | Menlo Park | adaptyx.bio | Biosensor technology
+35. Adari Cell Science | Oakland | adaricell.com | Cell-based assays
+36. Adicet Bio | Redwood City | adicetbio.com | Immunotherapies (CAR gamma-delta T cells)
+37. Adona Medical | Los Gatos | adonamed.com | Heart failure device
+38. Advanced Bifurcation Systems | Livermore | advancedbifurcation.com | Bifurcating stent device
+39. Advanced Cell Diagnostics | Newark | acdbio.com | RNA in situ detection
+40. Advanced Microbubbles | Newark | advancedmicrobubbles.com | Ultrasound-triggered microbubbles
+41. Advanced NanoTherapies | Santa Clara | advancednanotherapies.com | Nanoparticle drug delivery
+42. Advanced Process Systems | Orinda | advancedprosystems.com | Analytical instrument calibration
+43. Advansta | San Jose | advansta.com | Protein characterization products
+44. Adventris Pharmaceuticals | San Francisco | adventris.com | Cancer immunotherapy (vaccines)
+45. Adverum Biotechnologies | Redwood City | adverum.com | AAV gene therapies
+46. Aelan Cell Technologies | San Francisco | aelanct.com | Stem cell technology
+47. Aeovian Pharmaceuticals | Berkeley | aeovian.com | Small-molecule therapeutics
+48. Aequita Bioworks | San Carlos | aequitabioworks.com | Muscle loss antibody therapies
+49. Aerin Medical | Mountain View | aerinmedical.com | Nasal obstruction device
+50. Aether Biomachines | Menlo Park | aetherbio.com | Enzyme engineering (automation)
+51. AfaSci | Redwood City | afasci.com | Small-molecule CNS drugs
+52. Agilent Technologies (Bio Division) | Santa Clara | agilent.com | Lab instruments & screening
+53. Aikium | Berkeley | aikium.com | AI-driven drug discovery
+54. Aizon | San Francisco | aizon.ai | AI for pharma manufacturing
+55. Akero Therapeutics | South San Francisco | akerotx.com | NASH therapy
+56. Akura Medical | Los Gatos | akuramedical.com | Thrombectomy device (clot removal)
+57. Alamar Biosciences | Fremont | alamarbio.com | Proteomic liquid biopsy
+58. Alessa Therapeutics | San Carlos | alessatherapeutics.com | Targeted localized cancer therapy
+59. Algen Biotechnologies | San Francisco | algenbio.com | Gene network drug discovery
+60. Alife | San Francisco | alifehealth.com | AI-powered IVF solutions
+61. Aligos Therapeutics | South San Francisco | aligos.com | Treatments for liver & viral diseases
+62. AliveCor | Mountain View | kardia.com | Mobile heart monitoring (ECG)
+63. Alixia | San Francisco | alixia.com | Tumor immunotherapies
+64. Alkahest | San Carlos | alkahest.com | Anti-aging therapies (blood components)
+65. Allay Therapeutics | Menlo Park | allaytx.com | Localized pain management therapy
+66. Allelica | San Francisco | allelica.com | Polygenic risk scoring
+67. Alphalyse | Palo Alto | alphalyse.com | Protein analysis services
+68. Alstem | Richmond | alstembio.com | iPSC, cell lines & cytokines
+69. AlterG | Fremont | alterg.com | Anti-gravity treadmill (rehab)
+70. AltiBio | Half Moon Bay | altibio.bio | Pharmaceutical R&D ("Drugs")
+71. Alto Neuroscience | Mountain View | altoneuroscience.com | AI-driven neuro biomarkers
+72. Altos Labs | Redwood City | altoslabs.com | Cellular rejuvenation (aging)
+73. AltruBio | San Francisco | altrubio.com | Antibody therapeutics (immunology)
+74. Altus Life Science | San Jose | altuslifescience.com | Diagnostics & genetic testing
+75. Aluda Pharmaceuticals | Menlo Park | aludapharm.com | Small-molecule drug discovery
+76. Aluna | San Francisco | alunacare.com | Digital asthma monitoring
+77. Alveo Technologies | Alameda | alveotechnologies.com | Diagnostic devices (infectious diseases)
+78. Amador Bioscience | Pleasanton | amadorbioscience.com | Consulting & CRO (clinical trials)
+79. Amaros | Menlo Park | amaros.ai | Ophthalmology data platform (AI)
+80. Amgen (Bay Area) | South San Francisco | amgen.com | Biologics & small-molecule drugs
+81. AmplifiDx | Newark | amplifidx.com | Molecular diagnostics (point-of-care)
+82. Amprion | San Francisco | ampriondx.com | Brain health diagnostics (prions)
+83. Amygdala Neurosciences | Los Altos | amygns.com | Addiction therapies (small-molecule)
+84. AnaSpec | Fremont | anaspec.com | Peptides & antibodies reagents
+85. Ananya Health | Oakland | ananya.health | Cryoablation therapy (cervical cancer)
+86. Anchor Molecular | Pleasanton | anchormolecular.com | Quality controls & reference materials
+87. AnchorDx | Fremont | anchordx.com | Next-gen sequencing (oncology)
+88. Ancora Bio | Palo Alto | ancorabiotech.com | Multi-specific antibodies
+89. Ancora Heart | Santa Clara | ancoraheart.com | Device for mitral valve repair
+90. Andromeda Surgical | South San Francisco | andromedasurgical.com | Surgical robotics
+91. Angarus Therapeutics | South San Francisco | angarustx.com | Oncology (immunosuppression-targeted)
+92. Anixa Biosciences | San Jose | anixa.com | Cancer diagnostics & CAR-T
+93. Antares Therapeutics | South San Francisco | antaresrx.com | Small-molecule drug technologies
+94. Antheia | Menlo Park | antheia.bio | Yeast fermentation–based API production
+95. Antibodies Incorporated | Davis | antibodiesinc.com | Custom antibodies & assay services
+96. Antibody Solutions | Santa Clara | antibody.com | Antibody discovery services
+97. Antiva Biosciences | Redwood City | antivabio.com | Antiviral therapeutics (HPV)
+98. Anwita Biosciences | San Carlos | anwitabio.com | Antibodies & fusion proteins
+99. Apellis Pharmaceuticals | San Francisco | apellis.com | Cyclic peptide therapeutics
+100. Apeximmune | Burlingame | apeximmune.com | Immuno-oncology mAbs
+101. Apollomics | Foster City | apollomicsinc.com | Cancer medicines (multi-target)
+102. Apostle Inc. | Pleasanton | apostlebio.com | Cancer diagnostics (liquid biopsy)
+103. Applied Biomics | Hayward | appliedbiomics.com | Proteomics services
+104. Applied Cells | Santa Clara | appliedcells.com | Cell separation technology
+105. Applied StemCell | Milpitas | appliedstemcell.com | Cell lines & gene editing tools
+106. Applied Viromics | Fremont | appliedviromics.com | Custom viral vectors
+107. Apreo Health | Menlo Park | apreohealth.com | Lung disease therapy
+108. Aptah Bio | San Carlos | aptah-bio.com | RNA integrity therapeutics
+109. Aqtual | Hayward | aqtual.com | Cell-free DNA diagnostics
+110. Aqua Medical | Pleasanton | aquaendoscopy.com | Endoscopic ablation therapy
+111. Aquedeon Medical | Sunnyvale | aquedeonmedical.com | Vascular graft system
+112. Aragen Life Sciences | Morgan Hill | aragen.com | Biologics CRO (cell line, assays)
+113. Aralez Bio | Berkeley | aralezbio.com | Noncanonical amino acid tech
+114. Arbor Vita | Fremont | arborvita.com | Diagnostics (oncology)
+115. Arcus Biosciences | Hayward | arcusbio.com | Cancer immunotherapies
+116. Arda Therapeutics | San Carlos | ardatx.com | Pathogenic cell depletion (ADC)
+117. Aridis Pharmaceuticals | Los Gatos | aridispharma.com | Monoclonal antibodies (infectious diseases)
+118. Ark Diagnostics | Fremont | ark-tdm.com | Clinical assays (therapeutic drug monitoring)
+119. Artera | Los Altos | artera.ai | AI diagnostics (radiology)
+120. Artery Therapeutics | San Ramon | arterytx.com | Peptide therapies (cardiology)
+121. Artificial | Palo Alto | artificial.com | AI lab automation platform
+122. Ascendis Pharma | Palo Alto | ascendispharma.com | Prodrug therapies
+123. Asegua Therapeutics | Foster City | asegua.com | Authorized generics (Gilead)
+124. Asieris Pharmaceuticals | Palo Alto | asieris.com | Small-molecule & combo products
+125. Aspa Therapeutics | Palo Alto | aspatx.com | Gene therapy (Canavan disease)
+126. Assay Biotechnology | San Jose | assaybiotechnology.com | Antibodies & ELISA kits
+127. Assembly Biosciences | South San Francisco | assemblybio.com | Antiviral small molecules (HBV)
+128. AstraZeneca (Bay Area) | South San Francisco | astrazeneca.com | Biologics & vaccines R&D
+129. Astraea Therapeutics | Mountain View | astraeatherapeutics.com | Small-molecule antivirals
+130. Athelas | Mountain View | athelas.com | Point-of-care immune monitoring
+131. Atia Vision | Campbell | atiavision.com | Presbyopia-correcting intraocular lens
+132. Atila Biosystems | Sunnyvale | atilabiosystems.com | Nucleic acid amplification chemistry
+133. Atomic AI | South San Francisco | atomic.ai | AI-driven RNA drug discovery
+134. Atonarp | Pleasanton | atonarp.com | Mass spec molecular analysis
+135. AtriCure | Pleasanton | atricure.com | Cardiovascular surgical devices
+136. Atropos Therapeutics | San Carlos | atroposthera.com | Senescence-targeting small molecules
+137. Attovia Therapeutics | San Carlos | attovia.com | Biparatopic nanobody platform
+138. Attune Neurosciences | San Francisco | attuneneuro.com | Non-invasive neurostimulation
+139. Auctus Surgical | Danville | auctussurgical.com | Scoliosis tethering system
+140. Augmenta Bioworks | Menlo Park | augbio.com | Antibody discovery services
+141. Aulos Bioscience | Larkspur | aulosbio.com | IL-2 monoclonal antibodies
+142. Auransa | Palo Alto | auransa.com | AI-driven drug discovery (oncology)
+143. Aurora Microplates | San Jose | auroramicroplates.com | Microplate lab plastics
+144. AusperBio | San Mateo | ausperbio.com | Antiviral therapeutics (ASO)
+145. Austral Biologicals | San Ramon | australbiologicals.com | Research products & services
+146. Avails Medical | Menlo Park | availsmedical.com | Rapid infection diagnostics
+147. Avantec Vascular | Sunnyvale | avantecvascular.com | Peripheral vascular devices
+148. Avellino Labs | Menlo Park | avellino.ai | Gene therapy & diagnostics (ophthalmology)
+149. Avenue Biosciences | Palo Alto | avenuebiosciences.com | Protein engineering CRO
+150. Averto Medical | Fremont | avertomed.com | Ostomy avoidance device
+151. Avinger | Redwood City | lumivascular.us | Arterial surgical devices (PAD)
+152. Avirmax | Hayward | avirmax.com | rAAV gene therapy technology
+153. Avisi Technologies | Redwood City | avisitech.com | Glaucoma implant (nanotech)
+154. Avive Solutions | Brisbane | avive.life | Automated external defibrillator
+155. Avvio Medical | San Francisco | avviomedical.com | Kidney stone treatment device
+156. atHeart Medical | Santa Clara | atheartmedical.com | Atrial septal defect device
+
+================================================================================
+COMPANIES IN BOTH DATASETS - CONFLICT SUMMARY
+================================================================================
+
+Total overlapping companies: 25
+
+Company names and key conflicts:
+
+1. 10x Genomics (Pleasanton)
+   - Website format: CSV has "https://www.10xgenomics.com" vs TXT has "www.10xgenomics.com"
+   - TXT missing address (CSV has complete address)
+   - RECOMMENDATION: Keep CSV data (more complete)
+
+2. 3T Biosciences (South San Francisco)
+   - Website format: CSV "https://3tbiosciences.com" vs TXT "3tbiosciences.com"
+   - TXT missing address
+   - RECOMMENDATION: Keep CSV data (more complete)
+
+3. 4D Molecular Therapeutics (Emeryville)
+   - Website format: CSV "https://www.4dmoleculartherapeutics.com" vs TXT "4dmoleculartherapeutics.com"
+   - TXT missing address
+   - RECOMMENDATION: Keep CSV data (more complete)
+
+4. 89bio (San Francisco)
+   - Website format differences
+   - TXT missing address
+   - RECOMMENDATION: Keep CSV data (more complete)
+
+5. Abalone Bio (Emeryville)
+   - Website format: CSV "https://www.abalonebio.com" vs TXT "abalonebio.com"
+   - TXT missing address
+   - RECOMMENDATION: Keep CSV data (more complete)
+
+6. Accelero Biostructures - CITY CONFLICT
+   - CSV lists "San Francisco" but TXT lists "San Carlos"
+   - CSV has address at San Francisco location
+   - RECOMMENDATION: Verify correct location - may be two locations or data error
+   - Note: CSV address shows San Francisco zip code
+
+7. Acepodia (Alameda)
+   - Website format differences
+   - TXT missing address
+   - RECOMMENDATION: Keep CSV data (more complete)
+
+8. Acigen Biosciences (Berkeley)
+   - Website format differences
+   - TXT missing address
+   - RECOMMENDATION: Keep CSV data (more complete)
+
+9. Actym Therapeutics - CITY CONFLICT
+   - CSV lists "Berkeley" but TXT lists "Berkeley" (both same)
+   - CSV address shows San Francisco location
+   - Website domain: CSV "actym.com" vs TXT "actymthera.com"
+   - RECOMMENDATION: Clarify - CSV address is in SF, not Berkeley
+
+10. Adanate (Alameda)
+    - Website format differences
+    - TXT missing address
+    - RECOMMENDATION: Keep CSV data (more complete)
+
+11. Addition Therapeutics - CITY CONFLICT
+    - CSV: Berkeley, TXT: South San Francisco
+    - Need verification of actual headquarters
+    - RECOMMENDATION: Verify correct location
+
+12-25. (All other overlapping companies have similar patterns - missing addresses in TXT, website format variations)
+
+================================================================================
+KEY INSIGHTS FOR MERGE STRATEGY
+================================================================================
+
+1. ADDRESS FIELD STATUS:
+   - CSV: 124/124 companies have addresses (100%)
+   - TXT: 0/181 companies have street addresses (0%)
+   - ACTION: CSV addresses should be preserved/prioritized
+
+2. WEBSITE FIELD STATUS:
+   - CSV: Uses full URLs with https:// prefix (professional format)
+   - TXT: Uses plain domain names (less formal format)
+   - ACTION: CSV website format is better, but TXT can be used to fill blanks
+
+3. COMPANY NAMING CONVENTIONS:
+   - Most overlapping companies match when normalized (lowercase, trim)
+   - Some name variations exist (e.g., "AcureX Biosciences" vs "AcureX Therapeutics")
+
+4. GEOGRAPHIC DISTRIBUTION:
+   - New companies add breadth beyond traditional biotech hubs
+   - New companies in: Livermore, Orinda, Danville, Larkspur (less common biotech areas)
+   - Significant presence in: South San Francisco, San Francisco, Palo Alto, Menlo Park
+
+5. COMPANY STAGE:
+   - CSV includes company stage (Commercial, Clinical, Pre-clinical, etc.)
+   - TXT uses "Focus Area" field instead
+   - Need to categorize TXT companies by stage
+
+================================================================================
+RECOMMENDED MERGE APPROACH
+================================================================================
+
+STEP 1: Add all 156 new companies from TXT file
+   - Use Name, City, Website, Focus Area from TXT
+   - Leave Address blank initially (can be filled by research)
+   - Create Company Stage field based on focus area or mark as "Unknown"
+
+STEP 2: Review 25 overlapping companies
+   - For city conflicts (Accelero Biostructures, Addition Therapeutics, Actym, etc.):
+     * Verify correct location manually
+     * Keep CSV address if more reliable source
+   - For all others: Keep CSV data (complete addresses + proper website format)
+
+STEP 3: Data quality improvements needed for TXT companies
+   - Fill in street addresses (can be done through automated research)
+   - Standardize website URLs (add https:// prefix)
+   - Assign company stage/category
+   - Expand focus area descriptions where beneficial
+
+STEP 4: Create unified dataset
+   - 124 existing companies from CSV (with updates from step 2)
+   - 156 new companies from TXT
+   - Total: 280 companies
+
+================================================================================
+END OF REPORT
+================================================================================
