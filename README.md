@@ -4,9 +4,7 @@ An interactive map of biotechnology companies across the San Francisco Bay Area,
 
 ## 🗺️ View the Map
 
-**[View Interactive Map on Google My Maps](https://www.google.com/maps/d/u/0/edit?mid=1ilB4lPNTYk8O5bgUxavsIbZw_yPN4pU&usp=sharing)** _(Click to open)_
-
-> **Note**: You can update this link after creating your new map using the data in this repository. See [MAP_SETUP.md](docs/MAP_SETUP.md) for instructions.
+**[View Interactive Map on Google My Maps](https://www.google.com/maps/d/u/0/edit?mid=1ywFxIIbkxvmyBVD2unuQ-1DCAR8eKi8&usp=sharing)** _(Click to open)_
 
 ## About
 
