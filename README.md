@@ -43,7 +43,6 @@ The production dataset is available as **[`data/final/companies.csv`](data/final
 - **Address** (full street address)
 - **Company Stage** (Startup, Pre-clinical, Clinical, Commercial, Tools/Services, Academic/Gov't)
 - **Notes** (technology platform and focus areas)
-- **Hiring** (careers page link or status)
 
 **Data Dictionary**: See [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md) for complete column definitions.
 
@@ -124,7 +123,7 @@ Want to create an interactive map from this data?
 ## Future Plans
 
 This is v1.0 - a solid foundation. Future enhancements:
-- **Phase 2**: Add direct careers page URLs for all companies
+- **Phase 2**: Add careers page URLs to help job seekers apply directly
 - **Phase 3**: Expand to 250-300 companies (see [EXPANSION_STRATEGY.md](docs/EXPANSION_STRATEGY.md))
 - **Phase 4**: Custom interactive web map with advanced filtering
 
