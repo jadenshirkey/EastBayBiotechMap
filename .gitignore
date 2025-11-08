@@ -1,0 +1,16 @@
+# Personal files - DO NOT COMMIT
+Resumes/
+ProfessionalSummary.txt
+.claude/
+
+# System files
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Node modules if we add any JavaScript dependencies
+node_modules/
+package-lock.json
