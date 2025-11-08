@@ -94,37 +94,84 @@ The following 8 categories are mutually exclusive and easily verifiable using th
 
 #### 1. Large Pharma
 
-**Definition:** Major pharmaceutical corporations with global operations and multi-billion dollar revenue.
+**Definition:** Major pharmaceutical corporations with global operations and either annual revenue >$5B OR public market cap >$50B.
 
-**Verification Criteria (check in order):**
-1. **Public market cap** >$50B (check Google Finance, Yahoo Finance)
-2. **OR** Annual revenue >$5B (check latest 10-K, annual report, or Wikipedia)
-3. **AND** Global presence (operations in multiple continents)
+**Quantified Thresholds:**
+- Annual revenue: **>$5 billion**
+- OR Public market cap: **>$50 billion**
+- AND Global operations (presence on multiple continents)
 
-**How to verify:**
-- Search: `[Company name] revenue` → Check financial reports
-- Check Wikipedia infobox for revenue/market cap
-- Look for "Locations" or "Global" page on website
+**How to verify (step-by-step):**
 
-**Examples:** Genentech, Amgen, AbbVie, Novartis, Bayer
+1. **Check if publicly traded:**
+   - Search: `[Company name] stock` or `[Company name] ticker symbol`
+   - If traded on NYSE/NASDAQ → Get market cap from [Google Finance](https://www.google.com/finance) or [Yahoo Finance](https://finance.yahoo.com)
+   - If market cap >$50B → **Large Pharma**
+
+2. **If not public or market cap <$50B, check revenue:**
+   - Search: `[Company name] revenue` or `[Company name] annual report`
+   - Sources (in priority order):
+     a. Wikipedia infobox (look for "Revenue" field)
+     b. Company's "Investors" or "About" page
+     c. Latest financial report (10-K for US public companies)
+   - If revenue >$5B → Check global presence (step 3)
+   - If revenue <$5B → **Not Large Pharma** (likely Commercial Biotech)
+
+3. **Check global presence:**
+   - Visit company website → "Locations" or "Global Operations" page
+   - Must have operations in ≥2 continents (not just sales offices)
+   - If global AND (market cap >$50B OR revenue >$5B) → **Large Pharma**
+
+**Data not available?**
+- If revenue/market cap data unavailable after checking all sources → Default to **Commercial Biotech** if they have approved products
+
+**Examples:**
+- Genentech (revenue ~$15B, owned by Roche)
+- Amgen (market cap ~$150B, revenue ~$28B)
+- AbbVie (market cap ~$330B, revenue ~$54B)
+- Novartis (market cap ~$200B, revenue ~$50B)
 
 ---
 
 #### 2. Commercial Biotech
 
-**Definition:** Biotechnology companies with ≥1 FDA-approved product generating revenue, but smaller than Large Pharma.
+**Definition:** Biotechnology companies with ≥1 FDA-approved product generating revenue, with annual revenue ≤$5B AND market cap ≤$50B.
 
-**Verification Criteria:**
-1. Website mentions "FDA approved" product OR "commercial" product
-2. **OR** Check FDA.gov Drugs@FDA database for approved products
-3. **AND** Revenue <$5B (not Large Pharma threshold)
+**Quantified Thresholds:**
+- Has ≥1 FDA-approved product (drugs, biologics, devices, diagnostics)
+- AND Annual revenue: **≤$5 billion**
+- AND Public market cap: **≤$50 billion** (if publicly traded)
 
-**How to verify:**
-- Visit company website → Look for "Products" or "Pipeline" page
-- Search: `[Company name] FDA approval`
-- Check [FDA Drugs@FDA](https://www.accessdata.fda.gov/scripts/cder/daf/)
+**How to verify (step-by-step):**
 
-**Examples:** BioMarin, Exelixis, Dynavax, Codexis
+1. **Check for FDA-approved products:**
+   - Visit company website → "Products" or "Pipeline" page
+   - Look for terms: "FDA approved," "marketed," "commercial product"
+   - **OR** Search [FDA Drugs@FDA database](https://www.accessdata.fda.gov/scripts/cder/daf/)
+   - **OR** Search: `[Company name] FDA approval`
+   - If NO approved products → Skip to Clinical-Stage or Preclinical
+
+2. **If has approved product(s), verify size:**
+   - Search: `[Company name] revenue` or `[Company name] market cap`
+   - Sources (in priority order):
+     a. Wikipedia infobox (Revenue/Market cap fields)
+     b. Google Finance / Yahoo Finance (for market cap)
+     c. Company "Investors" or "About" page
+     d. Latest 10-K or annual report
+
+3. **Apply thresholds:**
+   - If revenue >$5B OR market cap >$50B → **Large Pharma** (not Commercial)
+   - If revenue ≤$5B AND market cap ≤$50B → **Commercial Biotech**
+   - If financial data unavailable → Default to **Commercial Biotech** (has approved product but clearly not Big Pharma scale)
+
+**Data not available?**
+- If revenue/market cap not found after checking sources → Assume **Commercial Biotech** if company has approved product and doesn't appear to be Big Pharma
+
+**Examples:**
+- BioMarin (market cap ~$18B, revenue ~$2B)
+- Exelixis (market cap ~$8B, revenue ~$1.7B)
+- Dynavax (market cap ~$1.5B, revenue ~$300M)
+- Codexis (market cap ~$800M, revenue ~$150M)
 
 ---
 
@@ -238,7 +285,7 @@ The following 8 categories are mutually exclusive and easily verifiable using th
 
 ### Classification Decision Tree
 
-Use this flowchart to classify companies:
+Use this flowchart to classify companies systematically:
 
 ```
 1. Check domain:
@@ -253,17 +300,25 @@ Use this flowchart to classify companies:
 3. Check business model:
    - Primary business is services/tools/CDMO → Platform/Tools
 
-4. Check revenue/market cap:
-   - Revenue >$5B OR market cap >$50B → Large Pharma
+4. Check if has FDA-approved products:
+   - Visit website "Products" page OR search FDA.gov Drugs@FDA
+   - If NO approved products → Skip to step 6
 
-5. Check products:
-   - Has FDA-approved product → Commercial Biotech
+5. If has approved product(s), check company size:
+   - Get revenue from: Wikipedia OR Google search "[Company] revenue"
+   - Get market cap from: Google Finance OR Yahoo Finance
 
-6. Check clinical trials:
-   - Active clinical trials (ClinicalTrials.gov) → Clinical-Stage Biotech
+   Decision:
+   - If revenue >$5B OR market cap >$50B → Large Pharma
+   - If revenue ≤$5B AND market cap ≤$50B → Commercial Biotech
+   - If data not available → Commercial Biotech (has product, not Big Pharma)
 
-7. Check pipeline:
-   - Therapeutic pipeline but no trials → Preclinical Biotech
+6. Check clinical trials (for companies without approved products):
+   - Search ClinicalTrials.gov for company name
+   - If active clinical trials → Clinical-Stage Biotech
+
+7. Check pipeline (for companies with no products or trials):
+   - Website mentions therapeutic pipeline/drug discovery → Preclinical Biotech
 
 8. If still unclear → Default to Preclinical Biotech or Platform/Tools
 ```
