@@ -60,7 +60,7 @@ def classify_company_stage(focus_areas, website_text=''):
 
     # Check for academic/government
     if any(keyword in text for keyword in ['university', 'institute', 'national lab', '.edu', '.gov']):
-        return 'Academic/Gov't'
+        return 'Academic/Gov\'t'
 
     # Check for large pharma (usually already classified, but check for keywords)
     if any(keyword in text for keyword in ['fortune 500', 'global pharmaceutical']):

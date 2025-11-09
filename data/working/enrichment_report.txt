@@ -1,0 +1,36 @@
+Google Maps API Enrichment Report
+======================================================================
+Date: 2025-11-08 21:54:15
+
+Statistics:
+  Total companies processed: 910
+  Addresses found: 885 (97.3%)
+  Websites found: 832 (91.4%)
+  Not found: 25 (2.7%)
+
+Companies not found in Google Maps:
+  - BioJiva
+  - BridgeBio Oncology Therapeutics
+  - Bullseye Biosciences
+  - Chrysalis Biomedical Advisors
+  - Cothera Bioscience
+  - Cyclarity Therapeutics
+  - DeepSight Technology
+  - Encellin
+  - Faeth Therapeutics
+  - GigaMune
+  - Imvaria
+  - Kivu Bioscience
+  - MindRhythm
+  - N1 Life
+  - Ouro Medicines
+  - RaySearch Laboratories
+  - Raydiant Oximetry
+  - Rejuvenation Technologies
+  - Shape Memory Medical
+  - Supercede Therapeutics
+  - Synfini
+  - Therna Biosciences
+  - Tradewind Bioscience
+  - TwoStep Therapeutics
+  - Vivace Therapeutics
