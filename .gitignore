@@ -36,3 +36,9 @@ east_bay_biotech_v2.csv
 # Node modules if we add any JavaScript dependencies
 node_modules/
 package-lock.json
+
+# Python virtual environments and cache
+venv/
+__pycache__/
+*.pyc
+*.pyo
