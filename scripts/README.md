@@ -48,6 +48,44 @@ python3 extract_wikipedia_companies.py
 2. Manually enrich with: Website, Address, Company Stage, Focus Areas
 3. Merge with existing `data/final/companies.csv`
 
+---
+
+### `extract_biopharmguy_companies.py`
+
+**Purpose**: Automated extraction of company names from BioPharmGuy Northern California directory
+
+**What it does**:
+- Fetches BioPharmGuy Northern California companies page
+- Parses HTML table structure (company, location, description)
+- Filters for Bay Area cities only
+- Auto-deduplicates by company name
+- Outputs to `data/working/biopharmguy_companies.csv`
+
+**Output columns**:
+- Company Name
+- Source URL
+- City
+- Focus Area (from description field)
+- Notes
+
+**Usage**:
+```bash
+cd scripts
+python3 extract_biopharmguy_companies.py
+```
+
+**Output location**: `data/working/biopharmguy_companies.csv`
+
+**Expected yield**: ~1,100 Bay Area biotech/pharma companies
+
+**Advantages**:
+- Pre-filtered to Northern California
+- Includes focus area descriptions
+- City names in consistent format
+- Higher volume than Wikipedia
+
+---
+
 ## Installation
 
 ```bash
@@ -59,23 +97,30 @@ pip install -r requirements.txt
 This implements **Phase 1: Company Discovery** from the methodology:
 
 ```
-Wikipedia Sources (automated)
-    ↓
-extract_wikipedia_companies.py
-    ↓
-data/working/wikipedia_companies.csv
-    ↓
-Manual enrichment (Phases 2-4)
-    ↓
-data/final/companies.csv
+Wikipedia Sources              BioPharmGuy Directory
+(3 pages, automated)           (Northern CA, automated)
+        ↓                              ↓
+extract_wikipedia_companies.py   extract_biopharmguy_companies.py
+        ↓                              ↓
+wikipedia_companies.csv           biopharmguy_companies.csv
+(~201 companies)                  (~1,116 companies)
+        ↓                              ↓
+        └──────────┬───────────────────┘
+                   ↓
+         Manual deduplication
+                   ↓
+         Manual enrichment (Phases 2-4)
+      (Website, Address, Company Stage)
+                   ↓
+          data/final/companies.csv
 ```
 
 ## Future Enhancements
 
 Following scripts may be added:
-- `extract_biopharmguy.py` - BioPharmGuy directory extraction
-- `extract_linkedin.py` - LinkedIn company search
-- `merge_sources.py` - Combine multiple extraction sources
+- `extract_linkedin.py` - LinkedIn company search automation
+- `merge_sources.py` - Automated deduplication across sources
+- `enrich_addresses.py` - Geocoding and address standardization
 
 ## Dependencies
 
