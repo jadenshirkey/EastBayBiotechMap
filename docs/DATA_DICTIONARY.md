@@ -27,40 +27,10 @@ Documentation for the Bay Area Biotech Map dataset.
 | **City** | Text | City where company is located | "Emeryville" | Yes |
 | **Address** | Text | Full street address | "5 Tower Place, Suite 100, Emeryville, CA 94608" | Recommended |
 | **Company Stage** | Category | Development/commercial stage | "Clinical-Stage Biotech", "Commercial-Stage Biotech" | Yes |
-| **Tags** | Keywords | 1-3 controlled keywords (comma-separated) | "CRISPR, gene-therapy" or "antibody, oncology" | Recommended |
-| **Notes** | Text | Brief description (1-2 sentences) | "CRISPR editors with in vivo delivery for oncology" | Optional |
+| **Notes** | Text | Technology focus and brief description | "AAV gene therapy; capsid engineering" or "Synthetic biology platform" | Yes |
 | **Hiring** | Text | Hiring status or careers link | "Check Website", URL to careers page | Optional |
 
-### Tags - Controlled Vocabulary
-
-Use 1-3 keywords from this list (comma-separated):
-
-**Therapeutics Modalities**:
-- `antibody` - Antibodies, ADCs, bispecifics, Fc engineering
-- `CRISPR` - CRISPR/Cas, base editors, prime editors
-- `gene-therapy` - AAV, lentiviral, or other viral vectors
-- `cell-therapy` - CAR-T, TCR-T, NK cells, stem cells
-- `RNA` - mRNA, siRNA, ASO, RNA editing
-- `small-molecule` - Traditional small molecule drugs
-- `protein-engineering` - Protein design, engineering, enzymes
-- `TPD` - Targeted protein degradation, PROTACs, molecular glue
-
-**Disease Areas**:
-- `oncology` - Cancer therapeutics
-- `neurology` - Neurological/neurodegenerative diseases
-- `rare-disease` - Orphan/rare diseases
-- `autoimmune` - Autoimmune and inflammatory diseases
-
-**Tools/Services**:
-- `CDMO` - Contract development & manufacturing
-- `CRO` - Contract research organization
-- `diagnostics` - Diagnostic tests, companion diagnostics
-- `platform` - Technology platform/tools for drug discovery
-- `synthetic-biology` - Engineered organisms, metabolic engineering
-- `AI-ML` - AI/ML for drug discovery or biotech
-
-**Other**:
-- `GMP-CMC` - Manufacturing, process development, quality
+**Note**: The Notes column already contains technology focus information (CRISPR, antibody, gene therapy, etc.), making it searchable and filterable without needing separate tags
 
 ### Company Stage Values
 
@@ -83,25 +53,13 @@ Use proxy signals for quick classification (don't spend time verifying):
 
 ### Enhancements (Priority Order)
 
-1. **Add Tags column** - Controlled keywords for filtering (2-3 hours for 171 companies)
-2. **Enhance Hiring column** - Direct careers URLs (2-3 hours for top 100 companies)
-3. **Simplify Company Stage** - Use proxy signals, mark Unknown if unclear (1 hour)
-4. **Run QC checklist** - Validate data quality (30 min)
+1. **Enhance Hiring column** - Direct careers URLs (2-3 hours for top 100 companies)
+2. **Simplify Company Stage** - Use proxy signals, mark Unknown if unclear (1 hour)
+3. **Run QC checklist** - Validate data quality (30 min)
 
-### Tags Strategy (NEW - High Value)
+**Total Estimated Time**: 3.5-4.5 hours
 
-Add a "Tags" column with 1-3 controlled keywords per company:
-- Scan website homepage and existing Notes
-- Pick 1-3 tags from controlled vocabulary (see above)
-- If unclear after 30 seconds, leave blank and move on
-- **Don't overthink it** - 80% coverage is good enough
-
-**Example**:
-- "CRISPR gene therapy company" → `CRISPR, gene-therapy, oncology`
-- "Antibody discovery platform" → `antibody, platform`
-- "Contract manufacturer" → `CDMO, GMP-CMC`
-
-### Hiring Enhancement Strategy (SIMPLIFIED)
+### Hiring Enhancement Strategy
 
 Focus on top 100 companies first (by size/stage):
 1. Search `site:greenhouse.io "[Company Name]"` or `site:lever.co "[Company Name]"`
@@ -174,10 +132,10 @@ Run these simple checks before finalizing:
 - [ ] No duplicate company names (check sorted list)
 
 **Quality Checks (SHOULD HAVE)**:
-- [ ] 80%+ companies have at least 1 tag
 - [ ] Company Stage is filled (use "Unknown" if unclear)
 - [ ] Addresses contain city name and CA
 - [ ] Top 50 companies have careers links
+- [ ] Notes field has technology focus info
 
 **Deduplication (Simple Rules)**:
 - [ ] Same domain = duplicate (keep one, merge data)
@@ -185,7 +143,7 @@ Run these simple checks before finalizing:
 
 **Spot Checks (Sample 10-20 companies)**:
 - [ ] Website loads (not 404)
-- [ ] Tags make sense for company focus
+- [ ] Notes describe company focus accurately
 - [ ] Address is in correct city
 - [ ] Not obviously closed/moved
 
@@ -194,16 +152,15 @@ Run these simple checks before finalizing:
 ## Usage Guidelines
 
 ### For Map Visualization
-- Use **Latitude** and **Longitude** for marker placement
-- Color-code markers by **Company Size**, **Technology Focus**, or **Company Stage**
-- Display **Description**, **Website**, **Careers Link** in popup windows
+- Use **Latitude** and **Longitude** for marker placement (auto-geocode from Address)
+- Color-code markers by **Company Stage** or **City**
+- Display **Notes**, **Website**, **Careers Link** in popup windows
 
 ### For Filtering
 Primary filter dimensions:
 - **City** (dropdown or checkboxes)
 - **Company Stage** (dropdown)
-- **Company Size** (once added)
-- **Technology Focus** (once added, may be multi-select)
+- **Text search** in Notes field for technology keywords (CRISPR, antibody, etc.)
 
 ### For Analysis
 This dataset can be used to:
