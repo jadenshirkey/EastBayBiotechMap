@@ -1,428 +1,201 @@
-# Data Collection Workflow
+# Data Collection Workflow - SIMPLIFIED (70/10 Approach)
 
-**Purpose**: Step-by-step procedures for enhancing the Bay Area Biotech Map dataset
+**Purpose**: Enhance the Bay Area Biotech Map with high-value, easy-to-collect data
 
-**Current Phase**: Phase 2 - Enhance Careers Links
+**Current Phase**: Phase 2 - Enhance Careers Links & Company Stage
+
+**Philosophy**: 70% quality with ~10% effort. Ship it, don't perfect it.
 
 ---
 
 ## Overview
 
-We have **171 companies** in `data/working/companies_merged.csv`. The "Hiring" column currently contains placeholder text like "Check Website" or blank entries. Our goal is to replace these with **direct URLs to careers pages**.
+We have **171 companies** in `data/working/companies_merged.csv`. Our goal is to:
 
-**Target**: Fill the "Hiring" column with working URLs for all 171 companies
+1. **Enhance Hiring column** - Direct careers URLs (for top 100 companies)
+2. **Simplify Company Stage** - Use proxy signals, don't over-verify
+3. **Run QC checks** - Quick validation before shipping
 
----
+**Total Estimated Time**: 3.5-4.5 hours for 171 companies
 
-## Why Careers URLs Matter
-
-For job seekers using this map:
-- ✅ **One-click access** to job postings (no hunting through company websites)
-- ✅ **Direct link** to application pages (saves time)
-- ✅ **Standardized** across all companies (consistent user experience)
+**Why no Tags?** The existing Notes column already contains technology focus keywords (CRISPR, antibody, gene therapy, etc.), making them searchable without duplication.
 
 ---
 
-## Careers URL Search Strategy
+## Task 1: Enhance Hiring Column (2-3 hours)
 
-### Priority Order
+**Focus on top 100 companies** (Commercial-Stage, Clinical-Stage, Large Pharma first)
 
-For each company, search in this order until you find a careers page:
+### Fast Search Process (1 minute per company max)
 
-1. **Applicant Tracking Systems (ATS)** - Most companies use these platforms
-2. **Company-hosted careers page** - Custom /careers or /jobs page on company site
-3. **Company website** - Fallback to main website if nothing else found
+For each company in priority order (Commercial → Clinical → Pre-clinical):
 
----
+**Step 1: Try common ATS platforms** (30 seconds)
+- Google: `site:greenhouse.io "[Company Name]"`
+- Google: `site:lever.co "[Company Name]"`
+- If found: Copy URL, move to next company
 
-## Method 1: Automated Search with Python + WebSearch
+**Step 2: Search careers page** (30 seconds)
+- Google: `"[Company Name]" careers`
+- Look for: `/careers`, `/jobs`, `/join-us` on company domain
+- If found: Copy URL, move to next company
 
-### Prerequisites
-- Python 3.6+
-- Access to WebSearch tool (or web scraping capabilities)
-- `data/working/companies_merged.csv`
+**Step 3: Give up** (immediately)
+- If nothing clear in 1 minute: Leave as "Check Website"
+- **Don't waste time** - move to next company
 
-### Script: `scripts/fetch_careers_urls.py`
+### Common ATS Patterns
 
-**Location**: `/scripts/fetch_careers_urls.py` (to be created)
+- Greenhouse: `https://boards.greenhouse.io/[company-slug]`
+- Lever: `https://jobs.lever.co/[company-name]`
+- Workday: `https://[company].wd1.myworkdayjobs.com/Careers`
+- SmartRecruiters: `https://jobs.smartrecruiters.com/[CompanyName]`
 
-**What it does**:
-1. Reads `companies_merged.csv`
-2. For each company:
-   - Searches ATS platforms (Greenhouse, Lever, Workday, SmartRecruiters)
-   - Searches for company careers page
-   - Extracts direct URL from search results
-   - Updates "Hiring" column
-3. Saves progress incrementally (every 25 companies)
-4. Outputs final CSV with careers URLs
+### What to SKIP
 
-**Usage**:
-```bash
-cd scripts
-python3 fetch_careers_urls.py
-```
-
-**Output**: `data/working/companies_with_careers.csv`
-
-### Detailed Search Procedure (Per Company)
-
-#### Step 1: Search Greenhouse.io
-**Query**: `site:greenhouse.io "[Company Name]"`
-
-**Look for**:
-- URL pattern: `https://boards.greenhouse.io/[company-slug]`
-- Example: `https://boards.greenhouse.io/ginkgobioworks`
-
-**Extract**:
-- If found: Copy the full URL
-- If not found: Proceed to Step 2
-
-#### Step 2: Search Lever.co
-**Query**: `site:lever.co "[Company Name]"`
-
-**Look for**:
-- URL pattern: `https://jobs.lever.co/[company-name]`
-- Example: `https://jobs.lever.co/cariboubio`
-
-**Extract**:
-- If found: Copy the full URL
-- If not found: Proceed to Step 3
-
-#### Step 3: Search Workday
-**Query**: `site:myworkdayjobs.com "[Company Name]"`
-
-**Look for**:
-- URL pattern: `https://[company].wd1.myworkdayjobs.com/[careers-page]`
-- Example: `https://genentech.wd1.myworkdayjobs.com/Careers`
-
-**Extract**:
-- If found: Copy the full URL
-- If not found: Proceed to Step 4
-
-#### Step 4: Search SmartRecruiters
-**Query**: `site:smartrecruiters.com "[Company Name]"`
-
-**Look for**:
-- URL pattern: `https://jobs.smartrecruiters.com/[CompanyName]`
-- Example: `https://jobs.smartrecruiters.com/Ginkgo`
-
-**Extract**:
-- If found: Copy the full URL
-- If not found: Proceed to Step 5
-
-#### Step 5: Search Company Careers Page
-**Query**: `"[Company Name]" careers jobs apply`
-
-**Look for**:
-- Company's main careers page (usually on their domain)
-- Common patterns:
-  - `https://[company].com/careers`
-  - `https://[company].com/jobs`
-  - `https://[company].com/join-us`
-  - `https://[company].com/about/careers`
-
-**Extract**:
-- If found: Copy the URL that leads to job listings
-- Verify it's not just a "about us" page with no actual jobs
-- If not found or unclear: Proceed to Step 6
-
-#### Step 6: Fallback to Company Website
-**Action**: Use the company's main website from the "Website" column
-
-**Mark as**: Keep "Check Website" (indicates manual check needed)
+❌ Don't validate URLs (do later if needed)
+❌ Don't check if jobs are posted
+❌ Don't research acquired companies deeply
+❌ Don't spend >1 min per company
 
 ---
 
-## Method 2: Manual Research (If Automated Fails)
+## Task 2: Simplify Company Stage (1 hour)
 
-For companies where automated search doesn't find clear results:
+**Use proxy signals - don't verify everything**
 
-### Manual Search Procedure
+### Quick Classification Rules
 
-1. **Google Search**: `[Company Name] careers`
-2. **Check Company Website**: Navigate to [Website column] and look for:
-   - Footer links (often "Careers" or "Jobs")
-   - Header navigation menu
-   - "About Us" → "Careers" submenu
-3. **Check LinkedIn**: Company LinkedIn page often has "Jobs" tab
-4. **Last resort**: Email company or mark as "No careers page found"
+Scan company website for these keywords:
 
-### Recording Manual Results
+| If website mentions... | Classification |
+|------------------------|----------------|
+| "FDA-approved" or "marketed product" | Commercial-Stage Biotech |
+| "Phase 1/2/3" or "clinical trial" | Clinical-Stage Biotech |
+| "Platform" or "technology" (but no products) | Pre-clinical/Startup |
+| "Contract" or "CDMO" or "services" | Tools/Services/CDMO |
+| "Acquired by..." | Acquired |
+| Unclear or website down | Unknown |
 
-When recording manually found URLs:
-```csv
-Company Name,Hiring
-Ginkgo Bioworks,https://www.ginkgobioworks.com/careers/
-Caribou Biosciences,https://jobs.lever.co/cariboubio
-Acme Biotech,Check Website
-```
+### Don't Waste Time On
 
----
+❌ Verifying FDA approvals
+❌ Checking ClinicalTrials.gov
+❌ Researching company history
+❌ Reading press releases
 
-## URL Validation & Quality Control
-
-After collecting URLs, validate them:
-
-### Validation Checklist
-
-For each URL in the "Hiring" column:
-
-- [ ] **URL is accessible** (doesn't return 404 error)
-- [ ] **URL is direct** (goes to jobs page, not generic "About" page)
-- [ ] **URL shows job listings** (or says "No current openings" - both OK)
-- [ ] **URL is properly formatted** (starts with `https://`)
-
-### Validation Script: `scripts/validate_urls.py`
-
-**What it does**:
-1. Reads CSV with careers URLs
-2. Tests each URL (HTTP GET request)
-3. Reports:
-   - ✅ Working URLs (200 OK)
-   - ⚠️ Redirects (3xx status)
-   - ❌ Broken URLs (404, 5xx)
-4. Outputs validation report
-
-**Usage**:
-```bash
-cd scripts
-python3 validate_urls.py
-```
-
-**Output**: `data/working/url_validation_report.txt`
+**Just mark it and move on.** You can refine later if needed.
 
 ---
 
-## Data Quality Standards
+## Task 3: QC Checklist (30 minutes)
 
-### What Counts as a Valid Careers URL
+Run these quick checks before finalizing:
 
-✅ **GOOD**:
-- Direct ATS links (Greenhouse, Lever, Workday, SmartRecruiters)
-- Company /careers page showing job listings
-- Company /jobs page with application links
-- Page that says "No current openings" (proves it's the careers page)
+### Required Fields
+- [ ] All companies have: Name, Website, City, Address
+- [ ] No duplicate company names (sort by name, scan for dupes)
+- [ ] Website URLs start with `http://` or `https://`
 
-❌ **NOT GOOD**:
-- Generic company homepage
-- "About Us" page mentioning careers but no jobs
-- Broken/404 links
-- PDF job descriptions (prefer online application pages)
+### Quality Targets (70% is good!)
+- [ ] Top 50 companies have careers links
+- [ ] Company Stage is filled (use "Unknown" if unclear)
+- [ ] Notes field has technology focus information
 
-### Special Cases
+### Deduplication (Simple)
+- [ ] Same domain = duplicate → keep one, merge data
+- [ ] Same address = duplicate → investigate
 
-**Acquired Companies**:
-- If company was acquired, link to parent company careers page
-- Note in Comments: "Acquired by [Parent Company]"
-
-**Defunct Companies**:
-- Leave "Hiring" blank
-- Update "Company Stage" to "Defunct" or "Closed"
-
-**No Careers Page**:
-- Leave as "Check Website"
-- Consider removing from final map (not hiring = not useful for job seekers)
+### Spot Check (Pick 10 random companies)
+- [ ] Website loads
+- [ ] Notes accurately describe company
+- [ ] Address is in correct city
 
 ---
 
-## Workflow Timeline & Effort Estimate
+## Simplified Execution Plan
 
-### Option A: Fully Automated
-**Time**: 2-3 hours
-**Pros**: Minimal manual work, reproducible
-**Cons**: May miss some URLs, requires script development
-**Best for**: Quick first pass, then manual cleanup
+### Total Time: 3.5-4.5 hours
 
-### Option B: Fully Manual
-**Time**: 8-10 hours (171 companies × ~3 min each)
-**Pros**: Most accurate, catch edge cases
-**Cons**: Time-consuming, not easily reproducible
-**Best for**: Small datasets or high-accuracy requirements
+**Session 1: Add Careers Links (2-3 hours)**
+- Sort CSV by Company Stage (Commercial → Clinical → Pre-clinical)
+- Focus on top 100 companies
+- Google search ATS platforms + careers pages
+- Max 1 min per company
+- Save progress every 25 companies
 
-### Option C: Hybrid (Recommended)
-**Phase 1**: Automated search for ATS platforms (30 min)
-**Phase 2**: Manual research for missing entries (3-4 hours)
-**Phase 3**: Validation and cleanup (1 hour)
-**Total**: 4-5 hours
+**Session 2: Simplify Company Stage (1 hour)**
+- Scan websites for proxy signals
+- Update stage classifications
+- Mark "Unknown" if unclear and move on
 
----
+**Session 3: QC Check (30 min)**
+- Run through QC checklist
+- Spot check 10-20 companies
+- Fix obvious errors
+- Ship it!
 
-## Step-by-Step Execution Plan
+### Working Tips
 
-### Week 1: Automated Collection
+**Batch work**:
+- Work in batches of 25 companies
+- Take breaks every hour
+- Save CSV after each batch
 
-**Day 1: Setup**
-- [ ] Review `data/working/companies_merged.csv`
-- [ ] Create `scripts/fetch_careers_urls.py` script
-- [ ] Test on 5-10 companies first
+**Tools**:
+- Use Excel or Google Sheets (easier than text editor for CSV)
+- Keep browser tabs organized (company website + Google search)
+- Use keyboard shortcuts (Ctrl+C, Ctrl+V for URLs)
 
-**Day 2: Run Automated Collection**
-- [ ] Run script on all 171 companies
-- [ ] Save progress to `data/working/companies_with_careers.csv`
-- [ ] Generate report: how many found vs. not found
-
-**Day 3: Review Results**
-- [ ] Check automated results for accuracy
-- [ ] Identify companies needing manual research
-- [ ] Prioritize companies (larger/well-known companies first)
-
-### Week 2: Manual Cleanup
-
-**Day 4-5: Manual Research**
-- [ ] Research companies where automated search found nothing
-- [ ] Focus on top 50 companies first
-- [ ] Update CSV with manually found URLs
-
-**Day 6: Validation**
-- [ ] Run URL validation script
-- [ ] Fix broken links
-- [ ] Test sample of URLs manually
-
-**Day 7: Finalization**
-- [ ] Copy to `data/final/companies.csv`
-- [ ] Update DATA_DICTIONARY.md
-- [ ] Commit and tag as v1.0
+**When to stop**:
+- Hit your time limit (stick to 70/10!)
+- Coverage is 70-80% for top companies
+- You're getting diminishing returns
 
 ---
 
-## Example Company Workflows
+## Quick Examples
 
-### Example 1: Ginkgo Bioworks (Large Company, Uses Greenhouse)
+**Example 1: Finding careers link (ATS)**
+- Company: Ginkgo Bioworks
+- Google: `site:greenhouse.io "Ginkgo"`
+- Result: `https://boards.greenhouse.io/ginkgobioworks`
+- Time: 30 seconds
 
-**Automated Search**:
-1. Query: `site:greenhouse.io "Ginkgo Bioworks"`
-2. Result: `https://boards.greenhouse.io/ginkgobioworks`
-3. Validation: Visit URL → Shows job listings ✅
-4. Update CSV: `Ginkgo Bioworks,https://boards.greenhouse.io/ginkgobioworks`
+**Example 2: Finding careers link (company page)**
+- Company: Small startup
+- Google: `"[Company Name]" careers`
+- Find: `https://company.com/careers`
+- Time: 45 seconds
 
-**Time**: <1 minute (automated)
+**Example 3: Simplifying stage**
+- Website mentions: "Phase 2 clinical trial"
+- Classification: Clinical-Stage Biotech
+- Time: 20 seconds
 
----
-
-### Example 2: Small Startup (Custom Careers Page)
-
-**Automated Search**:
-1. Query: `site:greenhouse.io "Acme Biotech"` → No results
-2. Query: `site:lever.co "Acme Biotech"` → No results
-3. Query: `"Acme Biotech" careers` → Find `https://acmebiotech.com/join-our-team`
-4. Validation: Visit URL → Shows 3 job listings ✅
-5. Update CSV: `Acme Biotech,https://acmebiotech.com/join-our-team`
-
-**Time**: 2-3 minutes (semi-automated)
-
----
-
-### Example 3: Acquired Company
-
-**Manual Research**:
-1. Google: "Acme Biotech careers" → News article says "Acquired by BigPharma in 2023"
-2. Visit: `https://www.bigpharma.com/careers`
-3. Update CSV: `Acme Biotech,https://www.bigpharma.com/careers`
-4. Add note in "Notes" column: "Acquired by BigPharma (2023)"
-
-**Time**: 5 minutes (manual)
+**Example 4: Unclear stage**
+- Company: Website down or vague
+- Stage: Mark as "Unknown"
+- Time: 10 seconds (don't waste time!)
 
 ---
 
-## Tools & Resources
+## Success Metrics (70/10 Goal)
 
-### Required Tools
-- Python 3 with csv module (built-in)
-- WebSearch capability or internet access for manual searches
-- Text editor or Excel for CSV editing
+**Target outcomes**:
+- Top 100 companies have careers links
+- All companies have a stage classification (or "Unknown")
+- Notes field already has technology focus (no duplicate work!)
+- Total time: 3.5-4.5 hours
 
-### Helpful Resources
-- **Greenhouse**: https://boards.greenhouse.io/
-- **Lever**: https://jobs.lever.co/
-- **Workday**: https://[company].wd1.myworkdayjobs.com/
-- **SmartRecruiters**: https://jobs.smartrecruiters.com/
-
-### ATS Platform Detection Tips
-
-**How to identify if a company uses an ATS**:
-1. Google: "[Company Name] careers"
-2. Click the careers link
-3. Look at the URL:
-   - Contains "greenhouse.io" → Greenhouse
-   - Contains "lever.co" → Lever
-   - Contains "myworkdayjobs.com" → Workday
-   - Contains "smartrecruiters.com" → SmartRecruiters
-   - Company's own domain → Custom page
+**Quality over quantity**:
+- ✅ Good enough is perfect
+- ✅ Ship it and iterate
+- ❌ Don't chase 100% perfection
+- ❌ Don't get stuck on edge cases
 
 ---
 
-## Troubleshooting
-
-### Problem: Company has multiple careers pages
-**Solution**: Choose the most general/comprehensive one
-- Prefer: All jobs page
-- Avoid: Specific department pages (e.g., /engineering-jobs)
-
-### Problem: Careers page requires login
-**Solution**: Check if there's a public job board
-- Some companies have both public and employee-only portals
-- Link to the public-facing one
-
-### Problem: URL redirects to a different page
-**Solution**: Use the final destination URL
-- Follow the redirect chain
-- Record the final URL where jobs are displayed
-
-### Problem: Company is hiring but no careers page found
-**Solution**:
-- Check LinkedIn Jobs tab
-- Check Indeed or ZipRecruiter (may post there)
-- Worst case: Leave as "Check Website"
-
----
-
-## Progress Tracking
-
-Use this checklist to track progress:
-
-### Phase 2 Progress Tracker
-
-**Automated Collection**:
-- [ ] Script created and tested
-- [ ] Run on all 171 companies
-- [ ] Results saved to CSV
-- [ ] Report generated (X% found, Y% manual needed)
-
-**Manual Research**:
-- [ ] Top 50 companies researched
-- [ ] All remaining companies researched
-- [ ] Edge cases handled (acquired, defunct, etc.)
-
-**Validation**:
-- [ ] URL validation script created
-- [ ] All URLs tested for accessibility
-- [ ] Broken links fixed
-- [ ] Final QA check completed
-
-**Finalization**:
-- [ ] Final CSV saved to `data/final/companies.csv`
-- [ ] Documentation updated
-- [ ] Changes committed to git
-- [ ] Version tagged (v1.0)
-
----
-
-## Success Metrics
-
-**Target**: 80%+ of companies have direct careers links
-
-**Quality metrics**:
-- ✅ URL is accessible (not 404)
-- ✅ URL shows actual jobs or "no openings" message
-- ✅ URL is direct (no need for additional navigation)
-
-**Expected results**:
-- ~120-140 companies: Direct ATS or careers page URL
-- ~20-30 companies: "Check Website" (no clear careers page)
-- ~10-20 companies: Acquired/defunct (special handling)
-
----
-
-**Last Updated**: January 8, 2025
-**Phase**: 2 (Careers URL Enhancement)
+**Last Updated**: January 2025
+**Philosophy**: 70% coverage, ~10% effort
 **Status**: Ready to execute

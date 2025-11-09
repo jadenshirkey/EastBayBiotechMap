@@ -27,35 +27,57 @@ Documentation for the Bay Area Biotech Map dataset.
 | **City** | Text | City where company is located | "Emeryville" | Yes |
 | **Address** | Text | Full street address | "5 Tower Place, Suite 100, Emeryville, CA 94608" | Recommended |
 | **Company Stage** | Category | Development/commercial stage | "Clinical-Stage Biotech", "Commercial-Stage Biotech" | Yes |
-| **Notes** | Text | Technology platform or focus areas | "Synthetic biology platform for organism engineering" | Yes |
+| **Notes** | Text | Technology focus and brief description | "AAV gene therapy; capsid engineering" or "Synthetic biology platform" | Yes |
 | **Hiring** | Text | Hiring status or careers link | "Check Website", URL to careers page | Optional |
+
+**Note**: The Notes column already contains technology focus information (CRISPR, antibody, gene therapy, etc.), making it searchable and filterable without needing separate tags
 
 ### Company Stage Values
 
-- **Startup** / **Pre-clinical/Startup**: Early-stage companies in R&D
-- **Clinical-Stage Biotech**: Companies with therapies in clinical trials
-- **Commercial-Stage Biotech**: Companies with marketed products
-- **Tools/Services/CDMO**: Service providers, contract manufacturers, tool/instrument makers
+Use proxy signals for quick classification (don't spend time verifying):
+
+- **Commercial-Stage Biotech**: "FDA-approved" or "marketed product" on website
+- **Clinical-Stage Biotech**: "Phase 1/2/3" anywhere on website or ClinicalTrials.gov
+- **Pre-clinical/Startup**: Developing therapeutics but no clinical trials yet
+- **Tools/Services/CDMO**: Provides services, tools, instruments, or manufacturing
+- **Large Pharma**: Fortune 500 scale with multiple Bay Area sites
 - **Academic/Gov't**: Research institutions, government labs
-- **Acquired**: Companies that have been acquired by larger entities
+- **Acquired**: Acquired by larger entity (note in Notes column)
+- **Unknown**: If unclear, mark as Unknown and move on
 
 ---
 
 ## Phase 2 Enhancement (In Progress)
 
-**Focus**: Enhancing the "Hiring" column with direct careers page URLs
+**Goal**: 70% quality with ~10% effort - add high-value, easy-to-collect data
 
-| Enhancement | Type | Description | Example Values | Source |
-|-------------|------|-------------|----------------|--------|
-| **Hiring** (enhanced) | URL | Direct link to jobs/careers page | "https://boards.greenhouse.io/ginkgo" or "https://company.com/careers" | ATS platforms, company websites |
+### Enhancements (Priority Order)
 
-**Why We're Not Adding Other Columns**:
-- ❌ **Latitude/Longitude**: Addresses auto-geocode in Google My Maps or Leaflet.js (no manual work needed)
-- ❌ **Description**: Already have "Notes" field with excellent descriptions
-- ❌ **Technology Focus**: Redundant with "Notes" field; hard to standardize
-- ❌ **Company Size**: Overlaps with "Company Stage"; requires LinkedIn/Crunchbase access
+1. **Enhance Hiring column** - Direct careers URLs (2-3 hours for top 100 companies)
+2. **Simplify Company Stage** - Use proxy signals, mark Unknown if unclear (1 hour)
+3. **Run QC checklist** - Validate data quality (30 min)
+
+**Total Estimated Time**: 3.5-4.5 hours
+
+### Hiring Enhancement Strategy
+
+Focus on top 100 companies first (by size/stage):
+1. Search `site:greenhouse.io "[Company Name]"` or `site:lever.co "[Company Name]"`
+2. If found: Add URL
+3. If not found: Search `"[Company Name]" careers`
+4. If nothing clear in 1 minute: Leave as "Check Website"
+
+**Don't waste time on**:
+- Broken links (validate later if needed)
+- Companies with no clear careers page
+- Startups with <10 employees
+
+### What We're NOT Adding
+
+- ❌ **Latitude/Longitude**: Addresses auto-geocode in mapping tools
+- ❌ **Company Size**: Overlaps with Stage; hard to verify
 - ❌ **Founded Year**: Low utility for job seekers
-- ❌ **Funding Status**: Requires paid Crunchbase subscription; data goes stale quickly
+- ❌ **Funding Status**: Goes stale quickly; requires paid data
 
 ---
 
@@ -100,28 +122,45 @@ All information is from publicly available sources:
 4. Validate URLs are accessible
 5. Output: `data/final/companies.csv`
 
-### Phase 3: Validation (Planned)
-1. Validate all URLs (check for 404s)
-2. Verify address formats
-3. Check for duplicates
-4. Validate coordinates are in Bay Area
-5. Manual QA check on major companies
+### Phase 3: QC Checklist (Quick Validation)
+
+Run these simple checks before finalizing:
+
+**Required Fields (MUST HAVE)**:
+- [ ] All companies have: Name, Website, City, Address
+- [ ] Website URLs start with `http://` or `https://`
+- [ ] No duplicate company names (check sorted list)
+
+**Quality Checks (SHOULD HAVE)**:
+- [ ] Company Stage is filled (use "Unknown" if unclear)
+- [ ] Addresses contain city name and CA
+- [ ] Top 50 companies have careers links
+- [ ] Notes field has technology focus info
+
+**Deduplication (Simple Rules)**:
+- [ ] Same domain = duplicate (keep one, merge data)
+- [ ] Same address = duplicate (investigate, merge if same company)
+
+**Spot Checks (Sample 10-20 companies)**:
+- [ ] Website loads (not 404)
+- [ ] Notes describe company focus accurately
+- [ ] Address is in correct city
+- [ ] Not obviously closed/moved
 
 ---
 
 ## Usage Guidelines
 
 ### For Map Visualization
-- Use **Latitude** and **Longitude** for marker placement
-- Color-code markers by **Company Size**, **Technology Focus**, or **Company Stage**
-- Display **Description**, **Website**, **Careers Link** in popup windows
+- Use **Latitude** and **Longitude** for marker placement (auto-geocode from Address)
+- Color-code markers by **Company Stage** or **City**
+- Display **Notes**, **Website**, **Careers Link** in popup windows
 
 ### For Filtering
 Primary filter dimensions:
 - **City** (dropdown or checkboxes)
 - **Company Stage** (dropdown)
-- **Company Size** (once added)
-- **Technology Focus** (once added, may be multi-select)
+- **Text search** in Notes field for technology keywords (CRISPR, antibody, etc.)
 
 ### For Analysis
 This dataset can be used to:
