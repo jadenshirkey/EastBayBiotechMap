@@ -10,7 +10,7 @@ An interactive map of biotechnology companies across the San Francisco Bay Area,
 
 ## About
 
-This project maps **169 biotechnology companies** across the entire San Francisco Bay Area, including:
+This project maps **1,210 biotechnology companies** across the entire San Francisco Bay Area, including:
 - **East Bay**: Emeryville, Berkeley, Oakland, Alameda, Fremont, Pleasanton
 - **Peninsula**: South San Francisco, Redwood City, Menlo Park, San Mateo
 - **San Francisco**: SF proper
@@ -64,13 +64,13 @@ This map was compiled through systematic research and data consolidation:
 4. Quality checks and validation
 5. Data organized using Python scripts (see [`scripts/`](scripts/))
 
-**See [PROJECT_PLAN.md](PROJECT_PLAN.md) for detailed methodology and future plans.**
+**See [METHODOLOGY.md](METHODOLOGY.md) for detailed methodology and future plans.**
 
 ## Data Currency
 
-- **Version**: v1.0
-- **Last Updated**: January 2025
-- **Companies**: 169 across the Bay Area
+- **Version**: v3.0
+- **Last Updated**: January 8, 2025
+- **Companies**: 1,210 across the Bay Area
 - **Address completion**: 100% (all companies have verified addresses)
 
 All company information is from publicly available sources: company websites, business registries, and press releases.
@@ -128,7 +128,7 @@ This is v1.0 - a solid foundation. Future enhancements:
 - **Phase 3**: Expand to 250-300 companies (see [EXPANSION_STRATEGY.md](docs/EXPANSION_STRATEGY.md))
 - **Phase 4**: Custom interactive web map with advanced filtering
 
-See [PROJECT_PLAN.md](PROJECT_PLAN.md) for the full roadmap.
+See [METHODOLOGY.md](METHODOLOGY.md) for the full roadmap.
 
 ## Acknowledgments
 
@@ -142,7 +142,7 @@ Data in this repository is provided for informational purposes. All company info
 
 ---
 
-**Version**: v1.0
+**Version**: v3.0
 **Last Updated**: January 8, 2025
 **Maintainer**: Jaden Shirkey
 **Contributions welcome!** 🧬

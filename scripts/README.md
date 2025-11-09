@@ -86,47 +86,164 @@ python3 extract_biopharmguy_companies.py
 
 ---
 
+### `merge_company_sources.py`
+
+**Purpose**: Merge and deduplicate companies from multiple sources
+
+**What it does**:
+- Combines Wikipedia, BioPharmGuy, and existing company data
+- Deduplicates by normalized company name (removes Inc., LLC, etc.)
+- Preserves complete data from existing dataset (priority: existing > BioPharmGuy > Wikipedia)
+- Creates timestamped backup before merging
+- Filters for Bay Area cities only
+
+**Output columns**:
+- Company Name
+- Website
+- City
+- Address
+- Company Stage
+- Focus Areas
+
+**Usage**:
+```bash
+cd scripts
+python3 merge_company_sources.py
+```
+
+**Input files**:
+- `../data/final/companies.csv` (existing dataset - highest priority)
+- `../data/working/wikipedia_companies.csv`
+- `../data/working/biopharmguy_companies.csv`
+
+**Output**: Updated `../data/final/companies.csv` + backup created
+
+**What gets merged**:
+- Existing companies: preserved with all data
+- New from BioPharmGuy: added with city + focus areas
+- New from Wikipedia: added only if Bay Area city confirmed
+
+---
+
+### `enrich_with_google_maps.py`
+
+**Purpose**: Enrich company data using Google Maps Places API
+
+**What it does**:
+- Searches Google Maps for companies missing addresses/websites
+- Retrieves verified addresses, websites, phone numbers, and coordinates
+- Auto-classifies company stage using keyword heuristics
+- Saves progress every 50 companies (safe for interruption)
+- Generates detailed enrichment report
+
+**Output columns enriched**:
+- Address (formatted street address)
+- Website (verified URL)
+- Company Stage (if not already set)
+- Coordinates (latitude/longitude for mapping)
+
+**Usage**:
+```bash
+# Set your Google Maps API key
+export GOOGLE_MAPS_API_KEY="your-api-key-here"
+
+# Run enrichment
+cd scripts
+python3 enrich_with_google_maps.py
+```
+
+**Requirements**:
+- Google Cloud Platform account
+- Places API enabled
+- Billing enabled (Places API is not free)
+- API key with Places API access
+
+**Output**:
+- Updated `../data/final/companies.csv`
+- `../data/working/enrichment_report.txt` (statistics and companies not found)
+
+**Rate limiting**: 0.1 second delay between API calls to respect limits
+
+**Cost estimate**: ~$0.032 per company lookup (Places API pricing)
+
+---
+
 ## Installation
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Workflow
+## Complete Workflow
 
-This implements **Phase 1: Company Discovery** from the methodology:
+This implements the full data pipeline from discovery to enrichment:
 
 ```
+Step 1: Extract from Sources
+─────────────────────────────────────────────────
 Wikipedia Sources              BioPharmGuy Directory
 (3 pages, automated)           (Northern CA, automated)
         ↓                              ↓
 extract_wikipedia_companies.py   extract_biopharmguy_companies.py
         ↓                              ↓
 wikipedia_companies.csv           biopharmguy_companies.csv
-(~201 companies)                  (~1,116 companies)
-        ↓                              ↓
+(~200 companies)                  (~1,100 companies)
+
+Step 2: Merge & Deduplicate
+─────────────────────────────────────────────────
         └──────────┬───────────────────┘
                    ↓
-         Manual deduplication
+         merge_company_sources.py
+         (existing + new sources)
                    ↓
-         Manual enrichment (Phases 2-4)
-      (Website, Address, Company Stage)
+          Deduplication by normalized name
+          Backup created automatically
                    ↓
           data/final/companies.csv
+              (merged dataset)
+
+Step 3: Enrich Missing Data
+─────────────────────────────────────────────────
+      enrich_with_google_maps.py
+    (Google Places API - requires key)
+                   ↓
+    Finds addresses, websites, coordinates
+    Auto-classifies company stages
+                   ↓
+          data/final/companies.csv
+         (complete, verified data)
+               1,210 companies
+```
+
+**Run in sequence**:
+```bash
+# 1. Extract new companies
+python3 extract_wikipedia_companies.py
+python3 extract_biopharmguy_companies.py
+
+# 2. Merge with existing data
+python3 merge_company_sources.py
+
+# 3. Enrich missing fields
+export GOOGLE_MAPS_API_KEY="your-key"
+python3 enrich_with_google_maps.py
 ```
 
 ## Future Enhancements
 
-Following scripts may be added:
+Potential future scripts:
 - `extract_linkedin.py` - LinkedIn company search automation
-- `merge_sources.py` - Automated deduplication across sources
-- `enrich_addresses.py` - Geocoding and address standardization
+- `validate_data.py` - Automated data quality checks
+- `cleanup_backups.py` - Remove old backup files
 
 ## Dependencies
 
-- Python 3.7+
-- requests - HTTP library for fetching web pages
-- beautifulsoup4 - HTML parsing
+- Python 3.9+
+- requests >= 2.31.0 - HTTP library for fetching web pages
+- beautifulsoup4 >= 4.12.0 - HTML parsing
+- googlemaps >= 4.10.0 - Google Maps Places API client (for enrichment script only)
+
+See `requirements.txt` for complete list.
 
 ## Troubleshooting
 
@@ -142,6 +259,17 @@ Following scripts may be added:
 - Script uses loose filtering (includes most candidates)
 - Manual review is expected per methodology
 - Adjust `BAY_AREA_CITIES` set in script if needed
+
+**Google Maps API errors**
+- Verify API key is set: `echo $GOOGLE_MAPS_API_KEY`
+- Check Places API is enabled in Google Cloud Console
+- Verify billing is enabled (Places API requires it)
+- Check API quotas and limits
+
+**Merge script creates duplicate backups**
+- Backup files are timestamped: `companies_backup_YYYYMMDD_HHMMSS.csv`
+- Safe to delete old backups, keep most recent
+- Located in `data/final/`
 
 ## Documentation
 
