@@ -4,7 +4,7 @@
 
 **AUDIENCE**: Project owner (Jaden) + Claude for context during active work
 
-**Last Updated**: January 8, 2025
+**Last Updated**: November 8, 2025
 
 ---
 
@@ -19,7 +19,7 @@
 7. [Open Questions & Decisions](#open-questions--decisions)
 8. [Success Metrics](#success-metrics)
 9. [Timeline & Effort Estimates](#timeline--effort-estimates)
-10. [Future Enhancements (V3+)](#future-enhancements-v3)
+10. [Future Enhancements (V4+)](#future-enhancements-v4)
 
 ---
 
@@ -164,7 +164,69 @@ Located in `/scripts/` to showcase computational skills:
   - Script: `scripts/validate_urls.py`
 - [ ] Save final dataset with careers links
 
-### 🗺️ Phase 3: Map Creation & Visualization (PLANNED)
+### 🔧 Phase 3: Data Quality Cleanup (CURRENT - V3)
+
+**Goal**: Ensure data accuracy and consistency before map publication
+
+**Why This Matters**:
+- Geographic scope must align with Bay Area boundaries per METHODOLOGY.md
+- City/Address consistency ensures accurate map placement
+- Website verification prevents user confusion and dead links
+- Company Stage classification enables proper filtering and categorization
+
+**Priority Issues Identified (January 2025 Audit)**:
+
+#### 🔴 Critical - Data Accuracy
+- [ ] **Fix 161 City vs Address discrepancies**
+  - Many companies listed in wrong city (e.g., listed as "San Francisco" but address is "South San Francisco")
+  - Impact: Incorrect map placement and filtering
+  - Method: Parse address field, extract actual city, update City column
+  - Estimated effort: 2-3 hours (scripted)
+
+- [ ] **Review 23 companies with non-CA/international addresses**
+  - Companies showing addresses outside California (some in MD, DC, UK, India)
+  - Examples: Achira (Bengaluru, India), Coherence Neuro (Cambridge, UK), Eicos Sciences (Chevy Chase, MD)
+  - Method: Research each company to determine if they have Bay Area office
+  - Decision: Remove if no Bay Area presence OR update address to Bay Area location
+  - Estimated effort: 3-4 hours (manual research required)
+
+- [ ] **Remove 2 Davis companies (outside Bay Area scope)**
+  - Davis is in Yolo County, explicitly excluded per METHODOLOGY.md Appendix A
+  - Companies: ARIZ Precision Medicine, Antibodies Incorporated
+  - Impact: Keeps dataset aligned with documented geographic scope
+  - Estimated effort: 5 minutes
+
+#### 🟡 Medium Priority - Data Quality Improvements
+- [ ] **Investigate website mismatches from Google API workflow**
+  - Some companies may have incorrect websites from Google Places API
+  - API may have matched wrong business with similar name
+  - Method: Spot-check companies enriched via Google Maps API, verify website matches company
+  - Cross-reference with Wikipedia/BioPharmGuy source data
+  - Estimated effort: 4-5 hours (validation + corrections)
+
+- [ ] **Review and improve Company Stage classifications**
+  - Many companies auto-classified as "Unknown" by keyword heuristics in `enrich_with_google_maps.py`
+  - Others may be incorrectly classified (e.g., classified as "Startup" but actually "Commercial")
+  - Method: Manual review of company websites and descriptions
+  - Priority: Focus on companies marked "Unknown" first
+  - Estimated effort: 6-8 hours (manual research)
+
+- [ ] **Add Data Source tracking column** (optional enhancement)
+  - Currently no way to trace which companies came from Wikipedia vs BioPharmGuy vs Google Maps
+  - Add "Data Source" column: Wikipedia, BioPharmGuy, Google Maps API, Manual Entry
+  - Helps with future audits and data provenance
+  - Estimated effort: 2-3 hours (scripted + manual tagging)
+
+**Total Estimated Effort**: 18-26 hours
+
+**Success Criteria**:
+- 100% of companies have Bay Area addresses (CA only)
+- City column matches Address city field
+- All websites verified and accessible
+- <5% companies marked "Unknown" for Company Stage
+- Data source documented for all entries
+
+### 🗺️ Phase 4: Map Creation & Visualization (PLANNED)
 
 **Goal**: Create interactive, embeddable map with filtering capabilities
 
@@ -180,7 +242,7 @@ Located in `/scripts/` to showcase computational skills:
 - [ ] Set up filtering (by city, size, stage, tech focus)
 - [ ] Deploy/embed map
 
-### 📦 Phase 4: Repository Polish & Documentation (PLANNED)
+### 📦 Phase 5: Repository Polish & Documentation (PLANNED)
 
 **Goal**: Professional, well-organized GitHub repository
 
@@ -190,7 +252,7 @@ Located in `/scripts/` to showcase computational skills:
 - [ ] Clean commit history
 - [ ] Tag major versions (v1.0, v2.0, etc.)
 
-### 🚀 Phase 5: Launch & Maintenance (PLANNED)
+### 🚀 Phase 6: Launch & Maintenance (PLANNED)
 
 **Tasks**:
 - [ ] Soft launch (friends/colleagues feedback)
@@ -462,13 +524,14 @@ This section documents the analysis performed during Phase 1 when integrating th
 | Phase 0: Foundation | 2 hours | ✅ Complete |
 | Phase 1: Data Consolidation | 5-8 hours | ✅ Complete (8 hours actual) |
 | Phase 2: Data Enrichment (Careers Links) | 10-15 hours | 🔄 In Progress |
-| Phase 3: Map Creation | 8-12 hours | 📅 Planned |
-| Phase 4: Repository Polish | 3-5 hours | 📅 Planned |
-| **Total** | **28-42 hours** | **~50% Complete** |
+| Phase 3: Data Quality Cleanup | 18-26 hours | 🔄 Current (V3) |
+| Phase 4: Map Creation | 8-12 hours | 📅 Planned |
+| Phase 5: Repository Polish | 3-5 hours | 📅 Planned |
+| **Total** | **46-68 hours** | **~40% Complete** |
 
 ---
 
-## Future Enhancements (V3+)
+## Future Enhancements (V4+)
 
 Potential features for future iterations:
 
