@@ -30,7 +30,7 @@ Companies must be located in recognized Bay Area cities. [See full list in appen
 
 ## Phase 1: Company Discovery
 
-### Primary Sources (High-Yield)
+### Primary Sources (Simple & Fast)
 
 #### 1. Wikipedia Lists (~30 min)
 - [List of biotechnology companies](https://en.wikipedia.org/wiki/List_of_biotechnology_companies)
@@ -38,34 +38,14 @@ Companies must be located in recognized Bay Area cities. [See full list in appen
 - [Companies based in the San Francisco Bay Area](https://en.wikipedia.org/wiki/Category:Companies_based_in_the_San_Francisco_Bay_Area)
 - **Action:** Extract company names → validate location → add to staging list
 
-#### 2. Google Maps Search (~1-2 hours)
-**Search Queries by City:**
-```
-"biotech [city name]"
-"pharmaceutical [city name]"
-"biologics [city name]"
-"life sciences [city name]"
-```
-
-**Priority Cities:**
-- South San Francisco
-- San Francisco
-- Berkeley / Emeryville
-- Redwood City
-- Alameda / Oakland
-- Hayward
-- Mountain View / Palo Alto
-
-**Action:** For each result, record: Name, Address, Website (from Google Business Profile)
-
-#### 3. BioPharmGuy Directory (~30 min)
+#### 2. BioPharmGuy Directory (~30 min)
 - Visit [BioPharmGuy California listings](http://www.biopharmguy.com)
 - Filter by Bay Area counties
 - **Action:** Copy table → filter by city → deduplicate
 
-#### 4. LinkedIn Company Search (optional, ~30 min)
-- Search: Company type "biotech" OR "pharmaceutical" + Location filters
-- **Action:** Extract company names → verify via Google → add if Bay Area
+#### 3. LinkedIn Company Search (~30 min)
+- **Search:** Industry filter = "Biotechnology" OR "Pharmaceuticals" + Location filters (San Francisco Bay Area)
+- **Action:** Extract company names → verify website via Google → add if valid Bay Area location
 
 ### Secondary Sources (Lower Priority)
 - Industry conference attendee lists
@@ -92,7 +72,7 @@ Company Name, Website, City, Address, Company Stage, Focus Areas
 | **Website** | Valid HTTPS URL | `https://www.gene.com` |
 | **City** | Must be in Bay Area whitelist | `South San Francisco` |
 | **Address** | Full street address with ZIP | `1 DNA Way, South San Francisco, CA 94080` |
-| **Company Stage** | One of 6 defined categories | `Large Pharma` |
+| **Company Stage** | One of 8 defined categories | `Large Pharma` |
 | **Focus Areas** | 1-3 sentences from company website | See examples below |
 
 ### Address Validation Process
@@ -108,51 +88,260 @@ Company Name, Website, City, Address, Company Stage, Focus Areas
 
 ### Company Stage Categories
 
-**1. Large Pharma**
-- Multi-billion dollar revenue
-- Global operations
-- Diversified pipeline
-- **Examples:** Genentech, Amgen, AbbVie, Novartis
+The following 8 categories are mutually exclusive and easily verifiable using the criteria below.
 
-**2. Commercial Biotech**
-- ≥1 approved product generating revenue
-- Smaller than Big Pharma
-- **Examples:** BioMarin, Exelixis, Dynavax
+---
 
-**3. Clinical-Stage Biotech**
-- ≥1 asset in Phase I/II/III trials
-- No approved products yet
-- **Examples:** Alector, Arsenal Biosciences, Caribou
+#### 1. Large Pharma
 
-**4. Preclinical Biotech**
-- Pipeline in research/preclinical stage
-- No clinical trials yet
-- **Examples:** Profluent, Scribe Therapeutics, Metagenomi
+**Definition:** Major pharmaceutical corporations with global operations and either annual revenue >$5B OR public market cap >$50B.
 
-**5. Platform/Tools**
-- Primary business: tools, services, instruments, CDMO
-- Not developing own therapeutics
-- **Examples:** ATUM, Catalent, Unchained Labs
+**Quantified Thresholds:**
+- Annual revenue: **>$5 billion**
+- OR Public market cap: **>$50 billion**
+- AND Global operations (presence on multiple continents)
 
-**6. Research Institute**
-- Academic, government, or non-profit
-- **Examples:** Gladstone Institutes, JBEI, IGI
+**How to verify (step-by-step):**
+
+1. **Check if publicly traded:**
+   - Search: `[Company name] stock` or `[Company name] ticker symbol`
+   - If traded on NYSE/NASDAQ → Get market cap from [Google Finance](https://www.google.com/finance) or [Yahoo Finance](https://finance.yahoo.com)
+   - If market cap >$50B → **Large Pharma**
+
+2. **If not public or market cap <$50B, check revenue:**
+   - Search: `[Company name] revenue` or `[Company name] annual report`
+   - Sources (in priority order):
+     a. Wikipedia infobox (look for "Revenue" field)
+     b. Company's "Investors" or "About" page
+     c. Latest financial report (10-K for US public companies)
+   - If revenue >$5B → Check global presence (step 3)
+   - If revenue <$5B → **Not Large Pharma** (likely Commercial Biotech)
+
+3. **Check global presence:**
+   - Visit company website → "Locations" or "Global Operations" page
+   - Must have operations in ≥2 continents (not just sales offices)
+   - If global AND (market cap >$50B OR revenue >$5B) → **Large Pharma**
+
+**Data not available?**
+- If revenue/market cap data unavailable after checking all sources → Default to **Commercial Biotech** if they have approved products
+
+**Examples:**
+- Genentech (revenue ~$15B, owned by Roche)
+- Amgen (market cap ~$150B, revenue ~$28B)
+- AbbVie (market cap ~$330B, revenue ~$54B)
+- Novartis (market cap ~$200B, revenue ~$50B)
+
+---
+
+#### 2. Commercial Biotech
+
+**Definition:** Biotechnology companies with ≥1 FDA-approved product generating revenue, with annual revenue ≤$5B AND market cap ≤$50B.
+
+**Quantified Thresholds:**
+- Has ≥1 FDA-approved product (drugs, biologics, devices, diagnostics)
+- AND Annual revenue: **≤$5 billion**
+- AND Public market cap: **≤$50 billion** (if publicly traded)
+
+**How to verify (step-by-step):**
+
+1. **Check for FDA-approved products:**
+   - Visit company website → "Products" or "Pipeline" page
+   - Look for terms: "FDA approved," "marketed," "commercial product"
+   - **OR** Search [FDA Drugs@FDA database](https://www.accessdata.fda.gov/scripts/cder/daf/)
+   - **OR** Search: `[Company name] FDA approval`
+   - If NO approved products → Skip to Clinical-Stage or Preclinical
+
+2. **If has approved product(s), verify size:**
+   - Search: `[Company name] revenue` or `[Company name] market cap`
+   - Sources (in priority order):
+     a. Wikipedia infobox (Revenue/Market cap fields)
+     b. Google Finance / Yahoo Finance (for market cap)
+     c. Company "Investors" or "About" page
+     d. Latest 10-K or annual report
+
+3. **Apply thresholds:**
+   - If revenue >$5B OR market cap >$50B → **Large Pharma** (not Commercial)
+   - If revenue ≤$5B AND market cap ≤$50B → **Commercial Biotech**
+   - If financial data unavailable → Default to **Commercial Biotech** (has approved product but clearly not Big Pharma scale)
+
+**Data not available?**
+- If revenue/market cap not found after checking sources → Assume **Commercial Biotech** if company has approved product and doesn't appear to be Big Pharma
+
+**Examples:**
+- BioMarin (market cap ~$18B, revenue ~$2B)
+- Exelixis (market cap ~$8B, revenue ~$1.7B)
+- Dynavax (market cap ~$1.5B, revenue ~$300M)
+- Codexis (market cap ~$800M, revenue ~$150M)
+
+---
+
+#### 3. Clinical-Stage Biotech
+
+**Definition:** Companies with ≥1 therapeutic asset in Phase I, II, or III clinical trials, but no approved products yet.
+
+**Verification Criteria:**
+1. Website mentions "clinical trial" or "Phase I/II/III"
+2. **OR** Check [ClinicalTrials.gov](https://clinicaltrials.gov/) for active/recruiting trials
+3. **AND** No FDA-approved products
+
+**How to verify:**
+- Visit company website → Check "Pipeline" or "Programs" page
+- Search ClinicalTrials.gov for company name
+- Look for press releases about trial initiation/results
+
+**Examples:** Alector, Arsenal Biosciences, Caribou Biosciences
+
+---
+
+#### 4. Preclinical Biotech
+
+**Definition:** Companies developing therapeutics in discovery or preclinical stage, with no active clinical trials.
+
+**Verification Criteria:**
+1. Website describes therapeutic pipeline OR drug discovery platform
+2. **AND** No mention of clinical trials or FDA approvals
+3. **AND** Not primarily a tools/services provider
+
+**How to verify:**
+- Check website "Technology" or "Pipeline" page
+- Look for terms: "preclinical," "discovery," "research stage," "platform"
+- Verify NO clinical trials on ClinicalTrials.gov
+
+**Examples:** Profluent, Scribe Therapeutics, Metagenomi
+
+---
+
+#### 5. Platform/Tools
+
+**Definition:** Companies whose primary business is providing tools, services, instruments, or contract services (CDMO/CRO), not developing their own therapeutics.
+
+**Verification Criteria:**
+1. Website emphasizes "services," "tools," "platform," "CDMO," or "CRO"
+2. Business model is B2B (selling to other biotech/pharma companies)
+3. May have technology but not developing own drugs
+
+**How to verify:**
+- Check website → Look for "Services," "Products," or "Solutions"
+- Look for customer testimonials or case studies
+- Check if they offer contract services, instruments, or reagents
+
+**Examples:** ATUM, Catalent, Unchained Labs, Bio-Rad
+
+---
+
+#### 6. Academic
+
+**Definition:** University-affiliated research organizations or academic institutes.
+
+**Verification Criteria:**
+1. Website domain is `.edu`
+2. **OR** Explicitly states university affiliation (e.g., "UC Berkeley," "Stanford")
+3. Primary mission is research and education
+
+**How to verify:**
+- Check website domain
+- Look for "About" page mentioning university affiliation
+- Check for academic publications, faculty listings
+
+**Examples:** Innovative Genomics Institute (IGI), QB3 institutes
+
+---
+
+#### 7. Government
+
+**Definition:** Federal, state, or local government research labs and facilities.
+
+**Verification Criteria:**
+1. Website domain is `.gov`
+2. **OR** Explicitly run by government agency (DOE, NIH, USDA, etc.)
+3. Funded by government appropriations
+
+**How to verify:**
+- Check website domain
+- Look for "About" page mentioning DOE, NIH, USDA, etc.
+- Check for government logos/seals
+
+**Examples:** Joint BioEnergy Institute (DOE), USDA Western Regional Research Center, Lawrence Berkeley National Lab facilities
+
+---
+
+#### 8. Nonprofit
+
+**Definition:** Non-profit research organizations that are neither academic nor government.
+
+**Verification Criteria:**
+1. Website states "non-profit," "501(c)(3)," or "foundation"
+2. **OR** Domain is `.org` AND explicitly non-commercial mission
+3. Not affiliated with university or government
+
+**How to verify:**
+- Check website "About" page for nonprofit status
+- Look for 501(c)(3) designation or "non-profit" statement
+- Check funding sources (grants, donations vs. commercial revenue)
+
+**Examples:** Gladstone Institutes, Arcadia Science
+
+---
 
 ### Classification Decision Tree
 
+Use this flowchart to classify companies systematically:
+
 ```
-Is it a research institute? → Research Institute
-Is revenue >$5B and global? → Large Pharma
-Has approved products? → Commercial Biotech
-Has active clinical trials? → Clinical-Stage Biotech
-Has therapeutics pipeline (preclinical)? → Preclinical Biotech
-Provides services/tools only? → Platform/Tools
+1. Check domain:
+   - .edu → Academic
+   - .gov → Government
+
+2. Check website "About" page:
+   - States "non-profit" or "501(c)(3)" → Nonprofit
+   - University affiliation → Academic
+   - Government agency → Government
+
+3. Check business model:
+   - Primary business is services/tools/CDMO → Platform/Tools
+
+4. Check if has FDA-approved products:
+   - Visit website "Products" page OR search FDA.gov Drugs@FDA
+   - If NO approved products → Skip to step 6
+
+5. If has approved product(s), check company size:
+   - Get revenue from: Wikipedia OR Google search "[Company] revenue"
+   - Get market cap from: Google Finance OR Yahoo Finance
+
+   Decision:
+   - If revenue >$5B OR market cap >$50B → Large Pharma
+   - If revenue ≤$5B AND market cap ≤$50B → Commercial Biotech
+   - If data not available → Commercial Biotech (has product, not Big Pharma)
+
+6. Check clinical trials (for companies without approved products):
+   - Search ClinicalTrials.gov for company name
+   - If active clinical trials → Clinical-Stage Biotech
+
+7. Check pipeline (for companies with no products or trials):
+   - Website mentions therapeutic pipeline/drug discovery → Preclinical Biotech
+
+8. If still unclear → Default to Preclinical Biotech or Platform/Tools
 ```
 
 ### Special Cases
-- **Acquired companies:** Classify by original business, note acquisition in Focus Areas
-- **Pivoted companies:** Use current business model
-- **Uncertain stage:** Default to most conservative (e.g., Clinical → Preclinical if trials unclear)
+
+**Acquired Companies:**
+- Classify by original business category
+- Add "(Acquired by [Parent Company])" to Focus Areas
+- If operations ceased entirely, consider excluding from list
+
+**Pivoted Companies:**
+- Use current business model for classification
+- Note pivot in Focus Areas if significant
+
+**Multi-Business Companies:**
+- Classify by primary/majority business
+- If 50/50 split, use higher stage (e.g., Clinical over Preclinical)
+
+**Uncertain Cases:**
+- Default to most conservative category
+- Platform/Tools if business model unclear
+- Preclinical if development stage unclear
 
 ---
 
@@ -221,6 +410,162 @@ Before adding company to master CSV, verify:
 - [ ] Company Stage is appropriate
 - [ ] Focus Areas is informative and factual
 - [ ] No duplicate entry exists
+
+---
+
+## V3 Workflow: Batch Discovery & Enrichment
+
+### Workflow Overview
+
+This workflow is optimized for efficiency by **deduplicating early** to avoid wasting resources on companies already in the master list.
+
+```
+STAGE 1: Discovery (30 min)
+┌─────────────────┐
+│ Wikipedia Agent │──┐
+└─────────────────┘  │
+┌─────────────────┐  │
+│BioPharmGuy Agent│──┤──→ [Merge & Dedupe] ──→ raw.csv
+└─────────────────┘  │       (by name)
+┌─────────────────┐  │
+│ LinkedIn Agent  │──┘
+└─────────────────┘
+
+STAGE 1.5: Early Deduplication (10 min) ⚡ CRITICAL OPTIMIZATION
+┌──────────────┐   ┌───────────────────────┐
+│   raw.csv    │ + │ master companies.csv  │
+└──────────────┘   └───────────────────────┘
+         │                    │
+         └────────┬───────────┘
+                  ↓
+      [Dedupe by website domain + company name]
+                  ↓
+         new_companies.csv
+      (ONLY companies not in master)
+
+STAGE 2: Address Acquisition (1-2 hr)
+Process ONLY new_companies.csv
+┌──────────────────────┐
+│ Batch 1: Cos 1-50    │──┐
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Batch 2: Cos 51-100  │──┤──→ addresses_added.csv
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Batch 3: Cos 101-150 │──┘
+└──────────────────────┘
+
+STAGE 3: Classification (1-2 hr)
+Each batch visits website once to determine stage
+┌──────────────────────┐
+│ Classifier Batch 1   │──┐
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Classifier Batch 2   │──┤──→ classified.csv
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Classifier Batch 3   │──┘
+└──────────────────────┘
+
+STAGE 4: Focus Areas Extraction (1-2 hr)
+Each batch extracts focus areas from same website
+┌──────────────────────┐
+│ Extractor Batch 1    │──┐
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Extractor Batch 2    │──┤──→ enriched.csv
+└──────────────────────┘  │
+┌──────────────────────┐  │
+│ Extractor Batch 3    │──┘
+└──────────────────────┘
+
+STAGE 5: Merge to Master (5 min)
+┌──────────────────┐
+│  enriched.csv    │──┐
+└──────────────────┘  │
+┌──────────────────┐  │──→ [Append] ──→ master companies.csv (UPDATED)
+│ master companies │──┘
+│      .csv        │
+└──────────────────┘
+```
+
+### Why Early Deduplication Matters
+
+**Without early deduplication:**
+- 500 companies discovered in Stage 1
+- 300 already in master list
+- **Waste:** 300 × 3 stages = 900 redundant operations
+
+**With early deduplication (Stage 1.5):**
+- 500 companies discovered in Stage 1
+- **Immediately filter to 200 new companies**
+- Only process 200 × 3 stages = 600 operations
+- **Savings:** 300 operations avoided + faster execution
+
+### Stage Details
+
+#### Stage 1: Discovery (Parallel)
+- **Input:** None
+- **Output:** `raw.csv` (columns: Company Name, Website)
+- **Parallelization:** 3 agents run simultaneously
+- **Agent 1:** Scrape Wikipedia lists
+- **Agent 2:** Extract BioPharmGuy directory
+- **Agent 3:** LinkedIn company search
+- **Merge:** Combine all sources, dedupe by name/website
+
+#### Stage 1.5: Early Deduplication
+- **Input:** `raw.csv` + `master companies.csv`
+- **Output:** `new_companies.csv`
+- **Process:**
+  1. Extract domains from raw.csv websites
+  2. Extract domains from master companies.csv websites
+  3. Remove any raw.csv companies where domain matches master
+  4. Remove any raw.csv companies where name matches master (fuzzy match)
+  5. Result = ONLY truly new companies
+
+#### Stage 2: Address Acquisition (Batched)
+- **Input:** `new_companies.csv`
+- **Output:** `addresses_added.csv`
+- **Batch size:** 50-100 companies per agent
+- **Process:** Each agent visits company websites, extracts addresses, validates with Google Maps
+
+#### Stage 3: Classification (Batched by Column)
+- **Input:** `addresses_added.csv`
+- **Output:** `classified.csv`
+- **Batch size:** 50-100 companies per agent
+- **Process:** Each agent determines Company Stage using decision tree from Phase 3
+
+#### Stage 4: Focus Areas (Batched by Column)
+- **Input:** `classified.csv`
+- **Output:** `enriched.csv`
+- **Batch size:** 50-100 companies per agent
+- **Process:** Each agent extracts 1-3 sentence descriptions from websites
+
+#### Stage 5: Merge to Master
+- **Input:** `enriched.csv` + `master companies.csv`
+- **Output:** Updated `master companies.csv`
+- **Process:** Append new companies to master, sort by city/name
+
+### Estimated Timeline
+
+| Stage | Duration | Parallelization | Total Time |
+|-------|----------|-----------------|------------|
+| Stage 1: Discovery | 30 min | 3 agents | 30 min |
+| Stage 1.5: Deduplication | 10 min | 1 process | 10 min |
+| Stage 2: Addresses | 2 hr | 3 agents | 40 min |
+| Stage 3: Classification | 2 hr | 3 agents | 40 min |
+| Stage 4: Focus Areas | 2 hr | 3 agents | 40 min |
+| Stage 5: Merge | 5 min | 1 process | 5 min |
+| **TOTAL** | | | **~3 hours** |
+
+### Success Metrics
+
+After workflow completion:
+- [ ] `raw.csv` has 200-500 companies
+- [ ] `new_companies.csv` has <50% of raw.csv (good deduplication)
+- [ ] `enriched.csv` has 100% complete data (all columns filled)
+- [ ] `master companies.csv` increased by size of `new_companies.csv`
+- [ ] All new companies pass QC checklist (Phase 6)
 
 ---
 
@@ -293,8 +638,11 @@ San Rafael, Novato, Mill Valley, Larkspur, Corte Madera, Tiburon, Sausalito
 
 **V3.0 (2025-11-08)**
 - Initial methodology document
-- Simplified discovery process (70/10 rule)
-- Defined 6 company stage categories
+- Ultra-simplified discovery process (70/10 rule)
+- Primary sources: Wikipedia (3 lists), BioPharmGuy, LinkedIn only
+- Defined 8 company stage categories with verification criteria
+- Separated Academic, Government, and Nonprofit categories
+- Added step-by-step verification process for each category
 - Established QC checklist
 
 **V2.0** - Manual curation, basic CSV
