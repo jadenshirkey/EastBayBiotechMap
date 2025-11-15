@@ -1,0 +1,31 @@
+Company Name,Website,City,County,Category,Notes
+Genentech,https://www.gene.com,South San Francisco,San Mateo,easy_win,Clear biotech company with website
+Gilead Sciences,https://www.gilead.com,Foster City,San Mateo,easy_win,Major pharma company
+BioMarin Pharmaceutical,https://www.biomarin.com,San Rafael,Marin,easy_win,Well-known biotech
+Alnylam Pharmaceuticals Bay Area,https://www.alnylam.com,South San Francisco,San Mateo,easy_win,RNA therapeutics
+Ultragenyx Pharmaceutical,https://www.ultragenyx.com,Novato,Marin,easy_win,Rare disease biotech
+Revolution Medicines,https://www.revmed.com,Redwood City,San Mateo,easy_win,Oncology focused
+Arcus Biosciences,https://www.arcusbio.com,Hayward,Alameda,easy_win,Cancer immunotherapy
+Vir Biotechnology,https://www.vir.bio,San Francisco,San Francisco,easy_win,Infectious disease
+GRAIL,https://www.grail.com,Menlo Park,San Mateo,easy_win,Cancer detection
+Denali Therapeutics,https://www.denalitherapeutics.com,South San Francisco,San Mateo,easy_win,Neurodegenerative diseases
+BioLabs Tenant Alpha,https://www.bioalpha.io,South San Francisco,San Mateo,incubator,Tenant at QB3@953
+GenStart Inc,https://www.genstart.bio,San Francisco,San Francisco,incubator,Incubator tenant
+LabCentral West Startup,https://www.lcwestco.com,Berkeley,Alameda,incubator,Shared lab space
+IndieBio Company X,https://www.indiebiox.com,San Francisco,San Francisco,incubator,IndieBio accelerator tenant
+JLABS Resident Biotech,https://www.jlabsres.bio,South San Francisco,San Mateo,incubator,JLABS tenant
+Thermo Fisher Alias,https://corporate.thermofisher.com/life-tech,South San Francisco,San Mateo,alias_domain,Uses parent company domain
+Gene Network Solutions,https://gns.stanford.edu,Palo Alto,Santa Clara,alias_domain,University-hosted domain
+BioInnovate Research,https://bioinnovate.ucsf.edu,San Francisco,San Francisco,alias_domain,Academic subdomain
+Precision BioSciences Group,https://precisionbio.net,Emeryville,Alameda,alias_domain,Unusual TLD
+Synthetic Genomics Bay,https://syntheticgenomics.io,Redwood City,San Mateo,alias_domain,Non-com TLD
+Biotech Edge Cases Inc,https://www.biotechedge.com,South SF,San Mateo,city_edge,South SF variant
+Cell Therapy Innovations,https://www.celltherapy.com,S San Francisco,San Mateo,city_edge,S San Francisco abbreviation
+Advanced Biologics Co,https://www.advbio.com,San Fran,San Francisco,city_edge,San Fran variant
+NanoMedicine Labs,https://www.nanomed.com,Palo Alto,Santa Clara,city_edge,Palo Alto (proper format)
+BioSystems Research,https://www.biosysres.com,South San Francisco,San Mateo,city_edge,Correct South San Francisco
+Directory Listed Only,https://biopharmguy.com/links/company123,Berkeley,Alameda,aggregator_only,BioPharmGuy aggregator link
+LinkedIn Profile Bio,https://www.linkedin.com/company/biocompany,Oakland,Alameda,aggregator_only,LinkedIn aggregator
+Wikipedia Entry Biotech,https://en.wikipedia.org/wiki/BioCompany,San Jose,Santa Clara,aggregator_only,Wikipedia aggregator
+UC Davis Biotech Center,https://www.ucdavis.edu/biotech,Davis,Yolo,out_of_scope,Davis (out of area)
+Sacramento BioSciences,https://www.sacbio.com,Sacramento,Sacramento,out_of_scope,Sacramento (out of area)
