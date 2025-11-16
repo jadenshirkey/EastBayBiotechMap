@@ -21,6 +21,12 @@ import csv
 from datetime import datetime
 from pathlib import Path
 
+# Path constants (script-relative paths)
+SCRIPT_DIR = Path(__file__).parent
+REPO_ROOT = SCRIPT_DIR.parent
+DATA_WORKING = REPO_ROOT / 'data' / 'working'
+DATA_FINAL = REPO_ROOT / 'data' / 'final'
+
 # Wikipedia sources per methodology
 WIKIPEDIA_SOURCES = [
     {
@@ -229,7 +235,7 @@ def main():
     bay_area.sort(key=lambda x: x['company_name'])
 
     # Write to CSV
-    output_dir = Path('../data/working')
+    output_dir = DATA_WORKING
     output_dir.mkdir(parents=True, exist_ok=True)
     output_file = output_dir / 'wikipedia_companies.csv'
 

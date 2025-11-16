@@ -88,6 +88,7 @@ This map is designed for:
 
 ## How It Was Created
 
+<<<<<<< HEAD
 This map is built using the **V4.3 automated pipeline** with systematic data flow from extraction through validation:
 
 **Pipeline Overview (Stages A → F)**
@@ -106,6 +107,22 @@ This map is built using the **V4.3 automated pipeline** with systematic data flo
 
 **See [METHODOLOGY.md](METHODOLOGY.md) for detailed methodology.**
 **See [docs/V4.3_WORK_PLAN.md](docs/V4.3_WORK_PLAN.md) for complete implementation plan.**
+=======
+This dataset is built using an automated Python pipeline that processes over 1,300 companies:
+
+1. **Discovery**: Extracts companies from BioPharmGuy's industry directory and Wikipedia categories (~1,300 raw entries)
+2. **Deduplication**: Merges sources using normalized company names and domain matching to eliminate duplicates
+3. **Enrichment**: Retrieves addresses and websites via Google Maps Places API using a two-tier search strategy
+4. **Classification**: Categorizes companies into 8 development stages (Pre-clinical to Commercial) using keyword analysis
+5. **Validation**: Applies geographic boundaries (9-county Bay Area) and multi-layer quality checks
+
+The pipeline achieves **95% data completeness** with addresses verified for all companies.
+
+**Learn More:**
+- **Full Methodology**: See [METHODOLOGY.md](METHODOLOGY.md) for complete pipeline architecture and data collection procedures
+- **Run It Yourself**: See [scripts/README.md](scripts/README.md) for installation and usage instructions
+- **Quality Assurance**: Validated against 80+ Bay Area cities with duplicate detection and URL verification
+>>>>>>> b3ce82c (Document automated pipeline architecture and fix script paths)
 
 ## Data Currency
 

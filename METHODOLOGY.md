@@ -693,6 +693,206 @@ After workflow completion:
 
 ---
 
+## Automated Pipeline Architecture
+
+### Overview
+
+The East Bay Biotech Map uses a five-stage automated Python pipeline that transforms web data into a validated, enriched database. This pipeline implements the 70/10 principle: achieving 70% data completeness with 10% of the effort through smart automation.
+
+**Pipeline Philosophy:**
+- **Multi-source discovery**: Cast a wide net, then filter intelligently
+- **Progressive refinement**: Each stage improves data quality
+- **Safety first**: Backups, progressive saving, non-destructive updates
+- **Transparency**: Extensive logging at every stage
+
+### Stage 1: Discovery - Web Scraping
+
+The pipeline begins with two parallel extraction scripts that discover companies from complementary sources:
+
+#### Wikipedia Extraction (`extract_wikipedia_companies.py`)
+**Sources:**
+- List of biotechnology companies (structured table)
+- US pharmaceutical companies category page
+- San Francisco Bay Area companies category page
+
+**Algorithm:**
+1. Fetches pages using requests library with polite User-Agent header
+2. Parses HTML using BeautifulSoup with two strategies:
+   - **Tables**: Extracts company names from wikitable links, scans for Bay Area cities
+   - **Categories**: Filters out meta-pages, extracts company links from mw-category divs
+3. Applies permissive Bay Area filtering (defaults to inclusion for manual review)
+4. Outputs to `data/working/wikipedia_companies.csv`
+
+**Yield**: ~200 companies requiring manual validation
+
+#### BioPharmGuy Extraction (`extract_biopharmguy_companies.py`)
+**Source:** BioPharmGuy Northern California directory (pre-filtered to region)
+
+**Algorithm:**
+1. Parses HTML table with company/location/description columns
+2. Extracts company name from website link (second link in cell)
+3. Parses location format "CA - City Name" with abbreviation mapping:
+   - "South SF" → "South San Francisco"
+   - "SF" → "San Francisco"
+4. Applies strict Bay Area city validation (rejects non-Bay Area immediately)
+5. Captures "Focus Area" descriptions for classification
+6. Outputs to `data/working/biopharmguy_companies.csv`
+
+**Yield**: ~1,117 high-quality companies with cities and focus areas
+
+### Stage 2: Merge & Deduplication (`merge_company_sources.py`)
+
+This critical stage intelligently combines data from multiple sources while eliminating duplicates.
+
+**Input Priority Hierarchy:**
+1. **Existing database** (highest - manually validated)
+2. **BioPharmGuy** (medium - industry curated)
+3. **Wikipedia** (lowest - general encyclopedia)
+
+**Company Name Normalization:**
+The key to deduplication is aggressive normalization that catches variations:
+```
+"BioMarin Pharmaceutical Inc." → "biomarin pharmaceutical"
+"ATUM (DNA 2.0)" → "atum"
+"Genentech, LLC" → "genentech"
+```
+
+**Process:**
+1. Convert to lowercase
+2. Remove legal suffixes (Inc., LLC, Corp., Ltd., etc.) via regex
+3. Strip parenthetical notes
+4. Remove special characters
+5. Normalize whitespace
+
+**Three-Phase Merge:**
+1. **Preserve existing**: All existing companies added unconditionally
+2. **Add BioPharmGuy**: New companies not matching existing normalized names
+3. **Add Wikipedia**: Only if new AND has verified Bay Area city
+
+**Safety**: Creates timestamped backup before overwriting
+
+**Output**: Unified `data/final/companies.csv` (~1,130 deduplicated companies)
+
+### Stage 3: Google Maps Enrichment (`enrich_with_google_maps.py`)
+
+Fills missing addresses and websites using Google's authoritative Places API.
+
+**Two-Tier Search Strategy:**
+1. **Primary**: `"[Company] [City] CA biotech"` - qualifier helps disambiguate
+2. **Fallback**: `"[Company] [City] CA"` - broader search if first fails
+
+**API Usage:**
+- Places Search API → Place Details API (two-step process)
+- Fields retrieved: address, website, coordinates, phone
+- Cost: ~$0.049 per company ($24.50 per 500 companies)
+
+**Company Stage Classification:**
+Keyword-based heuristic classifier with 8 categories (checked in priority order):
+1. Acquired (keywords: "acquired by", "acquisition")
+2. Academic/Gov't ("university", "institute", ".edu", ".gov")
+3. Large Pharma ("fortune 500", "global pharmaceutical")
+4. Commercial-Stage ("FDA approved", "marketed product")
+5. Clinical-Stage ("phase 1/2/3", "clinical trial")
+6. Tools/Services/CDMO ("CDMO", "CRO", "reagents", "kits")
+7. Pre-clinical/Startup ("therapeutic", "drug", "therapy")
+8. Unknown (no matching keywords)
+
+**Safety Features:**
+- **Progressive saving**: Every 50 companies (protects expensive API calls)
+- **Rate limiting**: 0.1s delay between calls (10 req/sec max)
+- **Non-destructive**: Only fills empty fields, preserves manual entries
+- **Error resilience**: Individual failures don't crash entire run
+
+**Output**: Updated `data/final/companies.csv` + enrichment report
+
+### Stage 4: Data Quality Analysis (`data_quality_analysis.py`)
+
+Comprehensive audit identifying issues before publication.
+
+**Seven-Part Analysis:**
+
+1. **Schema Validation**: Verifies correct columns and order
+2. **Completeness Check**: Measures % filled per column (✅ >90%, ⚠️ 80-90%, ❌ <80%)
+3. **Geographic Validation**: Identifies companies outside 80+ Bay Area cities
+4. **URL Validation**: Checks proper URL format (scheme + netloc)
+5. **Company Stage Distribution**: Shows breakdown by development stage
+6. **Duplicate Detection**:
+   - By normalized name (case-insensitive)
+   - By domain (catches shared websites from acquisitions)
+7. **Address Quality**:
+   - Full street addresses (contains comma + digits)
+   - City-only addresses (missing street)
+   - Missing addresses (empty field)
+
+**Output**: Console report with categorized issues and actionable recommendations
+
+### Stage 5: Manual Review & Correction
+
+While automated, the pipeline identifies items requiring human judgment:
+- Companies outside Bay Area boundaries
+- Invalid or missing URLs
+- Duplicate entries requiring consolidation
+- Companies not found in Google Maps
+
+### Pipeline Performance
+
+**Execution Times:**
+- Wikipedia extraction: 10-30 seconds
+- BioPharmGuy extraction: 5-15 seconds
+- Merge & deduplication: <1 second
+- Google Maps enrichment: 50-500 seconds (rate limited)
+- Quality analysis: 1-2 seconds
+- **Total**: 1-10 minutes depending on enrichment scope
+
+**Data Volumes:**
+- Raw discovery: ~1,300 companies
+- After deduplication: ~1,130 companies
+- Enrichment success rate: 85-95%
+- Final completeness: >95% for all critical fields
+
+### Running the Pipeline
+
+**Prerequisites:**
+```bash
+# Install Python dependencies
+pip install -r scripts/requirements.txt
+
+# Set Google Maps API key (for enrichment)
+export GOOGLE_MAPS_API_KEY="your-key-here"
+```
+
+**Execution:**
+```bash
+# Stage 1: Extract (run in parallel)
+python3 scripts/extract_wikipedia_companies.py &
+python3 scripts/extract_biopharmguy_companies.py &
+wait
+
+# Stage 2: Merge
+python3 scripts/merge_company_sources.py
+
+# Stage 3: Enrich (optional, requires API key)
+python3 scripts/enrich_with_google_maps.py
+
+# Stage 4: Analyze
+python3 scripts/data_quality_analysis.py
+```
+
+For detailed script usage, see [scripts/README.md](scripts/README.md).
+
+### Key Design Patterns
+
+1. **Path Independence**: Scripts use `Path(__file__).parent` for reliability
+2. **Normalization Intelligence**: Aggressive name matching catches subtle duplicates
+3. **Source Prioritization**: Clear data quality hierarchy
+4. **Progressive Refinement**: Each stage adds value
+5. **API Respect**: Rate limiting, polite headers, timeout handling
+6. **Safety Mechanisms**: Backups, checkpoints, non-destructive updates
+
+The pipeline embodies the 70/10 principle: automate the tedious parts while preserving room for human expertise where it matters most.
+
+---
+
 ## Incremental Updates
 
 ### Adding New Companies
