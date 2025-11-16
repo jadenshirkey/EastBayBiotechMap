@@ -41,6 +41,8 @@ AGGREGATOR_ETLD1 = {
     "youtube.com",
     "pinterest.com",
     "angellist.com",
+    "biopharmguy.com",  # BioPharmGuy directory listings
+    "wikipedia.org",  # Wikipedia articles
 }
 
 # Known multi-tenant/incubator addresses in the Bay Area
