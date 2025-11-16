@@ -336,12 +336,13 @@ def extract_city_from_address(address: str) -> Optional[str]:
 def geofence_ok(address_or_city: str, lat: Optional[float] = None,
                 lng: Optional[float] = None) -> bool:
     """
-    Generous geofence check: accept if city matches OR coordinates within radius.
+    California-wide geofence check: accept any location in California.
 
     This is the primary geofencing function used across the V4.3 pipeline.
-    It accepts a location if EITHER:
-    - The city name (extracted from address or passed directly) is in the whitelist, OR
-    - The lat/lng coordinates are within 60 miles of San Francisco
+    It accepts a location if ANY of:
+    - The address contains "CA" or "California"
+    - The lat/lng coordinates are within California bounds (32°-42°N, 114°-124°W)
+    - The city name is in the Bay Area whitelist (legacy support)
 
     Args:
         address_or_city: Full address string or city name
@@ -349,45 +350,48 @@ def geofence_ok(address_or_city: str, lat: Optional[float] = None,
         lng: Optional longitude in decimal degrees
 
     Returns:
-        True if location passes geofence (city OR radius check), False otherwise
+        True if location is in California, False otherwise
 
     Examples:
-        >>> # City name match
+        >>> # California address
+        >>> geofence_ok("123 Main St, San Diego, CA 92101")
+        True
+        >>> # Bay Area city (legacy)
         >>> geofence_ok("South San Francisco")
         True
-        >>> # Full address with whitelisted city
-        >>> geofence_ok("1 DNA Way, South San Francisco, CA 94080")
+        >>> # Coordinates in California
+        >>> geofence_ok("Some address", lat=34.0522, lng=-118.2437)
         True
-        >>> # Coordinates within radius (Oakland)
-        >>> geofence_ok("Some address", lat=37.8044, lng=-122.2712)
-        True
-        >>> # Both out of scope
-        >>> geofence_ok("Davis")
-        False
-        >>> # Davis with coordinates
-        >>> geofence_ok("Davis, CA", lat=38.5449, lng=-121.7405)
+        >>> # Out of state
+        >>> geofence_ok("New York, NY")
         False
     """
     if not address_or_city and (lat is None or lng is None):
         return False
 
-    # Check 1: City name (either direct or extracted from address)
+    # Check 1: California address (contains CA or California)
     if address_or_city:
-        # Try as direct city name
+        address_upper = address_or_city.upper()
+        # Look for ", CA" or "California" in address
+        if re.search(r',\s*CA\b', address_or_city, re.IGNORECASE) or \
+           'CALIFORNIA' in address_upper:
+            return True
+
+        # Legacy: Bay Area city whitelist
         if is_in_bay_area_city(address_or_city):
             return True
 
-        # Try extracting city from address
         extracted_city = extract_city_from_address(address_or_city)
         if extracted_city and is_in_bay_area_city(extracted_city):
             return True
 
-    # Check 2: Coordinates within radius (if provided)
+    # Check 2: California bounding box (lat/lng)
+    # California bounds: roughly 32°-42°N, 114°-124.5°W
     if lat is not None and lng is not None:
-        if is_within_radius(lat, lng):
+        if 32.0 <= lat <= 42.5 and -124.5 <= lng <= -114.0:
             return True
 
-    # Neither check passed
+    # No California indicators found
     return False
 
 

@@ -269,7 +269,9 @@ def apply_geofence(companies):
     """
     Apply California geofence AFTER deduplication.
 
-    Accept if city appears to be in California.
+    Accept if:
+    - City appears to be in California, OR
+    - Company is from Wikipedia (no city but still CA-relevant)
 
     Returns: filtered companies, stats
     """
@@ -278,16 +280,20 @@ def apply_geofence(companies):
 
     for company in companies:
         city = company.get('City', '').strip()
+        source = company.get('source', '')
 
         # Check if in California (using CA-wide geography)
         if city and is_in_bay_area_city(city):  # This now uses CA-wide check
+            filtered.append(company)
+        # Also accept Wikipedia companies without cities (they're from CA categories)
+        elif source == 'Wikipedia' and not city:
             filtered.append(company)
         else:
             rejected_count += 1
             # Optionally log rejections (can be verbose)
             # print(f"  Filtered out: '{company['Company Name']}' in {city} (not in California)")
 
-    print(f"\nGeofence filtering (California-wide):")
+    print(f"\nGeofence filtering (California-wide + Wikipedia):")
     print(f"  - Passed CA geofence: {len(filtered)}")
     print(f"  - Filtered out (non-CA): {rejected_count}")
 
