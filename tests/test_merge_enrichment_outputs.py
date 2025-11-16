@@ -147,6 +147,23 @@ def test_deduplicate_companies_empty_names():
     assert result[0]['Company Name'] == 'Genentech'
 
 
+def test_deduplicate_companies_confidence_det_vs_confidence():
+    """Test deduplication handles Confidence_Det (PathA) vs Confidence (PathB)."""
+    companies = [
+        # PathA data uses Confidence_Det
+        {'Company Name': 'Genentech', 'Website': 'https://www.gene.com', 'Confidence_Det': '0.95', 'Validation_Source': 'PathA'},
+        # PathB data uses Confidence
+        {'Company Name': 'Genentech', 'Website': 'https://www.gene.com', 'Confidence': '0.85', 'Validation_Source': 'PathB'},
+    ]
+
+    result = deduplicate_companies(companies)
+
+    # Should keep PathA version with higher confidence (0.95 > 0.85)
+    assert len(result) == 1
+    assert result[0]['Validation_Source'] == 'PathA'
+    assert result[0]['Confidence_Det'] == '0.95'
+
+
 # ============================================================================
 # Test normalize_fields
 # ============================================================================

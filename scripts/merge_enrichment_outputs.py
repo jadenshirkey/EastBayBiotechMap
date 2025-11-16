@@ -89,9 +89,9 @@ def deduplicate_companies(companies: list) -> list:
             # Compare with existing
             existing = by_name[name_key]
 
-            # Prefer higher confidence
-            existing_conf = float(existing.get('Confidence', '0.0') or '0.0')
-            new_conf = float(company.get('Confidence', '0.0') or '0.0')
+            # Prefer higher confidence (check both Confidence and Confidence_Det)
+            existing_conf = float(existing.get('Confidence', existing.get('Confidence_Det', '0.0')) or '0.0')
+            new_conf = float(company.get('Confidence', company.get('Confidence_Det', '0.0')) or '0.0')
 
             if new_conf > existing_conf:
                 by_name[name_key] = company
