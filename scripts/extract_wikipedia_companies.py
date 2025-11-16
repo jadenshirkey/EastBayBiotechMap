@@ -18,14 +18,21 @@ Date: January 2025
 import requests
 from bs4 import BeautifulSoup
 import csv
+import sys
+import time
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import unquote
 
 # Path constants (script-relative paths)
 SCRIPT_DIR = Path(__file__).parent
 REPO_ROOT = SCRIPT_DIR.parent
 DATA_WORKING = REPO_ROOT / 'data' / 'working'
 DATA_FINAL = REPO_ROOT / 'data' / 'final'
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(REPO_ROOT))
+from utils.helpers import is_aggregator
 
 # Wikipedia sources per methodology
 WIKIPEDIA_SOURCES = [
@@ -119,6 +126,7 @@ def extract_from_table(soup):
 
                 companies.append({
                     'company_name': company_name,
+                    'website': '',  # Will be extracted later with API call
                     'source_url': wiki_url,
                     'city': city,
                     'notes': 'From Wikipedia table'
@@ -155,6 +163,7 @@ def extract_from_category(soup):
 
                 companies.append({
                     'company_name': company_name,
+                    'website': '',  # Will be extracted later with API call
                     'source_url': wiki_url,
                     'city': '',  # Categories don't usually include location
                     'notes': 'From Wikipedia category'
@@ -191,6 +200,101 @@ def deduplicate_companies(companies):
             deduplicated.append(company)
 
     return deduplicated
+
+
+def extract_website_from_wikipedia_api(page_title):
+    """
+    Extract official website from Wikipedia page using External Links API.
+
+    Returns the most likely official website URL, or empty string if not found.
+    """
+    try:
+        # Extract page name from full Wikipedia URL if needed
+        if 'wikipedia.org/wiki/' in page_title:
+            page_title = page_title.split('/wiki/')[-1]
+
+        # Wikipedia API endpoint
+        api_url = "https://en.wikipedia.org/w/api.php"
+        params = {
+            'action': 'parse',
+            'page': unquote(page_title),  # Decode URL-encoded titles
+            'prop': 'externallinks',
+            'format': 'json',
+            'formatversion': 2
+        }
+
+        # Include User-Agent header (required by Wikipedia API)
+        headers = {
+            'User-Agent': 'EastBayBiotechMap/1.0 (Educational Research; https://github.com/jadenshirkey/EastBayBiotechMap)'
+        }
+
+        response = requests.get(api_url, params=params, headers=headers, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+
+        if 'error' in data:
+            return ''
+
+        if 'parse' not in data:
+            return ''
+
+        external_links = data['parse'].get('externallinks', [])
+
+        # Additional patterns to exclude (beyond what is_aggregator handles)
+        exclude_patterns = [
+            'archive.org', 'web.archive.org',  # Archive sites
+            'doi.org', 'pubmed', 'ncbi.nlm',  # Scientific references
+            'sec.gov', 'edgar',  # SEC filings
+            'reuters.com', 'bloomberg.com', 'forbes.com', 'fortune.com',  # News sites
+            'nytimes.com', 'wsj.com', 'washingtonpost.com',
+            'semanticscholar.org', 'scholar.google',  # Academic
+            'github.com', 'gitlab.com',  # Code repositories (usually not company sites)
+            '.pdf', '.doc', '.xls',  # Direct file downloads
+            'geohack.toolforge.org',  # Geographic coordinates tool
+            '/media/', '/news/', '/press/',  # Skip deep links to news sections
+            'marketwatch.com', 'yahoo.com'  # Financial news
+        ]
+
+        # Collect all potentially valid websites
+        potential_websites = []
+        for link in external_links:
+            url = link if isinstance(link, str) else link.get('url', '')
+
+            # Skip if empty
+            if not url:
+                continue
+
+            # Skip aggregators using our helper
+            if is_aggregator(url):
+                continue
+
+            # Skip excluded patterns
+            if any(pattern in url.lower() for pattern in exclude_patterns):
+                continue
+
+            potential_websites.append(url)
+
+        # Strategy: prefer root domains over deep links
+        # Extract base domains and return the first one that looks like a company site
+        for url in potential_websites:
+            # Extract domain from URL
+            from urllib.parse import urlparse
+            parsed = urlparse(url)
+
+            # Prefer URLs that are at the root or have simple paths like /about-us
+            path = parsed.path.rstrip('/')
+            if path == '' or path in ['/about', '/about-us', '/company', '/home']:
+                return url
+
+        # If no root domain found, return the first valid URL
+        if potential_websites:
+            return potential_websites[0]
+
+        return ''
+
+    except Exception as e:
+        # Silently handle errors - we'll just not have a website for this company
+        return ''
 
 
 def main():
@@ -231,6 +335,27 @@ def main():
     bay_area = [c for c in deduplicated if is_bay_area_company(c['company_name'], c['city'])]
     print(f"Bay Area candidates: {len(bay_area)} companies")
 
+    # Extract websites from Wikipedia pages
+    print("\nExtracting websites from Wikipedia pages...")
+    print("(This may take a minute due to rate limiting)")
+    websites_found = 0
+    for i, company in enumerate(bay_area):
+        # Extract website using Wikipedia API
+        website = extract_website_from_wikipedia_api(company['source_url'])
+        if website:
+            company['website'] = website
+            websites_found += 1
+
+        # Progress indicator every 25 companies
+        if (i + 1) % 25 == 0:
+            print(f"  Processed {i + 1}/{len(bay_area)} companies...")
+
+        # Rate limiting: 0.1 second delay between API calls
+        time.sleep(0.1)
+
+    print(f"  ✓ Found websites for {websites_found}/{len(bay_area)} companies ({100*websites_found/len(bay_area):.1f}%)")
+    print()
+
     # Sort by company name
     bay_area.sort(key=lambda x: x['company_name'])
 
@@ -240,12 +365,13 @@ def main():
     output_file = output_dir / 'wikipedia_companies.csv'
 
     with open(output_file, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=['Company Name', 'Source URL', 'City', 'Notes'])
+        writer = csv.DictWriter(f, fieldnames=['Company Name', 'Website', 'Source URL', 'City', 'Notes'])
         writer.writeheader()
 
         for company in bay_area:
             writer.writerow({
                 'Company Name': company['company_name'],
+                'Website': company.get('website', ''),
                 'Source URL': company['source_url'],
                 'City': company['city'],
                 'Notes': company['notes']
@@ -256,8 +382,9 @@ def main():
     print()
     print("Next steps:")
     print("1. Review the CSV and remove non-biotech companies")
-    print("2. Manually add: Website, Address, Company Stage, Focus Areas")
-    print("3. Merge with existing data/final/companies.csv")
+    print("2. Merge with BioPharmGuy data using merge_company_sources.py")
+    print("3. Companies with websites can use Path A enrichment (automated)")
+    print("4. Companies without websites will use Path B enrichment (AI-assisted)")
     print()
 
 
