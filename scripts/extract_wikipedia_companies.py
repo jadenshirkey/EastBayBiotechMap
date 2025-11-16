@@ -94,7 +94,7 @@ def fetch_wikipedia_page(url):
         return None
 
 
-def extract_from_table(soup):
+def extract_from_table(soup, source_name='Wikipedia table'):
     """Extract companies from Wikipedia table format."""
     companies = []
     tables = soup.find_all('table', class_='wikitable')
@@ -129,13 +129,13 @@ def extract_from_table(soup):
                     'website': '',  # Will be extracted later with API call
                     'source_url': wiki_url,
                     'city': city,
-                    'notes': 'From Wikipedia table'
+                    'notes': f'From {source_name}'
                 })
 
     return companies
 
 
-def extract_from_category(soup):
+def extract_from_category(soup, source_name='Wikipedia category'):
     """Extract companies from Wikipedia category page."""
     companies = []
 
@@ -166,7 +166,7 @@ def extract_from_category(soup):
                     'website': '',  # Will be extracted later with API call
                     'source_url': wiki_url,
                     'city': '',  # Categories don't usually include location
-                    'notes': 'From Wikipedia category'
+                    'notes': f'From {source_name}'
                 })
 
     return companies
@@ -258,7 +258,29 @@ def extract_website_from_wikipedia_api(page_title):
             'drugs.com', 'drugbank.ca',  # Drug databases
             'bizjournals.com', 'fiercebiotech.com',  # Industry news
             'pharmaintelligence.informa.com',  # Industry database
-            'google.com/search', 'jstor.org'  # Search engines
+            'google.com/search', 'jstor.org',  # Search engines
+            # Additional generalizable exclusions
+            'answers.com',  # Q&A sites
+            'biospace.com/article',  # Biotech news articles
+            'genengnews.com',  # Genetic engineering news
+            '.edu/',  # University sites (columbia.edu, etc.)
+            'isin.toolforge.org',  # Stock identifier tools
+            'indexes.', 'index.',  # Index/ranking sites (indexes.nasdaqomx.com)
+            '/article/', '/releases/',  # Article/press release URLs
+            '/news-posts/', '/news/',  # News paths
+            'awards.com', 'rankings.',  # Award/ranking sites
+            'oxfordjournals.org',  # Academic journals
+            'startribune.com', 'chicagotribune.com',  # Local news
+            'pharmaceutical-technology.com',  # Industry news sites
+            'abcnews.go.com', 'newsweek.com',  # Major news outlets
+            'connvoters.com',  # Voter registration (edge case)
+            'springeducationgroup.com',  # Unrelated companies
+            'auspostalhistory.com',  # Historical archives
+            'translateals.com',  # Research sites (not company)
+            'therapeuticsaccelerator.org',  # Non-profit initiatives
+            'sandp500changes',  # Stock tracking sites
+            'cmoleadershipawards',  # Award sites
+            'geekwire.com'  # Tech news
         ]
 
         # Collect all potentially valid websites
@@ -343,9 +365,9 @@ def main():
 
         # Extract based on page type
         if source['type'] == 'table':
-            companies = extract_from_table(soup)
+            companies = extract_from_table(soup, source_name=source['name'])
         else:  # category
-            companies = extract_from_category(soup)
+            companies = extract_from_category(soup, source_name=source['name'])
 
         print(f"  ✓ Extracted {len(companies)} companies\n")
         all_companies.extend(companies)
