@@ -2378,3 +2378,436 @@ INFO:enrichment.clinicaltrials_client:CLINICAL: Starlight Cardiovascular -> 1 tr
 INFO:enrichment.clinicaltrials_client:NO TRIALS: Stason Pharmaceuticals
 INFO:enrichment.clinicaltrials_client:NO TRIALS: Stately Bio
 INFO:enrichment.clinicaltrials_client:NO TRIALS: Stellartech Research
+INFO:enrichment.clinicaltrials_client:NO TRIALS: StemCardia
+INFO:enrichment.clinicaltrials_client:Progress: 2140/2483 (86.2%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: StemCyte -> 5 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Stemedica Cell Technologies -> 5 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Steris Applied Sterilization Technologies
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Sterogene Bioseparations
+INFO:enrichment.clinicaltrials_client:CLINICAL: Stiefel Laboratories -> 4 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Strategikon Pharma
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Strateos
+INFO:enrichment.clinicaltrials_client:NO TRIALS: StrokeDx
+INFO:enrichment.clinicaltrials_client:CLINICAL: Stroma Medical -> 4 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Structure Therapeutics -> 6 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2150/2483 (86.6%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: Stryker -> 9 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Studylog
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Subsense
+INFO:enrichment.clinicaltrials_client:CLINICAL: Subtle Medical -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Summit Therapeutics -> 7 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Summit Toxicology
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Sun Valley Research Center
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Suneris
+INFO:enrichment.clinicaltrials_client:CLINICAL: Sunovion -> 10 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Supercede Therapeutics
+INFO:enrichment.clinicaltrials_client:Progress: 2160/2483 (87.0%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Superfluid Dx
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Superior BioDiagnostics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Supira Medical -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Surf Bio
+INFO:enrichment.clinicaltrials_client:CLINICAL: Surface Ophthalmics -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Surge -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Surrozen
+INFO:enrichment.clinicaltrials_client:CLINICAL: Sutra Medical -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Sutro Biopharma -> 7 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Suture Ease
+INFO:enrichment.clinicaltrials_client:Progress: 2170/2483 (87.4%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Swaza
+INFO:enrichment.clinicaltrials_client:CLINICAL: Swing Therapeutics -> 6 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Switch Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Sydnexis -> 1 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Synageva
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Synchronicity Pharma
+INFO:enrichment.clinicaltrials_client:CLINICAL: Synedgen -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Synfini
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Synlico
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Synova Life Sciences
+INFO:enrichment.clinicaltrials_client:Progress: 2180/2483 (87.8%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Synthasome
+INFO:enrichment.clinicaltrials_client:NO TRIALS: SyntheX
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Synthego
+INFO:enrichment.clinicaltrials_client:CLINICAL: Synthekine -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Synthetic Design Lab
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Synvivia
+INFO:enrichment.clinicaltrials_client:NO TRIALS: System Biosciences
+INFO:enrichment.clinicaltrials_client:CLINICAL: T&L Biotechnology -> 5 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: T-Cure Bioscience -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: TAE Life Sciences -> 3 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2190/2483 (88.2%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TE Connectivity
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TEGA Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: THINK Surgical -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: TORL BioTherapeutics -> 6 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: TRIO Pharmaceuticals -> 4 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TRexBio
+INFO:enrichment.clinicaltrials_client:CLINICAL: TTI Medical -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tactogen
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tahoe Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Takara Bio USA
+INFO:enrichment.clinicaltrials_client:Progress: 2200/2483 (88.6%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tallac Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Talphera -> 18 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tandem Diabetes -> 7 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tanvex BioPharma -> 2 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Taran Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Targazyme -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Target Discovery -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tarsus Pharmaceuticals -> 10 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tasman Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Teal Health -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2210/2483 (89.0%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TechImmune
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Teco Diagnostics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tegmine Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Teikoku Pharma -> 11 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Teknova
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Telesair
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Telesis Bio
+INFO:enrichment.clinicaltrials_client:CLINICAL: Telios Pharma -> 11 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Telix Pharmaceuticals -> 16 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Telo Therapeutics
+INFO:enrichment.clinicaltrials_client:Progress: 2220/2483 (89.4%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tempero Bio -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tempest Therapeutics -> 3 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tempo Bioscience
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tempo Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tenaya Therapeutics -> 4 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tenex Health -> 1 trials, Unknown
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tenon Medical -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tentarix Biotherapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tenvie Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Teon Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2230/2483 (89.8%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TeraPore Technologies
+INFO:enrichment.clinicaltrials_client:CLINICAL: Terns Pharmaceuticals -> 5 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Terray Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Terremoto Biosciences -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TeselaGen Biotechnology
+INFO:enrichment.clinicaltrials_client:CLINICAL: TesoRx -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tetrous
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tetsuwan Scientific
+INFO:enrichment.clinicaltrials_client:NO TRIALS: The MT Group
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TheraDep Technologies
+INFO:enrichment.clinicaltrials_client:Progress: 2240/2483 (90.2%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: TheraNova -> 13 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Theracyte
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Theragene Pharmaceuticals
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Theragent
+INFO:enrichment.clinicaltrials_client:CLINICAL: Therapeutic Solutions International -> 3 trials, Unknown
+INFO:enrichment.clinicaltrials_client:CLINICAL: Therapeutics Inc. -> 17 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Theravance Biopharma -> 10 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Therini Bio -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Thermo Fisher -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Thermopeutix
+INFO:enrichment.clinicaltrials_client:Progress: 2250/2483 (90.6%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Therna Biosciences
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Third Wave Analytics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Thomas Advanced Medical -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Thrive Informatix
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tidewave Bio
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tierra Biosciences
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Timberlyne Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Ting Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tioga Cardiovascular -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tioga Research -> 4 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2260/2483 (91.0%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TippingPoint Biosciences
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tizona Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: TopAlliance Biosciences -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Topos Bio
+INFO:enrichment.clinicaltrials_client:CLINICAL: Toragen -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Toro Neurovascular -> 1 trials, Unknown
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tosk -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Totus Medicines -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tr1X -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Trace Neuroscience
+INFO:enrichment.clinicaltrials_client:Progress: 2270/2483 (91.4%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tradewind Bioscience
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tranquis Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Transcripta Bio
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Translucence Biosystems
+INFO:enrichment.clinicaltrials_client:CLINICAL: Transposon Therapeutics -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Travere Therapeutics -> 14 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Treeline Biosciences -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Trefoil Therapeutics -> 4 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Trellis Bioscience -> 4 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Trepte Biostorage
+INFO:enrichment.clinicaltrials_client:Progress: 2280/2483 (91.8%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Trestle Biotherapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Trethera -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Trevie Research
+INFO:enrichment.clinicaltrials_client:CLINICAL: TriArm Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TriLink Biotechnologies
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TriMed
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TriWest Research Associates
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Trident Bioscience
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Trilo Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Trilobio
+INFO:enrichment.clinicaltrials_client:Progress: 2290/2483 (92.2%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Triplebar
+INFO:enrichment.clinicaltrials_client:CLINICAL: Trishula Therapeutics -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: True Diagnostics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: TrueBinding -> 7 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TrueRelief
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Trukera Medical
+INFO:enrichment.clinicaltrials_client:CLINICAL: Trutino Biosciences -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Truvian Sciences
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Tulavi Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TumorGen
+INFO:enrichment.clinicaltrials_client:Progress: 2300/2483 (92.6%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: Turn Biotechnologies -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Turn Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Twist Bioscience
+INFO:enrichment.clinicaltrials_client:NO TRIALS: TwoStep Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Tyra Biosciences -> 6 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: UTAK Laboratories
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Uh-Oh Labs
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Ultima Genomics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Ultragenyx Pharmaceutical -> 15 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Unchained Labs
+INFO:enrichment.clinicaltrials_client:Progress: 2310/2483 (93.0%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: Unicycive Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Uniquity Bio
+INFO:enrichment.clinicaltrials_client:CLINICAL: United Biologics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: United Pharmaceutical -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Universal Brain
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Universal Sequencing Technology
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Universal Stabilization Technologies (Vitrilife)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Univfy
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Unlearn
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Unnatural Products
+INFO:enrichment.clinicaltrials_client:Progress: 2320/2483 (93.4%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Until Labs
+INFO:enrichment.clinicaltrials_client:CLINICAL: Uptake Medical -> 10 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Ur24Technology
+INFO:enrichment.clinicaltrials_client:NO TRIALS: UroViu
+INFO:enrichment.clinicaltrials_client:NO TRIALS: VIAL Dermatology CRO
+INFO:enrichment.clinicaltrials_client:CLINICAL: VIAN Therapeutics -> 2 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: VIVUS -> 19 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: VLP Biotech -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: VM Oncology -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: VST Bio
+INFO:enrichment.clinicaltrials_client:Progress: 2330/2483 (93.8%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: VahatiCor -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vala Sciences
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Valar Labs
+INFO:enrichment.clinicaltrials_client:CLINICAL: Valencia Technologies -> 6 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Validation Systems
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Valitor
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Valora Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vantis Vascular
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Varda
+INFO:enrichment.clinicaltrials_client:CLINICAL: Varian Medical Systems -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2340/2483 (94.2%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vasa Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: VasoRx
+INFO:enrichment.clinicaltrials_client:CLINICAL: VaxCyte -> 5 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vaxart -> 8 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vaxiion Therapeutics -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vector Laboratories
+INFO:enrichment.clinicaltrials_client:NO TRIALS: VedaBio
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Veebot
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Veeva Systems
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vektor Medical -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2350/2483 (94.6%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Velorum Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Venova Medical -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Venquis Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Ventoux Biosciences
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Ventris Medical
+INFO:enrichment.clinicaltrials_client:CLINICAL: Ventrix -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Ventyx Biosciences -> 3 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vera Therapeutics -> 6 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Veracyte -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Verana Health
+INFO:enrichment.clinicaltrials_client:Progress: 2360/2483 (95.0%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: Verge Genomics -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: VeriSIM Life
+INFO:enrichment.clinicaltrials_client:CLINICAL: Verily Life Sciences -> 11 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Verndari
+INFO:enrichment.clinicaltrials_client:CLINICAL: Versa Vascular -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: VersaPeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Verseon
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vertex -> 17 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vertos Medical -> 6 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vesicor Therapeutics
+INFO:enrichment.clinicaltrials_client:Progress: 2370/2483 (95.4%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: ViCardia Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: ViQi
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Via Nova Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: ViaLase -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Viage Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Viant Medical
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vibrant America Clinical Laboratory -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vibrato Medical -> 4 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vicinitas Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: VictoGen
+INFO:enrichment.clinicaltrials_client:Progress: 2380/2483 (95.9%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Videra Surgical
+INFO:enrichment.clinicaltrials_client:CLINICAL: Viking Therapeutics -> 9 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vir Biotechnology -> 13 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vironexis Biotherapeutics -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Virtuoso Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Visby Medical -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Viscient Biosciences
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Viseon
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Visgenx
+INFO:enrichment.clinicaltrials_client:NO TRIALS: VisiCELL Medical
+INFO:enrichment.clinicaltrials_client:Progress: 2390/2483 (96.3%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vista.ai
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vistagen Therapeutics -> 11 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: VitalConnect -> 1 trials, Unknown
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vitalex Biosciences
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vivace Therapeutics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vivani Medical -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vivera Pharmaceuticals
+INFO:enrichment.clinicaltrials_client:CLINICAL: Vividion Therapeutics -> 4 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vivreon Biosciences
+INFO:enrichment.clinicaltrials_client:CLINICAL: Viz.ai -> 6 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2400/2483 (96.7%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Voiant Medical
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vonova.io
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vulcan Biologics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Vybion
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Wainamics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Wakunaga Pharmaceutical
+INFO:enrichment.clinicaltrials_client:CLINICAL: Wallaby Medical -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: West Coast Research -> 1 trials, Unknown
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Wield Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: WinSanTor -> 4 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2410/2483 (97.1%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Wincal BioPharm
+INFO:enrichment.clinicaltrials_client:NO TRIALS: WuXi Apptec
+INFO:enrichment.clinicaltrials_client:NO TRIALS: X-Therma
+INFO:enrichment.clinicaltrials_client:NO TRIALS: XCellAssay
+INFO:enrichment.clinicaltrials_client:NO TRIALS: XENSE
+INFO:enrichment.clinicaltrials_client:CLINICAL: XII Medical -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Xaira Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Xcell Biosciences
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Xcell Science
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Xenco Medical
+INFO:enrichment.clinicaltrials_client:Progress: 2420/2483 (97.5%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: Xencor -> 15 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: XiltriX
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Ximedica
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Xosomix
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Xyphos
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Y-Trap
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Yatiri Bio
+INFO:enrichment.clinicaltrials_client:NO TRIALS: YenZym Antibodies
+INFO:enrichment.clinicaltrials_client:CLINICAL: YourChoice Therapeutics -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Yuvan Research
+INFO:enrichment.clinicaltrials_client:Progress: 2430/2483 (97.9%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: ZAP Surgical
+INFO:enrichment.clinicaltrials_client:CLINICAL: ZKR Orthopedics -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: ZMI Pharma
+INFO:enrichment.clinicaltrials_client:CLINICAL: ZabBio -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Zafrens
+INFO:enrichment.clinicaltrials_client:CLINICAL: Zai Lab -> 14 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: ZebraSci
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Zeda
+INFO:enrichment.clinicaltrials_client:NO TRIALS: ZefSci
+INFO:enrichment.clinicaltrials_client:CLINICAL: Zenflow -> 5 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2440/2483 (98.3%)
+INFO:enrichment.clinicaltrials_client:CLINICAL: Zenith Epigenetics -> 6 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Zenobia Fragments
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Zenobia Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: Zenshine Pharmaceuticals -> 15 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Zensun Sci & Tech -> 10 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: Zentalis Pharmaceuticals -> 11 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Zeon Systems
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Zerigo Health
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Zeto
+INFO:enrichment.clinicaltrials_client:CLINICAL: Zoll -> 14 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:Progress: 2450/2483 (98.7%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: ZoneOne Pharma
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Zyagen
+INFO:enrichment.clinicaltrials_client:NO TRIALS: ZymagenX
+INFO:enrichment.clinicaltrials_client:NO TRIALS: Zymo Research
+INFO:enrichment.clinicaltrials_client:CLINICAL: aTyr Pharma -> 9 trials, Public/Late-Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: ashibio -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: atHeart Medical -> 2 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: eLum Technologies
+INFO:enrichment.clinicaltrials_client:NO TRIALS: eMed Technologies
+INFO:enrichment.clinicaltrials_client:NO TRIALS: eXoZymes
+INFO:enrichment.clinicaltrials_client:Progress: 2460/2483 (99.1%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: enVVeno Medical
+INFO:enrichment.clinicaltrials_client:NO TRIALS: f5 Therapeutics
+INFO:enrichment.clinicaltrials_client:NO TRIALS: fluidIQ
+INFO:enrichment.clinicaltrials_client:NO TRIALS: iBio
+INFO:enrichment.clinicaltrials_client:NO TRIALS: iCRAS
+INFO:enrichment.clinicaltrials_client:NO TRIALS: iLeukon Therapeutics
+INFO:enrichment.clinicaltrials_client:CLINICAL: iNanoBio -> 1 trials, Unknown
+INFO:enrichment.clinicaltrials_client:CLINICAL: iQ Biosciences -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: iRhythm Technologies -> 4 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: iSono Health
+INFO:enrichment.clinicaltrials_client:Progress: 2470/2483 (99.5%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: iXCells Biotechnologies
+INFO:enrichment.clinicaltrials_client:NO TRIALS: insitro
+INFO:enrichment.clinicaltrials_client:CLINICAL: iota Biosciences -> 1 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:NO TRIALS: iuvo BioScience
+INFO:enrichment.clinicaltrials_client:CLINICAL: jCyte -> 4 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:CLINICAL: joimax -> 2 trials, Unknown
+INFO:enrichment.clinicaltrials_client:NO TRIALS: mFluiDx
+INFO:enrichment.clinicaltrials_client:NO TRIALS: nRichDX
+INFO:enrichment.clinicaltrials_client:NO TRIALS: nanoComposix
+INFO:enrichment.clinicaltrials_client:NO TRIALS: neuro42
+INFO:enrichment.clinicaltrials_client:Progress: 2480/2483 (99.9%)
+INFO:enrichment.clinicaltrials_client:NO TRIALS: resistanceBio
+INFO:enrichment.clinicaltrials_client:NO TRIALS: tag.bio
+INFO:enrichment.clinicaltrials_client:CLINICAL: xCures -> 6 trials, Clinical Stage
+INFO:enrichment.clinicaltrials_client:============================================================
+INFO:enrichment.clinicaltrials_client:CLINICAL TRIALS ENRICHMENT COMPLETE
+INFO:enrichment.clinicaltrials_client:============================================================
+INFO:enrichment.clinicaltrials_client:Total processed: 2483
+INFO:enrichment.clinicaltrials_client:Companies with trials: 1556
+INFO:enrichment.clinicaltrials_client:Clinical stage identified: 1023
+INFO:enrichment.clinicaltrials_client:Errors: 0
+INFO:enrichment.clinicaltrials_client:Clinical trials coverage: 43.4%
+INFO:__main__:Getting initial classification statistics...
+INFO:__main__:
+================================================================================
+INFO:__main__:EXHAUSTIVE ENRICHMENT FINAL REPORT
+INFO:__main__:================================================================================
+INFO:__main__:
+Execution Time: 7h 35m 3s
+INFO:__main__:
+--------------------------------------------------------------------------------
+INFO:__main__:PROCESSING STATISTICS
+INFO:__main__:--------------------------------------------------------------------------------
+INFO:__main__:Total companies in database: 2491
+INFO:__main__:SEC EDGAR processed: 0
+INFO:__main__:  - Filings found: 0
+INFO:__main__:  - Public companies identified: 0
+INFO:__main__:ClinicalTrials processed: 2483
+INFO:__main__:  - Trials found: 1556
+INFO:__main__:  - Clinical stage identified: 1023
+INFO:__main__:Errors encountered: 0
+INFO:__main__:
+--------------------------------------------------------------------------------
+INFO:__main__:CLASSIFICATION IMPROVEMENT
+INFO:__main__:--------------------------------------------------------------------------------
+INFO:__main__:
+BEFORE ENRICHMENT:
+INFO:__main__:  Clinical Stage           :    3 (  0.1%)
+INFO:__main__:  Public                   :  423 ( 17.0%)
+INFO:__main__:  Public/Late-Stage        :    1 (  0.0%)
+INFO:__main__:  Unclassified             : 2064 ( 82.9%)
+INFO:__main__:
+AFTER ENRICHMENT:
+INFO:__main__:  Clinical Stage           :  721 ( 28.9%)
+INFO:__main__:  Public                   :  600 ( 24.1%)
+INFO:__main__:  Public/Late-Stage        :  306 ( 12.3%)
+INFO:__main__:  Unclassified             :  864 ( 34.7%)
+INFO:__main__:
+IMPROVEMENT:
+INFO:__main__:  Companies newly classified: 1200
+INFO:__main__:  Unclassified companies reduced by: 1200 (58.1%)
+INFO:__main__:  Unclassified percentage reduced from 82.9% to 34.7%
+INFO:__main__:
+Report saved to: logs/enrichment_report_20251116_124943.txt
+INFO:__main__:
+================================================================================
+INFO:__main__:EXHAUSTIVE ENRICHMENT COMPLETE
+INFO:__main__:================================================================================
