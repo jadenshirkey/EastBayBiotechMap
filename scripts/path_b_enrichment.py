@@ -68,7 +68,7 @@ MANUAL_QUEUE = WORKING_DIR / "manual_review_queue_path_b.csv"
 ANTHROPIC_USAGE_REPORT = WORKING_DIR / "anthropic_usage_report.txt"
 
 # Anthropic configuration
-ANTHROPIC_MODEL = "claude-3-5-sonnet-20241022"
+ANTHROPIC_MODEL = "claude-sonnet-4-5-20250929"  # Claude Sonnet 4.5 (latest)
 TEMPERATURE = 0
 MAX_TOKENS = 1200
 MAX_TOOL_ROUNDS = 8
