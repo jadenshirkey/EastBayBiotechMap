@@ -20,6 +20,12 @@ import re
 from pathlib import Path
 from datetime import datetime
 
+# Path constants (script-relative paths)
+SCRIPT_DIR = Path(__file__).parent
+REPO_ROOT = SCRIPT_DIR.parent
+DATA_WORKING = REPO_ROOT / 'data' / 'working'
+DATA_FINAL = REPO_ROOT / 'data' / 'final'
+
 # Bay Area cities whitelist (from METHODOLOGY.md Appendix A)
 BAY_AREA_CITIES = {
     # Alameda County
@@ -244,14 +250,14 @@ def main():
     print()
 
     # File paths
-    existing_file = Path('../data/final/companies.csv')
-    wikipedia_file = Path('../data/working/wikipedia_companies.csv')
-    biopharmguy_file = Path('../data/working/biopharmguy_companies.csv')
-    output_file = Path('../data/final/companies.csv')
+    existing_file = DATA_FINAL / 'companies.csv'
+    wikipedia_file = DATA_WORKING / 'wikipedia_companies.csv'
+    biopharmguy_file = DATA_WORKING / 'biopharmguy_companies.csv'
+    output_file = DATA_FINAL / 'companies.csv'
 
     # Create backup of existing file
     if existing_file.exists():
-        backup_file = Path(f'../data/final/companies_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
+        backup_file = DATA_FINAL / f'companies_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv'
         print(f"Creating backup: {backup_file.name}")
         import shutil
         shutil.copy(existing_file, backup_file)

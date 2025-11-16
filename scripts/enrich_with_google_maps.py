@@ -23,6 +23,12 @@ import re
 from pathlib import Path
 from datetime import datetime
 
+# Path constants (script-relative paths)
+SCRIPT_DIR = Path(__file__).parent
+REPO_ROOT = SCRIPT_DIR.parent
+DATA_WORKING = REPO_ROOT / 'data' / 'working'
+DATA_FINAL = REPO_ROOT / 'data' / 'final'
+
 try:
     import googlemaps
 except ImportError:
@@ -198,7 +204,7 @@ def main():
         sys.exit(1)
 
     # Load companies
-    companies_file = Path('../data/final/companies.csv')
+    companies_file = DATA_FINAL / 'companies.csv'
     print(f"Loading companies from: {companies_file}")
     companies = load_companies(companies_file)
     print(f"  Loaded {len(companies)} companies")
@@ -276,7 +282,7 @@ def main():
     print()
 
     # Generate report
-    report_file = Path('../data/working/enrichment_report.txt')
+    report_file = DATA_WORKING / 'enrichment_report.txt'
     with open(report_file, 'w', encoding='utf-8') as f:
         f.write("Google Maps API Enrichment Report\n")
         f.write("=" * 70 + "\n")
