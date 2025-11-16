@@ -36,7 +36,8 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Import V4.3 modules
-from config.geography import is_in_bay_area_city, is_valid_county, BAY_COUNTIES, CITY_WHITELIST
+# Using CA-wide geography for broader coverage
+from config.geography_ca import is_in_bay_area_city, is_valid_county
 from utils.helpers import etld1, normalize_name, is_aggregator, AGGREGATOR_ETLD1
 
 # ============================================================================
@@ -266,11 +267,9 @@ def deduplicate_by_etld1_and_name(companies):
 
 def apply_geofence(companies):
     """
-    Apply Bay Area geofence AFTER deduplication.
+    Apply California geofence AFTER deduplication.
 
-    Accept if:
-    - City in CITY_WHITELIST, OR
-    - County in BAY_COUNTIES (if provided)
+    Accept if city appears to be in California.
 
     Returns: filtered companies, stats
     """
@@ -280,17 +279,17 @@ def apply_geofence(companies):
     for company in companies:
         city = company.get('City', '').strip()
 
-        # Check city whitelist
-        if city and is_in_bay_area_city(city):
+        # Check if in California (using CA-wide geography)
+        if city and is_in_bay_area_city(city):  # This now uses CA-wide check
             filtered.append(company)
         else:
             rejected_count += 1
             # Optionally log rejections (can be verbose)
-            # print(f"  Filtered out: '{company['Company Name']}' in {city} (not in Bay Area)")
+            # print(f"  Filtered out: '{company['Company Name']}' in {city} (not in California)")
 
-    print(f"\nGeofence filtering:")
-    print(f"  - Passed geofence: {len(filtered)}")
-    print(f"  - Filtered out: {rejected_count}")
+    print(f"\nGeofence filtering (California-wide):")
+    print(f"  - Passed CA geofence: {len(filtered)}")
+    print(f"  - Filtered out (non-CA): {rejected_count}")
 
     return filtered
 
@@ -416,8 +415,8 @@ def main():
     deduplicated, domain_conflicts = deduplicate_by_etld1_and_name(all_companies)
     print(f"  After deduplication: {len(deduplicated)} companies")
 
-    # Apply Bay Area geofence (AFTER deduplication)
-    print("\nApplying Bay Area geofence (9-county + city whitelist)...")
+    # Apply California geofence (AFTER deduplication)
+    print("\nApplying California-wide geofence...")
     geofenced = apply_geofence(deduplicated)
 
     # Generate domain reuse report
@@ -436,7 +435,7 @@ def main():
     print(f"  - Existing companies: {len(existing_companies)}")
     print(f"  - Total before dedupe: {len(all_companies)}")
     print(f"  - After deduplication: {len(deduplicated)}")
-    print(f"  - After Bay Area geofence: {len(geofenced)}")
+    print(f"  - After California geofence: {len(geofenced)}")
     print(f"  - Aggregator domains reset: {aggregator_count}")
     print(f"  - Domain conflicts: {len(domain_conflicts)}")
 
