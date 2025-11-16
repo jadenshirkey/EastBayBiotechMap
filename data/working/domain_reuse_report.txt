@@ -1,0 +1,58 @@
+======================================================================
+Domain Reuse Conflict Report
+======================================================================
+Generated: 2025-11-15 23:44:23
+
+⚠ Found 11 domain(s) used by multiple companies:
+
+Domain: bms.com
+  - Bristol Myers Squibb
+  - Juno Therapeutics
+
+Domain: businessweek.com
+  - Help Remedies
+  - SUGEN
+
+Domain: genervon.com
+  - Genervon
+  - Genervon Biopharmaceuticals
+
+Domain: horiba.com
+  - HORIBA Medical
+  - Horiba Instruments
+
+Domain: jnj.com
+  - Johnson & Johnson
+  - Johnson and Johnson Innovative Medicine
+
+Domain: lusisbio.com
+  - Lusis
+  - Lusis Biosciences
+
+Domain: mcguffpharmaceuticals.com
+  - McGuff Companies
+  - McGuff Pharmaceuticals
+
+Domain: pfizer.com
+  - G. D. Searle & Company
+  - Pfizer
+
+Domain: phasescientificamericas.com
+  - PHASE Scientific Americas
+  - Phase Scientific
+
+Domain: sigmaaldrich.com
+  - Millipore
+  - MilliporeSigma
+
+Domain: wuxiapptec.com
+  - STA Pharmaceutical
+  - WuXi Apptec
+
+----------------------------------------------------------------------
+ACTION REQUIRED:
+  Review these conflicts and resolve manually:
+  1. Verify which company actually owns the domain
+  2. Update the incorrect entries to have Website=''
+  3. If legitimate (e.g., parent company), add to ALLOWLIST_DOMAINS
+

@@ -23,24 +23,27 @@
 
 **Marker Style by Company Stage**:
 1. Click on the layer → **Style by** → **Uniform style**
-2. Choose: **Company Stage** column
-3. Assign colors:
-   - 🔴 Red: Clinical-Stage Biotech
-   - 🟠 Orange: Pre-clinical/Startup
-   - 🟢 Green: Commercial-Stage Biotech
-   - 🔵 Blue: Tools/Services/CDMO
-   - ⚪ Gray: Academic/Gov't
-   - ⚫ Black: Acquired
+2. Choose: **Company_Stage** column
+3. Assign colors (8 categories per V4.3 classification):
+   - 🟢 Green: **Public** (publicly traded companies)
+   - 🟠 Orange: **Private** (venture-funded startups)
+   - ⚫ Black: **Acquired** (acquired by larger companies)
+   - 🔴 Red: **Clinical** (companies with drugs in clinical trials)
+   - 🟣 Purple: **Research** (pre-clinical research stage)
+   - 🟡 Yellow: **Incubator** (biotech accelerators/incubators)
+   - 🔵 Blue: **Service** (CROs, CDMOs, service providers)
+   - ⚪ Gray: **Unknown** (classification pending)
 
 **Info Window Content**:
 1. Click on any marker → Edit
 2. Under title, add these fields (Google My Maps does this automatically from CSV):
    - Company Name (bold)
    - City
+   - Address
    - Website (clickable link)
-   - Notes
-   - Company Stage
-   - Hiring (if present)
+   - Company_Stage
+   - Focus_Areas
+   - Validation_Source
 
 ### Step 3: Name and Share the Map
 

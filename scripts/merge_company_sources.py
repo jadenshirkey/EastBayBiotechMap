@@ -52,7 +52,7 @@ ALLOWLIST_DOMAINS = {
 # Final schema columns
 FINAL_COLUMNS = [
     'Company Name', 'Website', 'City', 'Address',
-    'Company Stage', 'Focus Areas', 'Validation_Source'
+    'Company Stage', 'Focus Areas', 'Description', 'Validation_Source'
 ]
 
 # ============================================================================
@@ -73,10 +73,15 @@ def load_bpg_companies(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
+            # Clean up city - remove trailing commas and whitespace
+            city = row.get('City', '').strip()
+            if city.endswith(','):
+                city = city[:-1].strip()
+
             companies.append({
                 'Company Name': row['Company Name'].strip(),
                 'Website': row.get('Website', '').strip(),
-                'City': row.get('City', '').strip(),
+                'City': city,
                 'Address': '',
                 'Company Stage': '',
                 'Focus Areas': row.get('Focus Area', '').strip(),
@@ -88,7 +93,7 @@ def load_bpg_companies(filepath):
 
 
 def load_wikipedia_companies(filepath):
-    """Load Wikipedia extractions (minimal data)."""
+    """Load Wikipedia extractions (including descriptions)."""
     companies = []
     if not filepath.exists():
         print(f"Warning: {filepath} not found, skipping Wikipedia source")
@@ -107,11 +112,12 @@ def load_wikipedia_companies(filepath):
 
             companies.append({
                 'Company Name': company_name,
-                'Website': '',
+                'Website': row.get('Website', '').strip(),  # Now we have websites from Wikipedia
                 'City': row.get('City', '').strip(),
                 'Address': '',
                 'Company Stage': '',
                 'Focus Areas': '',
+                'Description': row.get('Description', '').strip(),  # Preserve Wikipedia description
                 'source': 'Wikipedia'
             })
 
@@ -361,6 +367,7 @@ def save_companies(companies, filepath):
                 'Address': company.get('Address', ''),
                 'Company Stage': company.get('Company Stage', ''),
                 'Focus Areas': company.get('Focus Areas', ''),
+                'Description': company.get('Description', ''),  # Include Wikipedia description
                 'Validation_Source': company.get('source', '')
             })
 
@@ -434,11 +441,14 @@ def main():
     print(f"  - Domain conflicts: {len(domain_conflicts)}")
 
     # Coverage stats
-    with_website = sum(1 for c in geofenced if c.get('Website', '').strip())
-    without_website = len(geofenced) - with_website
-    print(f"\n  Coverage:")
-    print(f"    - With Website: {with_website} ({100*with_website/len(geofenced):.1f}%)")
-    print(f"    - Without Website: {without_website} ({100*without_website/len(geofenced):.1f}%)")
+    if len(geofenced) > 0:
+        with_website = sum(1 for c in geofenced if c.get('Website', '').strip())
+        without_website = len(geofenced) - with_website
+        print(f"\n  Coverage:")
+        print(f"    - With Website: {with_website} ({100*with_website/len(geofenced):.1f}%)")
+        print(f"    - Without Website: {without_website} ({100*without_website/len(geofenced):.1f}%)")
+    else:
+        print(f"\n  Coverage: No companies to analyze (all filtered out)")
 
     print("\n" + "="*70)
     print("✓ Merge complete!")

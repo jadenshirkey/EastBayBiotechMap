@@ -383,6 +383,73 @@ def score_url_for_company(url, core_name):
     return score
 
 
+def extract_company_description(page_title):
+    """
+    Extract the first paragraph (introduction) from a Wikipedia article.
+    This provides a factual description suitable for Focus_Areas.
+
+    Returns the description text or empty string if not found.
+    """
+    try:
+        # Extract page name from full Wikipedia URL if needed
+        if 'wikipedia.org/wiki/' in page_title:
+            page_title = page_title.split('/wiki/')[-1]
+
+        # Wikipedia API endpoint
+        api_url = "https://en.wikipedia.org/w/api.php"
+        headers = {
+            'User-Agent': 'EastBayBiotechMap/1.0 (Educational Research; https://github.com/jadenshirkey/EastBayBiotechMap)'
+        }
+
+        # Get article introduction text
+        params = {
+            'action': 'query',
+            'titles': unquote(page_title),
+            'prop': 'extracts',
+            'exintro': True,  # Only the introduction
+            'explaintext': True,  # Plain text, not HTML
+            'exsentences': 3,  # First 3 sentences
+            'format': 'json',
+            'formatversion': 2
+        }
+
+        response = requests.get(api_url, params=params, headers=headers, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+
+        if 'error' in data or 'query' not in data:
+            return ''
+
+        pages = data['query'].get('pages', [])
+        if not pages:
+            return ''
+
+        # Get the extract text
+        extract = pages[0].get('extract', '')
+
+        # Clean up the text
+        if extract:
+            # Remove citation brackets [1], [2], etc.
+            import re
+            extract = re.sub(r'\[\d+\]', '', extract)
+            # Remove extra whitespace
+            extract = ' '.join(extract.split())
+            # Truncate to 200 characters for Focus_Areas requirement
+            if len(extract) > 200:
+                # Try to break at sentence boundary
+                sentences = extract[:200].split('. ')
+                if len(sentences) > 1:
+                    extract = '. '.join(sentences[:-1]) + '.'
+                else:
+                    extract = extract[:197] + '...'
+
+        return extract
+
+    except Exception:
+        # Silently handle errors
+        return ''
+
+
 def extract_official_website_from_html(page_title):
     """
     Extract the official website by parsing the External Links section HTML.
@@ -691,16 +758,26 @@ def main():
     bay_area = [c for c in deduplicated if is_bay_area_company(c['company_name'], c['city'])]
     print(f"Bay Area candidates: {len(bay_area)} companies")
 
-    # Extract websites from Wikipedia pages
-    print("\nExtracting websites from Wikipedia pages...")
+    # Extract websites and descriptions from Wikipedia pages
+    print("\nExtracting websites and descriptions from Wikipedia pages...")
     print("(This may take a minute due to rate limiting)")
     websites_found = 0
+    descriptions_found = 0
+
     for i, company in enumerate(bay_area):
         # Extract website using Wikipedia API
         website = extract_website_from_wikipedia_api(company['source_url'])
         if website:
             company['website'] = website
             websites_found += 1
+
+        # Extract company description for Focus_Areas
+        description = extract_company_description(company['source_url'])
+        if description:
+            company['description'] = description
+            descriptions_found += 1
+        else:
+            company['description'] = ''
 
         # Progress indicator every 25 companies
         if (i + 1) % 25 == 0:
@@ -710,6 +787,7 @@ def main():
         time.sleep(0.1)
 
     print(f"  ✓ Found websites for {websites_found}/{len(bay_area)} companies ({100*websites_found/len(bay_area):.1f}%)")
+    print(f"  ✓ Found descriptions for {descriptions_found}/{len(bay_area)} companies ({100*descriptions_found/len(bay_area):.1f}%)")
     print()
 
     # Sort by company name
@@ -721,7 +799,7 @@ def main():
     output_file = output_dir / 'wikipedia_companies.csv'
 
     with open(output_file, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=['Company Name', 'Website', 'Source URL', 'City', 'Notes'])
+        writer = csv.DictWriter(f, fieldnames=['Company Name', 'Website', 'Source URL', 'City', 'Notes', 'Description'])
         writer.writeheader()
 
         for company in bay_area:
@@ -730,7 +808,8 @@ def main():
                 'Website': company.get('website', ''),
                 'Source URL': company['source_url'],
                 'City': company['city'],
-                'Notes': company['notes']
+                'Notes': company['notes'],
+                'Description': company.get('description', '')
             })
 
     print()
