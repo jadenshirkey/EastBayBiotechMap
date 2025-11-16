@@ -88,26 +88,6 @@ This map is designed for:
 
 ## How It Was Created
 
-<<<<<<< HEAD
-This map is built using the **V4.3 automated pipeline** with systematic data flow from extraction through validation:
-
-**Pipeline Overview (Stages A → F)**
-
-1. **Stage A - Extraction**: BioPharmGuy CA-wide scraping with Website field capture
-2. **Stage B - Merge & Geofence**: eTLD+1 deduplication, late geofencing, aggregator filtering
-3. **Stage C - Enrichment**:
-   - **Path A** (Python + Google Maps): For companies with BPG Website - deterministic validation
-   - **Path B** (Anthropic structured outputs): For companies without Website - AI validation
-4. **Stage D - Classification**: Company stage using methodology decision tree
-5. **Stage E - Focus Extraction**: Factual focus areas from company websites (≤200 chars)
-6. **Stage F - QC & Promotion**:
-   - Automated validators (6 gates)
-   - Manual review queues (spot-checks + Tier 4)
-   - Promotion to final/ (only after all checks pass)
-
-**See [METHODOLOGY.md](METHODOLOGY.md) for detailed methodology.**
-**See [docs/V4.3_WORK_PLAN.md](docs/V4.3_WORK_PLAN.md) for complete implementation plan.**
-=======
 This dataset is built using an automated Python pipeline that processes over 1,300 companies:
 
 1. **Discovery**: Extracts companies from BioPharmGuy's industry directory and Wikipedia categories (~1,300 raw entries)
@@ -122,7 +102,6 @@ The pipeline achieves **95% data completeness** with addresses verified for all 
 - **Full Methodology**: See [METHODOLOGY.md](METHODOLOGY.md) for complete pipeline architecture and data collection procedures
 - **Run It Yourself**: See [scripts/README.md](scripts/README.md) for installation and usage instructions
 - **Quality Assurance**: Validated against 80+ Bay Area cities with duplicate detection and URL verification
->>>>>>> b3ce82c (Document automated pipeline architecture and fix script paths)
 
 ## Data Currency
 
