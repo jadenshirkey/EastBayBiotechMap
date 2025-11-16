@@ -1,0 +1,28 @@
+2025-11-16 02:11:10,234 - INFO - Starting validation of /mnt/c/Users/shirk/Documents/Adulting/EastBayBiotechMap/data/working/companies_cleaned.csv
+2025-11-16 02:11:10,235 - INFO - Validating data integrity...
+2025-11-16 02:11:10,280 - INFO - PASSED: All company names are unique
+2025-11-16 02:11:10,281 - ERROR - FAILED: 41 missing required fields
+2025-11-16 02:11:10,282 - INFO - PASSED: All coordinates valid
+2025-11-16 02:11:10,283 - INFO - PASSED: All confidence scores valid
+2025-11-16 02:11:10,284 - INFO - PASSED: All stage values valid
+2025-11-16 02:11:10,286 - INFO - Validating critical invariants...
+2025-11-16 02:11:10,357 - INFO - PASSED: Company count preserved (1002/1002)
+2025-11-16 02:11:10,359 - INFO - PASSED: Address coverage maintained (100.0%)
+2025-11-16 02:11:10,360 - INFO - PASSED: Classification rate sufficient (82.3%)
+2025-11-16 02:11:10,361 - INFO - PASSED: Quality score average acceptable (81.9)
+2025-11-16 02:11:10,362 - INFO - Validating ground truth companies...
+2025-11-16 02:11:10,402 - ERROR - FAILED: 2 ground truth mismatches
+2025-11-16 02:11:10,403 - ERROR -   biomarin: not found in output
+2025-11-16 02:11:10,403 - ERROR -   bio-rad: not found in output
+2025-11-16 02:11:10,405 - INFO - Validating quality metrics...
+2025-11-16 02:11:10,442 - INFO - PASSED: 100.0% have good quality scores
+2025-11-16 02:11:10,442 - INFO -   High quality: 755
+2025-11-16 02:11:10,443 - INFO -   Medium quality: 247
+2025-11-16 02:11:10,444 - INFO -   Low quality: 0
+2025-11-16 02:11:10,445 - INFO - Running regression tests...
+2025-11-16 02:11:10,518 - INFO - PASSED: No classification regression detected
+2025-11-16 02:11:10,520 - INFO - Validating edge case handling...
+2025-11-16 02:11:10,561 - INFO -   Companies with special characters: 13
+2025-11-16 02:11:10,562 - INFO -   Non-California companies: 26
+2025-11-16 02:11:10,570 - INFO - Validation report saved to /mnt/c/Users/shirk/Documents/Adulting/EastBayBiotechMap/deleteme/reports/validation_report.md
+2025-11-16 02:11:10,571 - ERROR - ❌ Some validation tests FAILED

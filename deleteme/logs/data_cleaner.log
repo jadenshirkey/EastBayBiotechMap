@@ -1,0 +1,15 @@
+2025-11-16 02:06:13,657 - INFO - Starting data cleaning pipeline for /mnt/c/Users/shirk/Documents/Adulting/EastBayBiotechMap/data/working/companies_enhanced_v2.csv
+2025-11-16 02:06:13,799 - INFO - Cleaned 1002 company records
+2025-11-16 02:06:13,813 - ERROR - Error during data cleaning: dict contains fields not in fieldnames: 'State'
+2025-11-16 02:07:18,661 - INFO - Starting data cleaning pipeline for /mnt/c/Users/shirk/Documents/Adulting/EastBayBiotechMap/data/working/companies_enhanced_v2.csv
+2025-11-16 02:07:18,801 - INFO - Cleaned 1002 company records
+2025-11-16 02:07:18,858 - INFO - Cleaning report saved to /mnt/c/Users/shirk/Documents/Adulting/EastBayBiotechMap/deleteme/reports/cleaning_report.md
+2025-11-16 02:07:18,860 - INFO - Data cleaning complete. Output saved to /mnt/c/Users/shirk/Documents/Adulting/EastBayBiotechMap/data/working/companies_cleaned.csv
+2025-11-16 02:07:18,862 - INFO - 
+Cleaning Statistics:
+2025-11-16 02:07:18,862 - INFO -   names_cleaned: 1002
+2025-11-16 02:07:18,863 - INFO -   addresses_parsed: 1002
+2025-11-16 02:07:18,864 - INFO -   websites_cleaned: 1002
+2025-11-16 02:07:18,864 - INFO -   cities_standardized: 69
+2025-11-16 02:07:18,865 - INFO -   duplicates_found: 0
+2025-11-16 02:07:18,865 - INFO -   companies_merged: 0
