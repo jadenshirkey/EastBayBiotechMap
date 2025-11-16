@@ -242,7 +242,7 @@ def extract_website_from_wikipedia_api(page_title):
 
         # Additional patterns to exclude (beyond what is_aggregator handles)
         exclude_patterns = [
-            'archive.org', 'web.archive.org',  # Archive sites
+            'archive.org', 'web.archive.org',  # Archive sites (handled separately in fallback)
             'doi.org', 'pubmed', 'ncbi.nlm',  # Scientific references
             'sec.gov', 'edgar',  # SEC filings
             'reuters.com', 'bloomberg.com', 'forbes.com', 'fortune.com',  # News sites
@@ -252,7 +252,13 @@ def extract_website_from_wikipedia_api(page_title):
             '.pdf', '.doc', '.xls',  # Direct file downloads
             'geohack.toolforge.org',  # Geographic coordinates tool
             '/media/', '/news/', '/press/',  # Skip deep links to news sections
-            'marketwatch.com', 'yahoo.com'  # Financial news
+            'marketwatch.com', 'yahoo.com',  # Financial news
+            'biotickr.com',  # Generic biotech ticker site
+            'businesswire.com', 'prnewswire.com',  # Press release sites
+            'drugs.com', 'drugbank.ca',  # Drug databases
+            'bizjournals.com', 'fiercebiotech.com',  # Industry news
+            'pharmaintelligence.informa.com',  # Industry database
+            'google.com/search', 'jstor.org'  # Search engines
         ]
 
         # Collect all potentially valid websites
@@ -289,6 +295,25 @@ def extract_website_from_wikipedia_api(page_title):
         # If no root domain found, return the first valid URL
         if potential_websites:
             return potential_websites[0]
+
+        # Fallback: Check for archived company websites (defunct companies)
+        # Extract original URL from archive.org links
+        import re
+        for link in external_links:
+            if 'archive.org/web/' in link:
+                # Extract original URL from archive link
+                # Format: https://web.archive.org/web/[timestamp]/[original_url]
+                match = re.search(r'archive\.org/web/\d+/(.+)', link)
+                if match:
+                    original_url = match.group(1)
+                    # Ensure it has http:// or https://
+                    if not original_url.startswith(('http://', 'https://')):
+                        original_url = 'http://' + original_url
+                    # Ensure it's not another aggregator or excluded site
+                    if not is_aggregator(original_url):
+                        if not any(pattern in original_url.lower() for pattern in exclude_patterns):
+                            # Return the original URL (note: site may be defunct)
+                            return original_url
 
         return ''
 
