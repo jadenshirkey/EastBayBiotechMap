@@ -1,0 +1,114 @@
+[
+  {
+    "worker_id": 0,
+    "chunk_file": "data/working/chunks/chunk_0.csv",
+    "start_index": 0,
+    "end_index": 121,
+    "size": 122
+  },
+  {
+    "worker_id": 1,
+    "chunk_file": "data/working/chunks/chunk_1.csv",
+    "start_index": 122,
+    "end_index": 243,
+    "size": 122
+  },
+  {
+    "worker_id": 2,
+    "chunk_file": "data/working/chunks/chunk_2.csv",
+    "start_index": 244,
+    "end_index": 365,
+    "size": 122
+  },
+  {
+    "worker_id": 3,
+    "chunk_file": "data/working/chunks/chunk_3.csv",
+    "start_index": 366,
+    "end_index": 487,
+    "size": 122
+  },
+  {
+    "worker_id": 4,
+    "chunk_file": "data/working/chunks/chunk_4.csv",
+    "start_index": 488,
+    "end_index": 609,
+    "size": 122
+  },
+  {
+    "worker_id": 5,
+    "chunk_file": "data/working/chunks/chunk_5.csv",
+    "start_index": 610,
+    "end_index": 731,
+    "size": 122
+  },
+  {
+    "worker_id": 6,
+    "chunk_file": "data/working/chunks/chunk_6.csv",
+    "start_index": 732,
+    "end_index": 853,
+    "size": 122
+  },
+  {
+    "worker_id": 7,
+    "chunk_file": "data/working/chunks/chunk_7.csv",
+    "start_index": 854,
+    "end_index": 976,
+    "size": 122
+  },
+  {
+    "worker_id": 8,
+    "chunk_file": "data/working/chunks/chunk_8.csv",
+    "start_index": 977,
+    "end_index": 1098,
+    "size": 122
+  },
+  {
+    "worker_id": 9,
+    "chunk_file": "data/working/chunks/chunk_9.csv",
+    "start_index": 1099,
+    "end_index": 1221,
+    "size": 122
+  },
+  {
+    "worker_id": 10,
+    "chunk_file": "data/working/chunks/chunk_10.csv",
+    "start_index": 1222,
+    "end_index": 1343,
+    "size": 122
+  },
+  {
+    "worker_id": 11,
+    "chunk_file": "data/working/chunks/chunk_11.csv",
+    "start_index": 1344,
+    "end_index": 1465,
+    "size": 122
+  },
+  {
+    "worker_id": 12,
+    "chunk_file": "data/working/chunks/chunk_12.csv",
+    "start_index": 1466,
+    "end_index": 1587,
+    "size": 122
+  },
+  {
+    "worker_id": 13,
+    "chunk_file": "data/working/chunks/chunk_13.csv",
+    "start_index": 1588,
+    "end_index": 1815,
+    "size": 122
+  },
+  {
+    "worker_id": 14,
+    "chunk_file": "data/working/chunks/chunk_14.csv",
+    "start_index": 1816,
+    "end_index": 2088,
+    "size": 122
+  },
+  {
+    "worker_id": 15,
+    "chunk_file": "data/working/chunks/chunk_15.csv",
+    "start_index": 2089,
+    "end_index": 2352,
+    "size": 111
+  }
+]
