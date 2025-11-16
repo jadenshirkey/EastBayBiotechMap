@@ -1,30 +1,100 @@
 # East Bay Biotech Map - Methodology
 
-**Version:** 3.0
-**Last Updated:** 2025-11-08
-**Philosophy:** 70% coverage with 10% effort - prioritizing practical execution over exhaustive completeness
+**Version:** 4.3
+**Last Updated:** 2025-11-16
+**Philosophy:** Systematic validation with automated QC gates - prioritizing data quality and reproducibility
 
 ---
 
 ## Overview
 
-This document describes the reproducible process for discovering, validating, and cataloging biotechnology companies in the San Francisco Bay Area.
+This document describes the reproducible process for discovering, validating, and cataloging biotechnology companies in the San Francisco Bay Area using the V4.3 framework.
+
+The V4.3 framework introduces:
+- **BPG-first extraction** with CA-wide coverage
+- **Two-path enrichment** (Path A for companies with websites, Path B for those without)
+- **Deterministic validation** with confidence scoring
+- **Automated QC gates** with manual review for edge cases
+- **Staging → Promotion flow** ensuring only validated data reaches production
 
 ---
 
 ## Geographic Scope
 
-### Included Counties
-- **Core:** San Francisco, San Mateo, Alameda, Contra Costa, Santa Clara
-- **Extended:** Marin, Napa, Sonoma (on case-by-case basis)
+### Included Counties (9-County Bay Area)
+- **Core:** Alameda, Contra Costa, Marin, San Francisco, San Mateo, Santa Clara
+- **Extended:** Napa, Solano, Sonoma
+
+All 9 counties are treated equally in the V4.3 geofence.
 
 ### Excluded Areas
 - **Davis, CA** (Yolo County - outside Bay Area)
-- **Sacramento metro**
-- Any location >60 miles from San Francisco
+- **Sacramento metro** (Sacramento County)
+- **Central Valley** cities
+- Any location >60 miles from San Francisco (backstop radius check)
 
 ### City Whitelist
-Companies must be located in recognized Bay Area cities. [See full list in appendix]
+Companies must be located in recognized Bay Area cities (~60 cities across 9 counties). See `config/geography.py` for the canonical whitelist.
+
+**Geofence Logic:** Accept if **City in whitelist** OR **Coordinates within 60-mile radius of SF**.
+
+---
+
+## Validation Strategy (V4.3)
+
+### Path A: Deterministic Validation (Companies with BPG Website)
+
+**Input:** Companies with Website field from BioPharmGuy
+
+**Process:**
+1. Extract brand token from eTLD+1 domain (e.g., gene.com → "gene")
+2. Build biasable query: "{brand_token} {City} CA biotech"
+3. Call Google Maps Text Search → get top 3-5 candidates
+4. For each candidate, call Place Details
+5. Apply hard gates:
+   - **Geofence**: Address must be in Bay Area (9-county + city whitelist)
+   - **Business type**: Exclude real_estate_agency, lodging, premise-only
+   - **Multi-tenant**: If incubator address, require strong brand match (name similarity ≥0.85 OR website eTLD+1 match)
+6. **Website cross-check**: Score += 0.3 if Google website eTLD+1 == BPG eTLD+1
+7. **Accept if confidence ≥ 0.75**
+
+**Output:** Address, Place_ID, Confidence_Det, Validation_Reason
+
+### Path B: AI Validation (Companies without BPG Website)
+
+**Input:** Companies without Website field (routed to Path B queue)
+
+**Process:**
+1. Use Anthropic Claude Sonnet 4.5 with structured outputs
+2. Provide tools: `search_places`, `get_place_details` (Google Maps API wrappers)
+3. Prompt includes:
+   - Geographic hard gate (9-county Bay Area only)
+   - Brand-domain validation (reject aggregators)
+   - Business-type validation (exclude lodging, real estate, premise)
+   - Multi-tenant handling (incubator addresses need strong brand evidence)
+   - Acceptance threshold ≥0.75
+   - **Prefer nulls over wrong data**
+4. Temperature = 0 (deterministic)
+5. JSON schema enforced for output
+
+**Output:** Address, Website (if found), Confidence, Validation JSON
+
+### Confidence Tiers
+
+Companies are categorized into 4 tiers based on confidence scores:
+
+| Tier | Confidence Range | Description | QC Process |
+|------|-----------------|-------------|------------|
+| **Tier 1** | ≥ 0.95 | BPG + Google confirm same eTLD+1 | 10 random spot-checks |
+| **Tier 2** | 0.90-0.95 | BPG ground truth, Google mismatch/missing | 10 random spot-checks |
+| **Tier 3** | 0.75-0.90 | AI validated (Path B) | Automated validators only |
+| **Tier 4** | < 0.75 | Flagged for manual review | **All companies reviewed** |
+
+**Target Distribution:**
+- Tier 1: ≥70%
+- Tier 2: ≥10%
+- Tier 3: ≤10%
+- Tier 4: 0% (all resolved before promotion)
 
 ---
 
@@ -353,11 +423,14 @@ Use this flowchart to classify companies systematically:
 3. "Technology" or "Platform" page summary
 4. LinkedIn company description
 
-### Format Guidelines
-- **Length:** 1-3 sentences (max 200 characters preferred)
+### Format Guidelines (V4.3)
+- **Length:** 1-3 sentences (≤200 characters enforced)
 - **Content:** Technology platform, therapeutic areas, key innovations
-- **Tone:** Factual, not marketing fluff
-- **Keywords:** Include relevant terms (antibody, CRISPR, AAV, etc.)
+- **Tone:** Factual, not marketing fluff (de-marketed)
+- **Keywords:** Platform, technology, therapeutic area, modality
+- **Extraction:** Automated from About/Technology pages (see `scripts/extract_focus_areas.py`)
+
+**Note:** V4.3 uses automated extraction with HTML caching and rate limiting. Manual review focuses on accuracy, not extraction.
 
 ### Good Examples
 ```
@@ -374,6 +447,57 @@ Use this flowchart to classify companies systematically:
 "Innovative solutions for patients worldwide" (marketing speak)
 "Founded in 2018 by..." (wrong focus)
 ```
+
+---
+
+## V4.3 QC Checklist
+
+Before promotion to `data/final/`, all companies must pass:
+
+### Automated Validators (6 Gates)
+
+**All validators must return PASS before promotion proceeds.**
+
+1. **URL Validation**
+   - All Website fields are valid HTTPS/HTTP or blank
+   - No malformed URLs
+
+2. **Geofence Validation**
+   - All City values in city whitelist
+   - All Address values within Bay Area (9-county or 60-mile radius)
+
+3. **Duplicate Domain Check**
+   - Zero duplicate eTLD+1 domains (except allowlist: gene.com for multi-brand)
+   - Each domain maps to exactly one company
+
+4. **Aggregator Check**
+   - Zero aggregator domains (LinkedIn, Crunchbase, Facebook, Yelp, etc.)
+   - Aggregators reset to blank during merge
+
+5. **Place ID Requirement**
+   - If Address present, Place_ID must be present
+   - Ensures Google Maps validated all addresses
+
+6. **Out-of-Scope Check**
+   - Zero Davis/Sacramento/Central Valley companies
+   - No locations outside 9-county Bay Area
+
+### Manual Review
+
+**Tier 1/2 Spot-Checks (10 random samples)**
+- Verify address matches company's actual location (check website)
+- Confirm company is legitimate biotech/life sciences
+- Validate city and focus areas accuracy
+
+**Tier 4 Full Review (ALL flagged companies)**
+- Investigate why confidence is low
+- Options:
+  - Fix data issues (incorrect website, address)
+  - Remove from dataset if out of scope
+  - Accept if data correct despite low confidence
+- Document review in `data/working/reviewed_flags.csv`
+
+**Blocking:** Promotion blocked if Tier 4 companies unreviewed.
 
 ---
 
@@ -634,7 +758,65 @@ San Rafael, Novato, Mill Valley, Larkspur, Corte Madera, Tiburon, Sausalito
 
 ---
 
+## V4.3 Pipeline Stages
+
+The V4.3 framework implements a complete A→F staged pipeline:
+
+**Stage A: Extraction**
+- BioPharmGuy CA-wide extraction (state-ca-all-geo.php)
+- Website field capture (external link preservation)
+- HTML caching with 7-day expiration
+- Output: `data/working/bpg_ca_raw.csv`
+
+**Stage B: Merge & Geofence**
+- eTLD+1 deduplication with domain-reuse detection
+- Late geofencing (after deduplication)
+- Aggregator denylist filtering
+- Output: `data/working/companies_merged.csv`
+
+**Stage C: Enrichment**
+- **Path A**: Companies with Website → Google Maps validation
+- **Path B**: Companies without Website → Anthropic structured outputs
+- Merge Path A + Path B outputs
+- Output: `data/working/companies_enriched.csv`
+
+**Stage D: Classification**
+- Apply methodology decision tree (8 categories)
+- Default to "Unknown" if ambiguous
+- Output: `data/working/companies_classified.csv`
+
+**Stage E: Focus Extraction**
+- Fetch company websites (About/Technology pages)
+- Extract 1-3 factual sentences (≤200 chars)
+- HTML caching, rate limiting (1 req/sec)
+- Output: `data/working/companies_focused.csv`
+
+**Stage F: QC & Promotion**
+- Run 6 automated validators
+- Generate review queues (spot-checks + Tier 4)
+- Manual review process
+- Promotion to `data/final/companies.csv` (ONLY after QC passes)
+
+**Key Scripts:**
+- `scripts/classify_company_stage.py` - Stage D
+- `scripts/extract_focus_areas.py` - Stage E
+- `scripts/validate_for_promotion.py` - Stage F validators
+- `scripts/generate_review_queues.py` - Stage F review queues
+- `scripts/promote_to_final.py` - Stage F promotion
+
+---
+
 ## Version History
+
+**V4.3 (2025-11-16)**
+- Complete A→F staged pipeline implementation
+- Two-path enrichment (Path A deterministic, Path B AI)
+- 6 automated validators with hard gates
+- Confidence tiering system (Tier 1-4)
+- Manual review process for QC
+- Staging → Promotion flow (no direct writes to final/)
+- BPG-first with CA-wide extraction
+- eTLD+1 deduplication with domain-reuse detection
 
 **V3.0 (2025-11-08)**
 - Initial methodology document

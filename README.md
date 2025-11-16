@@ -10,12 +10,12 @@ An interactive map of biotechnology companies across the San Francisco Bay Area,
 
 ## About
 
-This project maps **1,210 biotechnology companies** across the entire San Francisco Bay Area, including:
+This project maps **biotechnology companies** across the entire San Francisco Bay Area (9-county region), including:
 - **East Bay**: Emeryville, Berkeley, Oakland, Alameda, Fremont, Pleasanton
 - **Peninsula**: South San Francisco, Redwood City, Menlo Park, San Mateo
 - **San Francisco**: SF proper
 - **South Bay**: Palo Alto, Mountain View, Sunnyvale, San Jose
-- **North Bay**: San Rafael, Novato
+- **North Bay**: San Rafael, Novato, Marin County
 
 Companies range from early-stage startups to commercial-stage biotech firms, spanning diverse areas including:
 - Protein engineering and structural biology
@@ -26,13 +26,21 @@ Companies range from early-stage startups to commercial-stage biotech firms, spa
 - Diagnostics and research tools
 - Computational biology and AI-driven drug discovery
 
+### Features (V4.3 Framework)
+
+- **Two-Path Enrichment**: BPG-first approach with intelligent fallback to AI validation
+- **Comprehensive Quality Gates**: 6 automated validators ensuring data integrity
+- **Confidence Scoring**: Tiered system (1-4) with deterministic scoring for Path A
+- **Manual Review Process**: Spot-checks for high-confidence entries, full review for flagged items
+- **Staging → Promotion Flow**: All processing happens in working/ directory; final/ only written after QC passes
+
 ## Data
 
 The map includes information on:
 - **Company locations** with verified addresses
 - **Company websites** for direct access
-- **Company stage** (startup, pre-clinical, clinical-stage, commercial)
-- **Technology platform** descriptions and focus areas
+- **Company stage** (Public, Private, Clinical, Research, etc.)
+- **Focus areas** - factual technology platform descriptions
 
 ### Data File
 
@@ -41,8 +49,31 @@ The production dataset is available as **[`data/final/companies.csv`](data/final
 - **Website**
 - **City**
 - **Address** (full street address)
-- **Company Stage** (Startup, Pre-clinical, Clinical, Commercial, Tools/Services, Academic/Gov't)
-- **Notes** (technology platform and focus areas)
+- **Company_Stage** (Public, Private, Acquired, Clinical, Research, Incubator, Service, Unknown)
+- **Focus_Areas** (technology platform and therapeutic focus)
+
+### Data Quality (V4.3)
+
+The V4.3 framework includes comprehensive quality gates to ensure data integrity:
+
+**Quality Gates (All Must Pass)**
+- ✓ All URLs validated (HTTPS or blank)
+- ✓ All locations within Bay Area geofence (9-county + city whitelist)
+- ✓ Zero duplicate domains (excluding allowlist)
+- ✓ Zero aggregator domains (LinkedIn, Crunchbase, etc.)
+- ✓ All companies with addresses have Place IDs
+- ✓ Zero out-of-scope locations (Davis, Sacramento, etc.)
+
+**Confidence Tiers**
+- **Tier 1 (≥0.95)**: BPG + Google confirm same domain - Target: ≥70%
+- **Tier 2 (0.90-0.95)**: BPG ground truth, Google mismatch - Target: ≥10%
+- **Tier 3 (0.75-0.90)**: AI validated (Path B enrichment) - Target: ≤10%
+- **Tier 4 (<0.75)**: Flagged for manual review - Target: 0%
+
+**Manual Review Process**
+- 10 random spot-checks from Tier 1/2 companies
+- All Tier 4 companies manually reviewed before promotion
+- Address verification against company websites
 
 **Data Dictionary**: See [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md) for complete column definitions.
 
@@ -57,23 +88,50 @@ This map is designed for:
 
 ## How It Was Created
 
-This map was compiled through systematic research and data consolidation:
-1. Multiple biotech company directories aggregated and deduplicated
-2. Address verification for all 169 companies
-3. Technology platform categorization from company websites
-4. Quality checks and validation
-5. Data organized using Python scripts (see [`scripts/`](scripts/))
+This map is built using the **V4.3 automated pipeline** with systematic data flow from extraction through validation:
 
-**See [METHODOLOGY.md](METHODOLOGY.md) for detailed methodology and future plans.**
+**Pipeline Overview (Stages A → F)**
+
+1. **Stage A - Extraction**: BioPharmGuy CA-wide scraping with Website field capture
+2. **Stage B - Merge & Geofence**: eTLD+1 deduplication, late geofencing, aggregator filtering
+3. **Stage C - Enrichment**:
+   - **Path A** (Python + Google Maps): For companies with BPG Website - deterministic validation
+   - **Path B** (Anthropic structured outputs): For companies without Website - AI validation
+4. **Stage D - Classification**: Company stage using methodology decision tree
+5. **Stage E - Focus Extraction**: Factual focus areas from company websites (≤200 chars)
+6. **Stage F - QC & Promotion**:
+   - Automated validators (6 gates)
+   - Manual review queues (spot-checks + Tier 4)
+   - Promotion to final/ (only after all checks pass)
+
+**See [METHODOLOGY.md](METHODOLOGY.md) for detailed methodology.**
+**See [docs/V4.3_WORK_PLAN.md](docs/V4.3_WORK_PLAN.md) for complete implementation plan.**
 
 ## Data Currency
 
-- **Version**: v3.0
-- **Last Updated**: January 8, 2025
-- **Companies**: 1,210 across the Bay Area
-- **Address completion**: 100% (all companies have verified addresses)
+- **Version**: v4.3
+- **Framework**: V4.3 (Staging → Promotion with QC gates)
+- **Last Updated**: See `data/final/last_updated.txt`
+- **Coverage**: 9-county Bay Area (Alameda, Contra Costa, Marin, Napa, San Francisco, San Mateo, Santa Clara, Solano, Sonoma)
+- **Quality**: All companies pass 6 automated validators + manual review
 
-All company information is from publicly available sources: company websites, business registries, and press releases.
+All company information is from publicly available sources: BioPharmGuy, Wikipedia, Google Maps API, company websites.
+
+### API Costs
+
+The V4.3 pipeline uses commercial APIs with cost monitoring:
+
+- **Google Maps API** (Path A enrichment): ~$0.049/company baseline
+  - Text Search: $0.032 per call
+  - Place Details: $0.017 per call
+  - Includes caching to reduce redundant calls
+
+- **Anthropic Claude** (Path B enrichment): Measured empirically via token usage
+  - Model: Claude Sonnet 4.5
+  - Temperature: 0 (deterministic)
+  - Structured outputs with tool use (Google Places API integration)
+
+Cost reports generated in `data/working/api_usage_report.txt` and `data/working/anthropic_usage_report.txt`.
 
 ## Repository Structure
 
