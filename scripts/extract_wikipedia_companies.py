@@ -202,16 +202,317 @@ def deduplicate_companies(companies):
     return deduplicated
 
 
-def extract_website_from_wikipedia_api(page_title):
+def extract_core_company_name(company_name):
     """
-    Extract official website from Wikipedia page using External Links API.
+    Extract the core company name by removing common suffixes.
+    This helps match company names to their domains.
+    """
+    import re
 
-    Returns the most likely official website URL, or empty string if not found.
+    # Common suffixes to remove (order matters - longer first)
+    suffixes = [
+        'Pharmaceuticals', 'Pharmaceutical', 'Pharma',
+        'Therapeutics', 'Therapeutic',
+        'Laboratories', 'Laboratory', 'Labs', 'Lab',
+        'International', 'Intl',
+        'Technologies', 'Technology', 'Tech',
+        'Biopharmaceuticals', 'Biopharmaceutical', 'Biopharma',
+        'Biotechnology', 'Biotech', 'Bio',
+        'Manufacturing', 'Mfg',
+        'Corporation', 'Corp',
+        'Incorporated', 'Inc',
+        'Company', 'Co',
+        'Limited', 'Ltd',
+        'Medicines', 'Medicine', 'Med',
+        'Sciences', 'Science',
+        'Holdings', 'Holding',
+        'Group', 'Grp',
+        'Systems', 'System',
+        'Solutions', 'Solution',
+        'Industries', 'Industry',
+        'Enterprises', 'Enterprise',
+        'Associates', 'Associate', 'Assoc',
+        'Partners', 'Partner',
+        'Ventures', 'Venture'
+    ]
+
+    # Remove parenthetical content first
+    core_name = re.sub(r'\([^)]*\)', '', company_name).strip()
+
+    # Remove suffixes (case-insensitive)
+    for suffix in suffixes:
+        # Match suffix at word boundary with optional punctuation
+        pattern = r'\b' + re.escape(suffix) + r'\.?\b'
+        core_name = re.sub(pattern, '', core_name, flags=re.IGNORECASE).strip()
+
+    # Remove any trailing punctuation and extra spaces
+    core_name = re.sub(r'[,.\-]+$', '', core_name).strip()
+    core_name = ' '.join(core_name.split())
+
+    return core_name.lower()
+
+
+def score_url_for_company(url, core_name):
+    """
+    Score how likely a URL is to be the official website for a company.
+    Higher score = more likely to be the official site.
+    """
+    import re
+    from urllib.parse import urlparse
+
+    # Parse the URL
+    parsed = urlparse(url.lower())
+    domain = parsed.netloc.replace('www.', '')
+    path = parsed.path.rstrip('/')
+
+    # Immediately reject document files
+    if any(ext in path.lower() for ext in ['.pdf', '.doc', '.xls', '.ppt', '.txt']):
+        return -1000
+
+    score = 0
+
+    # Extract just the main domain part (before .com, .org, etc.)
+    domain_parts = domain.split('.')
+    if len(domain_parts) >= 2:
+        # Get the part right before the TLD (e.g., "fibrogen" from "fibrogen.com")
+        # but "gcs-web" from "fibrogen.gcs-web.com" (subdomain)
+        if len(domain_parts) >= 3:
+            # Has subdomain - check both subdomain and main domain
+            subdomain = domain_parts[0]
+            main_domain = domain_parts[-2]  # e.g., "gcs-web" from "fibrogen.gcs-web.com"
+        else:
+            subdomain = ''
+            main_domain = domain_parts[0]  # e.g., "fibrogen" from "fibrogen.com"
+    else:
+        subdomain = ''
+        main_domain = domain
+
+    # Remove spaces and special chars from core name for matching
+    core_name_clean = re.sub(r'[^a-z0-9]', '', core_name)
+
+    # HIGHEST PRIORITY: Exact match of core name as the main domain
+    if core_name_clean and main_domain == core_name_clean:
+        score += 200  # Highest score for exact domain match
+    # Good: Core name in subdomain (like fibrogen.gcs-web.com)
+    elif subdomain and core_name_clean and core_name_clean == subdomain:
+        score += 100  # Still good but not as good as main domain
+    # OK: Core name appears somewhere in domain
+    elif core_name_clean and core_name_clean in domain:
+        score += 50
+
+    # Check if individual words from core name appear in domain
+    if core_name and score < 50:  # Only if we haven't found a good match
+        core_words = core_name.split()
+        for word in core_words:
+            if len(word) > 3 and word in domain:  # Skip very short words
+                score += 20
+
+    # Prefer root domains over deep links
+    if path == '' or path in ['/home', '/index.html', '/index.php']:
+        score += 20
+    elif path in ['/about', '/about-us', '/company']:
+        score += 10
+
+    # Prefer .com domains
+    if domain.endswith('.com'):
+        score += 5
+
+    # Heavy penalties for news and investor relations sites
+    news_patterns = [
+        'news', 'media', 'press', 'journal', 'times', 'post',
+        'reuters', 'bloomberg', 'forbes', 'fortune', 'wsj',
+        'cnn', 'bbc', 'npr', 'ap', 'upi',
+        'fierce', 'stat', 'endpoints', 'biospace',
+        'businesswire', 'prnewswire', 'marketwatch',
+        'seekingalpha', 'fool', 'investor', 'ir.',
+        'gcs-web', 'q4cdn', 'edgar', 'sec.gov',
+        'citeline', 'evaluate', 'genengnews', 'sdbj'
+    ]
+
+    for pattern in news_patterns:
+        if pattern in domain:
+            score -= 100  # Heavy penalty for news/IR sites
+
+    # Penalize overly long URLs (likely news articles, deep links)
+    url_length = len(url)
+    if core_name:
+        core_length = len(core_name)
+        if core_length > 0:
+            length_ratio = url_length / core_length
+
+            # Ideal ratio is 2-6x company name length
+            if length_ratio > 15:  # e.g., 80+ chars for 5-char name
+                score -= 50  # Heavy penalty for very long URLs
+            elif length_ratio > 10:  # e.g., 50+ chars for 5-char name
+                score -= 30  # Moderate penalty
+            elif length_ratio > 8:
+                score -= 15  # Light penalty
+            elif 2 <= length_ratio <= 6:
+                score += 10  # Bonus for ideal length range
+
+    # Penalize deep paths (likely not homepage)
+    path_segments = [p for p in path.split('/') if p]  # Non-empty segments
+    if len(path_segments) >= 4:  # e.g., /page/content/detail/id/
+        score -= 40
+    elif len(path_segments) >= 3:
+        score -= 20
+    elif len(path_segments) >= 2:
+        score -= 10
+
+    # Penalize URLs with many query parameters (often news, databases)
+    if '?' in url:
+        query_params = parsed.query
+        param_count = len(query_params.split('&')) if query_params else 0
+
+        if param_count >= 5:  # Many params (e.g., SEC filings)
+            score -= 50
+        elif param_count >= 3:
+            score -= 30
+        elif param_count >= 1:
+            score -= 10
+
+    # Penalize excessive punctuation (%, &, =, etc.)
+    # Good sites: www.gene.com (mostly alphanumeric)
+    # Bad sites: many %, &, = (query strings)
+    special_chars = len(re.findall(r'[%&=?#]', url))
+    if special_chars >= 10:
+        score -= 30
+    elif special_chars >= 5:
+        score -= 15
+
+    return score
+
+
+def extract_official_website_from_html(page_title):
+    """
+    Extract the official website by parsing the External Links section HTML.
+    This is more reliable than scoring all external links.
+
+    Returns the official website URL or empty string if not found.
     """
     try:
         # Extract page name from full Wikipedia URL if needed
         if 'wikipedia.org/wiki/' in page_title:
             page_title = page_title.split('/wiki/')[-1]
+
+        # Wikipedia API endpoint
+        api_url = "https://en.wikipedia.org/w/api.php"
+        headers = {
+            'User-Agent': 'EastBayBiotechMap/1.0 (Educational Research; https://github.com/jadenshirkey/EastBayBiotechMap)'
+        }
+
+        # First, get section numbers to find "External links" section
+        sections_params = {
+            'action': 'parse',
+            'page': unquote(page_title),
+            'prop': 'sections',
+            'format': 'json',
+            'formatversion': 2
+        }
+
+        sections_response = requests.get(api_url, params=sections_params, headers=headers, timeout=10)
+        sections_data = sections_response.json()
+
+        if 'error' in sections_data or 'parse' not in sections_data:
+            return ''
+
+        # Find the section index for "External links"
+        external_links_section = None
+        for section in sections_data.get('parse', {}).get('sections', []):
+            section_title = section.get('line', '').lower()
+            if 'external link' in section_title:  # Matches "External links" or "External link"
+                external_links_section = section['index']
+                break
+
+        if not external_links_section:
+            return ''  # No external links section found
+
+        # Get the HTML for just that section
+        text_params = {
+            'action': 'parse',
+            'page': unquote(page_title),
+            'prop': 'text',
+            'section': external_links_section,
+            'format': 'json',
+            'formatversion': 2
+        }
+
+        text_response = requests.get(api_url, params=text_params, headers=headers, timeout=10)
+        text_data = text_response.json()
+
+        if 'error' in text_data or 'parse' not in text_data:
+            return ''
+
+        html = text_data.get('parse', {}).get('text', '')
+        if not html:
+            return ''
+
+        # Parse HTML with BeautifulSoup to find "Official website"
+        soup = BeautifulSoup(html, 'html.parser')
+
+        # Strategy 1: Look for links with text containing "official website"
+        for link in soup.find_all('a', href=True):
+            link_text = link.get_text(strip=True).lower()
+            if 'official' in link_text and 'website' in link_text:
+                href = link.get('href', '')
+                # Ensure it's a full URL
+                if href.startswith('http'):
+                    return href
+
+        # Strategy 2: Look for span with class "official-website"
+        official_span = soup.find('span', class_='official-website')
+        if official_span:
+            link = official_span.find('a', href=True)
+            if link:
+                href = link.get('href', '')
+                if href.startswith('http'):
+                    return href
+
+        # Strategy 3: First external link in a list item (often the official site)
+        ul_element = soup.find('ul')
+        if ul_element:
+            first_li = ul_element.find('li')
+            if first_li:
+                link = first_li.find('a', href=True)
+                if link:
+                    # Check if it's likely an official site (not aggregator, not news)
+                    href = link.get('href', '')
+                    link_text = link.get_text(strip=True).lower()
+                    if href.startswith('http') and not is_aggregator(href):
+                        # If text suggests it's official, return it
+                        if any(word in link_text for word in ['official', 'company', 'homepage', 'corporate']):
+                            return href
+
+        return ''  # No official website found
+
+    except Exception:
+        # Silently handle errors
+        return ''
+
+
+def extract_website_from_wikipedia_api(page_title):
+    """
+    Extract official website from Wikipedia page.
+    First tries to find "Official website" link from HTML,
+    then falls back to scoring all external links.
+
+    Returns the most likely official website URL, or empty string if not found.
+    """
+    try:
+        # PRIORITY 1: Try to extract "Official website" from HTML
+        official_website = extract_official_website_from_html(page_title)
+        if official_website:
+            return official_website
+
+        # FALLBACK: Use original scoring method
+        # Extract page name from full Wikipedia URL if needed
+        if 'wikipedia.org/wiki/' in page_title:
+            page_title = page_title.split('/wiki/')[-1]
+
+        # Extract core company name from page title
+        # Remove underscores and decode URL encoding
+        company_name = unquote(page_title).replace('_', ' ')
+        core_name = extract_core_company_name(company_name)
 
         # Wikipedia API endpoint
         api_url = "https://en.wikipedia.org/w/api.php"
@@ -280,11 +581,22 @@ def extract_website_from_wikipedia_api(page_title):
             'therapeuticsaccelerator.org',  # Non-profit initiatives
             'sandp500changes',  # Stock tracking sites
             'cmoleadershipawards',  # Award sites
-            'geekwire.com'  # Tech news
+            'geekwire.com',  # Tech news
+            # New exclusions from data analysis
+            'heraldstaronline.com', 'localtechwire.com',  # Found in data
+            'specialtypharmacycontinuum.com', 'accessrx.com',  # Found in data
+            'secfilings.', 'nasdaq.com/edgar',  # SEC filing variants
+            '/story/', '/blog/',  # Generic article paths
+            'FilingID=', 'FormType=', 'CoName=',  # Query params for filings
+            'bostonglobe.com', 'latimes.com', 'sfgate.com',  # More news
+            'statnews.com', 'endpts.com',  # Biotech news
+            'wikinvest.com', 'seekingalpha.com',  # Financial sites
+            '/filingFrameset.asp', '/content.detail/',  # Filing/CMS paths
+            'pharmaceutical-journal.com', 'pharmatimes.com'  # More pharma news
         ]
 
-        # Collect all potentially valid websites
-        potential_websites = []
+        # Collect and score all potentially valid websites
+        scored_websites = []
         for link in external_links:
             url = link if isinstance(link, str) else link.get('url', '')
 
@@ -300,23 +612,20 @@ def extract_website_from_wikipedia_api(page_title):
             if any(pattern in url.lower() for pattern in exclude_patterns):
                 continue
 
-            potential_websites.append(url)
+            # Score this URL based on company name matching
+            score = score_url_for_company(url, core_name)
+            scored_websites.append((score, url))
 
-        # Strategy: prefer root domains over deep links
-        # Extract base domains and return the first one that looks like a company site
-        for url in potential_websites:
-            # Extract domain from URL
-            from urllib.parse import urlparse
-            parsed = urlparse(url)
+        # Sort by score (highest first)
+        scored_websites.sort(key=lambda x: x[0], reverse=True)
 
-            # Prefer URLs that are at the root or have simple paths like /about-us
-            path = parsed.path.rstrip('/')
-            if path == '' or path in ['/about', '/about-us', '/company', '/home']:
-                return url
-
-        # If no root domain found, return the first valid URL
-        if potential_websites:
-            return potential_websites[0]
+        # Return the highest scoring URL if it has a reasonable score
+        # Even a score of 0 might be OK if it's the only option
+        if scored_websites:
+            best_score, best_url = scored_websites[0]
+            # Accept if score is positive OR if it's the only non-negative option
+            if best_score > -50:  # Allow slightly negative scores but not terrible ones
+                return best_url
 
         # Fallback: Check for archived company websites (defunct companies)
         # Extract original URL from archive.org links

@@ -135,7 +135,12 @@ Cost reports generated in `data/working/api_usage_report.txt` and `data/working/
 BayAreaBiotechMap/
 ├── data/
 │   ├── final/companies.csv          # Production dataset (use this!)
-│   └── working/companies_merged.csv # Working version
+│   ├── working/                     # Staging area for pipeline processing
+│   │   ├── bpg_ca_raw.csv          # BioPharmGuy extraction
+│   │   ├── wikipedia_companies.csv  # Wikipedia extraction
+│   │   ├── companies_merged.csv     # After merge & deduplication
+│   │   └── companies_enriched.csv   # After Path A/B enrichment
+│   └── cache/                       # HTML/API caching (7-day TTL)
 ├── scripts/                         # Python data processing scripts
 ├── docs/
 │   ├── MAP_SETUP.md                # How to create/update Google My Maps
