@@ -1,42 +1,44 @@
-# East Bay Biotech Map - Methodology
+# California Biotech Map - Methodology
 
-**Version:** 4.3
+**Version:** 5.0
 **Last Updated:** 2025-11-16
-**Philosophy:** Systematic validation with automated QC gates - prioritizing data quality and reproducibility
+**Philosophy:** SQL database architecture with multi-source enrichment - maximizing data completeness and accuracy
 
 ---
 
 ## Overview
 
-This document describes the reproducible process for discovering, validating, and cataloging biotechnology companies in the San Francisco Bay Area using the V4.3 framework.
+This document describes the reproducible process for discovering, validating, and cataloging biotechnology companies across California using the V5 SQL-based framework.
 
-The V4.3 framework introduces:
-- **BPG-first extraction** with CA-wide coverage
-- **Two-path enrichment** (Path A for companies with websites, Path B for those without)
-- **Deterministic validation** with confidence scoring
-- **Automated QC gates** with manual review for edge cases
-- **Staging → Promotion flow** ensuring only validated data reaches production
+The V5 framework introduces:
+- **SQL Database Backend** replacing CSV files for data integrity
+- **Multi-source enrichment** (SEC EDGAR, ClinicalTrials.gov, Google Maps)
+- **Intelligent classification** based on enrichment data
+- **Safety-first scripts** with --dry-run, --limit, and --test-db flags
+- **California-focused export** for Google My Maps integration
 
 ---
 
 ## Geographic Scope
 
-### Included Counties (9-County Bay Area)
-- **Core:** Alameda, Contra Costa, Marin, San Francisco, San Mateo, Santa Clara
-- **Extended:** Napa, Solano, Sonoma
+### V5 Coverage: California Statewide
+- **Primary Focus:** San Francisco Bay Area (9 counties)
+- **San Diego Region:** La Jolla, Carlsbad, San Diego
+- **Los Angeles Region:** Thousand Oaks, Irvine, Los Angeles
+- **Database:** 2,491 companies nationwide
+- **Export:** 978 California companies for mapping
 
-All 9 counties are treated equally in the V4.3 geofence.
+### California Filtering Logic
+Companies included if:
+- Address contains ", CA " or ", California "
+- OR city name matches California city list
+- AND has valid coordinates
 
-### Excluded Areas
-- **Davis, CA** (Yolo County - outside Bay Area)
-- **Sacramento metro** (Sacramento County)
-- **Central Valley** cities
-- Any location >60 miles from San Francisco (backstop radius check)
-
-### City Whitelist
-Companies must be located in recognized Bay Area cities (~60 cities across 9 counties). See `config/geography.py` for the canonical whitelist.
-
-**Geofence Logic:** Accept if **City in whitelist** OR **Coordinates within 60-mile radius of SF**.
+### Major Biotech Hubs
+- **Bay Area:** 600+ companies
+- **San Diego:** 200+ companies
+- **Los Angeles:** 100+ companies
+- **Other CA:** 78 companies
 
 ---
 
