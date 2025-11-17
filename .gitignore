@@ -52,3 +52,24 @@ __pycache__/
 
 # Data cache (HTML files, API responses)
 data/cache/
+
+# Working/Temporary Data (never commit)
+data/working/
+data/backups/
+data/logs/
+data/bayarea_biotech.db
+logs/
+*.log
+deleteme/
+
+# Temporary test files
+data/test*.csv
+data/test*.db
+*_test.csv
+*_test.db
+
+# Chunk files from parallel processing
+chunks/
+*_chunk_*.csv
+*_enriched.csv
+*_enriched_failed.csv

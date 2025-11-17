@@ -1,8 +1,0 @@
-2025-11-16 02:12:21,445 - INFO - Generating final V3-compatible CSV from /mnt/c/Users/shirk/Documents/Adulting/EastBayBiotechMap/data/working/companies_cleaned.csv
-2025-11-16 02:12:21,488 - INFO - Processing 1002 companies
-2025-11-16 02:12:21,544 - INFO - Summary report saved to /mnt/c/Users/shirk/Documents/Adulting/EastBayBiotechMap/deleteme/reports/final_summary.md
-2025-11-16 02:12:21,544 - INFO - Final CSV generated: /mnt/c/Users/shirk/Documents/Adulting/EastBayBiotechMap/data/final/companies.csv
-2025-11-16 02:12:21,545 - INFO -   Total companies: 1002
-2025-11-16 02:12:21,546 - INFO -   Classified: 825 (82.3%)
-2025-11-16 02:12:21,547 - INFO -   With address: 1002 (100.0%)
-2025-11-16 02:12:21,548 - INFO - Final CSV generation completed successfully
