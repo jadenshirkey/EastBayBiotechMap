@@ -11,10 +11,17 @@ import difflib
 import os
 import re
 
-# Environment and configuration
-API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
+# Import secure configuration
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config.secure_config import get_config
+
+# Get configuration
+config = get_config()
+API_KEY = config.google_maps_api_key
+
 if not API_KEY:
-    print("Error: GOOGLE_MAPS_API_KEY environment variable is not set")
+    print("Error: Google Maps API key not configured. Please set GOOGLE_MAPS_API_KEY environment variable.")
+    print("Copy .env.template to .env and add your API key.")
     exit(1)
 
 def name_similarity(name1, name2):

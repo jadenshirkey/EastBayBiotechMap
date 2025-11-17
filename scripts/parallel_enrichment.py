@@ -16,12 +16,47 @@ INPUT_CSV = Path("data/working/companies_merged.csv")
 CHUNK_DIR = Path("data/working/chunks")
 
 def main():
-    # Load checkpoint to see what's been processed
-    with open(CHECKPOINT_FILE) as f:
-        checkpoint = json.load(f)
+    # Load and validate checkpoint file
+    processed_indices = set()
 
-    processed_indices = set(checkpoint.get("processed_indices", []))
-    print(f"Found {len(processed_indices)} already processed companies")
+    try:
+        if CHECKPOINT_FILE.exists():
+            with open(CHECKPOINT_FILE, 'r') as f:
+                checkpoint_data = json.load(f)
+
+            # Validate checkpoint structure
+            if not isinstance(checkpoint_data, dict):
+                raise ValueError("Checkpoint file must contain a JSON object/dictionary")
+
+            # Validate processed_indices field
+            processed_indices_data = checkpoint_data.get("processed_indices", [])
+            if not isinstance(processed_indices_data, list):
+                raise ValueError("'processed_indices' must be a list")
+
+            # Validate all indices are integers and within reasonable bounds
+            MAX_INDEX = 1000000  # Reasonable upper limit
+            for idx in processed_indices_data:
+                if not isinstance(idx, int):
+                    raise ValueError(f"Invalid index type: {type(idx)}, expected int")
+                if idx < 0 or idx > MAX_INDEX:
+                    raise ValueError(f"Index {idx} out of bounds (0-{MAX_INDEX})")
+
+            processed_indices = set(processed_indices_data)
+            print(f"Loaded checkpoint with {len(processed_indices)} processed companies")
+
+    except FileNotFoundError:
+        print("No checkpoint file found, starting fresh")
+        processed_indices = set()
+
+    except (json.JSONDecodeError, ValueError) as e:
+        print(f"Warning: Invalid checkpoint file, starting fresh. Error: {e}")
+        processed_indices = set()
+
+        # Backup corrupted checkpoint
+        if CHECKPOINT_FILE.exists():
+            backup_path = CHECKPOINT_FILE.with_suffix('.corrupt.json')
+            CHECKPOINT_FILE.rename(backup_path)
+            print(f"Corrupted checkpoint backed up to: {backup_path}")
 
     # Load all companies
     with open(INPUT_CSV, 'r', encoding='utf-8') as f:

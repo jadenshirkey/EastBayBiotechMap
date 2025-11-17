@@ -14,6 +14,8 @@ from typing import Dict, List, Optional, Tuple
 from pathlib import Path
 from datetime import datetime, timedelta
 import sqlite3
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from requests.exceptions import RequestException, Timeout, ConnectionError
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -28,19 +30,41 @@ class SECEdgarClient:
         Args:
             user_agent: Required by SEC (should include email)
         """
+        import os
+
         if not user_agent:
-            user_agent = "BiotechMapEnrichment/1.0 (youremail@example.com)"
-            logger.warning("Using default User-Agent. Please set your email!")
+            user_agent = os.environ.get("SEC_EDGAR_USER_AGENT")
+
+        # Validate User-Agent is provided and not the default placeholder
+        if not user_agent or "youremail@example.com" in user_agent or "@example.com" in user_agent:
+            raise ValueError(
+                "SEC EDGAR requires a valid User-Agent with your email address.\n"
+                "Please set the SEC_EDGAR_USER_AGENT environment variable.\n"
+                "Format: 'YourAppName/1.0 (your.email@domain.com)'\n"
+                "This is required by SEC Terms of Service to identify API users."
+            )
+
+        # Validate email format in User-Agent
+        import re
+        email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if not re.search(email_pattern, user_agent):
+            raise ValueError(
+                "User-Agent must include a valid email address.\n"
+                "Format: 'YourAppName/1.0 (your.email@domain.com)'"
+            )
 
         self.headers = {
             "User-Agent": user_agent,
             "Accept": "application/json"
         }
 
+        logger.info(f"SEC EDGAR client initialized with User-Agent: {user_agent}")
+
         # SEC endpoints
         self.base_url = "https://data.sec.gov"
         self.submissions_url = "https://data.sec.gov/submissions"
-        self.tickers_url = "https://www.sec.gov/files/company_tickers.json"
+        # Use the endpoint that includes exchange data
+        self.tickers_url = "https://www.sec.gov/files/company_tickers_exchange.json"
         self.search_url = "https://efts.sec.gov/LATEST/search-index"
 
         # Rate limiting (SEC allows 10 requests per second)
@@ -61,6 +85,19 @@ class SECEdgarClient:
 
         self.last_request_time = time.time()
 
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=4, max=10),
+        retry=retry_if_exception_type((RequestException, Timeout, ConnectionError)),
+        before_sleep=lambda retry_state: logger.warning(f"Retrying SEC API request (attempt {retry_state.attempt_number})...")
+    )
+    def _make_request(self, url: str, timeout: int = 30) -> requests.Response:
+        """Make HTTP request with retry logic"""
+        self._rate_limit()
+        response = requests.get(url, headers=self.headers, timeout=timeout)
+        response.raise_for_status()
+        return response
+
     def load_company_tickers(self) -> bool:
         """Load all company tickers from SEC
 
@@ -71,9 +108,7 @@ class SECEdgarClient:
             return True
 
         try:
-            self._rate_limit()
-            response = requests.get(self.tickers_url, headers=self.headers, timeout=30)
-            response.raise_for_status()
+            response = self._make_request(self.tickers_url)
 
             data = response.json()
 
@@ -82,6 +117,8 @@ class SECEdgarClient:
                 cik = str(entry.get('cik_str', '')).zfill(10)
                 ticker = entry.get('ticker', '').upper()
                 title = entry.get('title', '').upper()
+                # Extract exchange data from the new endpoint
+                exchange = entry.get('exchange', '').upper() if entry.get('exchange') else None
 
                 # Index by ticker
                 if ticker:
@@ -89,7 +126,7 @@ class SECEdgarClient:
                         'cik': cik,
                         'ticker': ticker,
                         'company_name': title,
-                        'exchange': None  # Will be enriched later
+                        'exchange': exchange  # Now populated from data
                     }
 
                 # Index by normalized company name
@@ -99,7 +136,7 @@ class SECEdgarClient:
                         'cik': cik,
                         'ticker': ticker,
                         'company_name': title,
-                        'exchange': None
+                        'exchange': exchange
                     }
 
             self.tickers_loaded = True
@@ -275,15 +312,15 @@ class SECEdgarClient:
             logger.debug(f"SEC search failed for {company_name}: {e}")
             return None
 
-    def get_company_filings(self, cik: str, limit: int = 10) -> List[Dict]:
-        """Get recent filings for a company
+    def get_company_filings(self, cik: str, limit: int = 10) -> Tuple[List[Dict], Optional[str]]:
+        """Get recent filings for a company and extract SIC code
 
         Args:
             cik: Company CIK number
             limit: Maximum number of filings to return
 
         Returns:
-            List of filing dictionaries
+            Tuple of (List of filing dictionaries, SIC code)
         """
         try:
             # Format CIK with leading zeros
@@ -295,10 +332,15 @@ class SECEdgarClient:
             response = requests.get(url, headers=self.headers, timeout=10)
 
             if response.status_code == 404:
-                return []
+                return [], None
 
             response.raise_for_status()
             data = response.json()
+
+            # Extract SIC code
+            sic_code = data.get('sic', None)
+            if sic_code:
+                sic_code = str(sic_code)
 
             filings = []
             recent = data.get('filings', {}).get('recent', {})
@@ -315,34 +357,34 @@ class SECEdgarClient:
                         'accession_number': accessions[i] if i < len(accessions) else None
                     })
 
-            return filings
+            return filings, sic_code
 
         except Exception as e:
             logger.error(f"Failed to get filings for CIK {cik}: {e}")
-            return []
+            return [], None
 
-    def classify_company_status(self, cik: str) -> Tuple[str, float]:
+    def classify_company_status(self, cik: str) -> Tuple[str, float, Optional[str]]:
         """Classify company status based on filings
 
         Args:
             cik: Company CIK number
 
         Returns:
-            Tuple of (status, confidence)
+            Tuple of (status, confidence, sic_code)
         """
-        filings = self.get_company_filings(cik, limit=20)
+        filings, sic_code = self.get_company_filings(cik, limit=20)
 
         if not filings:
-            return 'unknown', 0.0
+            return 'unknown', 0.0, sic_code
 
         # Check for recent filings
         latest_filing = filings[0] if filings else None
         if not latest_filing:
-            return 'unknown', 0.0
+            return 'unknown', 0.0, sic_code
 
         filing_date_str = latest_filing.get('filing_date')
         if not filing_date_str:
-            return 'unknown', 0.0
+            return 'unknown', 0.0, sic_code
 
         try:
             filing_date = datetime.strptime(filing_date_str, '%Y-%m-%d')
@@ -354,25 +396,25 @@ class SECEdgarClient:
             # Active public company (recent 10-K or 10-Q)
             if any(form in ['10-K', '10-Q'] for form in recent_forms[:5]):
                 if days_since_filing < 180:
-                    return 'public', 0.95
+                    return 'public', 0.95, sic_code
                 elif days_since_filing < 365:
-                    return 'public', 0.85
+                    return 'public', 0.85, sic_code
                 else:
-                    return 'formerly_public', 0.75
+                    return 'formerly_public', 0.75, sic_code
 
             # Check for acquisition indicators
             if any(form in ['SC 13D', 'SC 13G', 'SC TO-T'] for form in recent_forms):
-                return 'acquired', 0.8
+                return 'acquired', 0.8, sic_code
 
             # Has SEC filings but not regular reporting
             if recent_forms:
-                return 'public', 0.7
+                return 'public', 0.7, sic_code
 
-            return 'unknown', 0.0
+            return 'unknown', 0.0, sic_code
 
         except Exception as e:
             logger.error(f"Error classifying company status: {e}")
-            return 'unknown', 0.0
+            return 'unknown', 0.0, sic_code
 
     def enrich_company(self, company_name: str, website: str = None) -> Optional[Dict]:
         """Full enrichment pipeline for a company
@@ -393,23 +435,25 @@ class SECEdgarClient:
         # Get additional data
         cik = match.get('cik')
         if cik:
-            # Get recent filings
-            filings = self.get_company_filings(cik, limit=10)
+            # Get recent filings and SIC code
+            filings, sic_code = self.get_company_filings(cik, limit=10)
             match['filings'] = filings
             match['filing_count'] = len(filings)
+            match['sic_code'] = sic_code  # Add SIC code to match
 
             if filings:
                 match['latest_filing_date'] = filings[0].get('filing_date')
                 match['latest_filing_type'] = filings[0].get('form')
 
-            # Classify status
-            status, confidence = self.classify_company_status(cik)
+            # Classify status (also returns SIC code but we already have it)
+            status, confidence, _ = self.classify_company_status(cik)
             match['company_status'] = status
             match['status_confidence'] = confidence
 
             # Build EDGAR URL
             match['edgar_url'] = f"https://www.sec.gov/cgi-bin/browse-edgar?CIK={cik}"
 
+        # Note: exchange should already be in match from search_by_name if available
         return match
 
 
@@ -470,17 +514,19 @@ class SECEdgarEnricher:
             sec_data: SEC enrichment data
         """
         try:
-            # Insert SEC data
+            # Insert SEC data (including exchange and SIC code)
             self.cursor.execute("""
                 INSERT INTO sec_edgar_data (
-                    company_id, cik, ticker, company_name_edgar,
+                    company_id, cik, ticker, exchange, sic_code, company_name_edgar,
                     filing_count, latest_filing_date, latest_filing_type,
                     company_status, match_confidence, edgar_url
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 company_id,
                 sec_data.get('cik'),
                 sec_data.get('ticker'),
+                sec_data.get('exchange'),  # Now populated from API
+                sec_data.get('sic_code'),  # Now populated from API
                 sec_data.get('company_name'),
                 sec_data.get('filing_count', 0),
                 sec_data.get('latest_filing_date'),

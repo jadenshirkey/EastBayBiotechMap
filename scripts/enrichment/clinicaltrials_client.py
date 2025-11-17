@@ -12,10 +12,9 @@ from typing import Dict, List, Optional, Tuple
 from datetime import datetime, timedelta
 import re
 from difflib import SequenceMatcher
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from db.db_manager import DatabaseManager
+from scripts.db.db_manager import DatabaseManager
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from requests.exceptions import RequestException, Timeout, ConnectionError
 
 # Configure logging
 logging.basicConfig(
@@ -45,6 +44,23 @@ class ClinicalTrialsClient:
             time.sleep(self.rate_limit_delay - elapsed)
         self.last_request_time = time.time()
 
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=4, max=10),
+        retry=retry_if_exception_type((RequestException, Timeout, ConnectionError)),
+        before_sleep=lambda retry_state: logger.warning(f"Retrying ClinicalTrials.gov API (attempt {retry_state.attempt_number})...")
+    )
+    def _make_api_request(self, params: Dict) -> requests.Response:
+        """Make API request with retry logic"""
+        self._rate_limit()
+        response = self.session.get(
+            f"{self.BASE_URL}/studies",
+            params=params,
+            timeout=30
+        )
+        response.raise_for_status()
+        return response
+
     def search_by_sponsor(self, company_name: str, max_studies: int = 100) -> List[Dict]:
         """
         Search for clinical trials by sponsor or collaborator name
@@ -56,8 +72,6 @@ class ClinicalTrialsClient:
         Returns:
             List of clinical trial records
         """
-        self._rate_limit()
-
         # Build query using the generic query.term parameter which searches all fields including sponsors
         # API v2 uses pipe-separated field names, not comma-separated
         params = {
@@ -68,12 +82,7 @@ class ClinicalTrialsClient:
         }
 
         try:
-            response = self.session.get(
-                f"{self.BASE_URL}/studies",
-                params=params,
-                timeout=30
-            )
-            response.raise_for_status()
+            response = self._make_api_request(params)
 
             data = response.json()
             studies = data.get('studies', [])
@@ -87,12 +96,7 @@ class ClinicalTrialsClient:
                     'format': 'json'
                 }
 
-                response = self.session.get(
-                    f"{self.BASE_URL}/studies",
-                    params=params,
-                    timeout=30
-                )
-                response.raise_for_status()
+                response = self._make_api_request(params)
                 data = response.json()
                 studies = data.get('studies', [])
 
