@@ -1,6 +1,6 @@
-# Bay Area Biotech Map
+# California Biotech Map
 
-An interactive map of biotechnology companies across the San Francisco Bay Area, created to help job seekers, researchers, and entrepreneurs explore the thriving biotech ecosystem.
+An interactive map of biotechnology companies across California, with focus on the San Francisco Bay Area, created to help job seekers, researchers, and entrepreneurs explore the thriving biotech ecosystem.
 
 ## 🗺️ View the Map
 
@@ -10,12 +10,11 @@ An interactive map of biotechnology companies across the San Francisco Bay Area,
 
 ## About
 
-This project maps **biotechnology companies** across the entire San Francisco Bay Area (9-county region), including:
-- **East Bay**: Emeryville, Berkeley, Oakland, Alameda, Fremont, Pleasanton
-- **Peninsula**: South San Francisco, Redwood City, Menlo Park, San Mateo
-- **San Francisco**: SF proper
-- **South Bay**: Palo Alto, Mountain View, Sunnyvale, San Jose
-- **North Bay**: San Rafael, Novato, Marin County
+This project maps **978 biotechnology companies** across California, with comprehensive coverage of major biotech hubs:
+- **Bay Area**: San Francisco, South San Francisco, Emeryville, Berkeley, Oakland
+- **San Diego**: La Jolla, Carlsbad, San Diego proper
+- **Los Angeles**: Thousand Oaks, Irvine, LA proper
+- **Peninsula**: Palo Alto, Mountain View, Sunnyvale, San Jose
 
 Companies range from early-stage startups to commercial-stage biotech firms, spanning diverse areas including:
 - Protein engineering and structural biology
@@ -26,56 +25,64 @@ Companies range from early-stage startups to commercial-stage biotech firms, spa
 - Diagnostics and research tools
 - Computational biology and AI-driven drug discovery
 
-### Features (V4.3 Framework)
+### Features (V5 Framework - SQL Database Architecture)
 
-- **Two-Path Enrichment**: BPG-first approach with intelligent fallback to AI validation
-- **Comprehensive Quality Gates**: 6 automated validators ensuring data integrity
-- **Confidence Scoring**: Tiered system (1-4) with deterministic scoring for Path A
-- **Manual Review Process**: Spot-checks for high-confidence entries, full review for flagged items
-- **Staging → Promotion Flow**: All processing happens in working/ directory; final/ only written after QC passes
+- **SQL Database Backend**: Robust SQLite database replacing CSV files for data integrity and relationships
+- **Multi-Source Enrichment**: Integration with SEC EDGAR and ClinicalTrials.gov APIs for comprehensive company intelligence
+- **Advanced Classification**: Automated stage classification based on SEC filings, clinical trials, and public status
+- **California Focus**: Intelligent filtering for California-based companies with address validation
+- **Data Completeness**: Reduced "Unknown" classifications from 76% to 30% through enrichment pipeline
 
 ## Data
 
-The map includes information on:
-- **Company locations** with verified addresses
+The map includes enriched information on:
+- **Company locations** with Google-verified addresses and coordinates
 - **Company websites** for direct access
-- **Company stage** (Public, Private, Clinical, Research, etc.)
-- **Focus areas** - factual technology platform descriptions
+- **Company stage** classification based on multiple data sources
+- **Focus areas** - technology platforms and therapeutic areas
+- **Clinical trials** count from ClinicalTrials.gov
+- **SEC filings** count from EDGAR database
 
-### Data File
+### Data Architecture
 
-The production dataset is available as **[`data/final/companies.csv`](data/final/companies.csv)**, containing:
-- **Company Name**
-- **Website**
-- **City**
-- **Address** (full street address)
-- **Company_Stage** (Public, Private, Acquired, Clinical, Research, Incubator, Service, Unknown)
-- **Focus_Areas** (technology platform and therapeutic focus)
+**Primary Database**: `data/bayarea_biotech_sources.db` (SQLite)
+- Contains 2,491 total companies (nationwide)
+- 978 California companies exported for mapping
 
-### Data Quality (V4.3)
+**Export File**: [`data/final/companies.csv`](data/final/companies.csv)
+- California-only subset optimized for Google My Maps
+- Includes all required mapping fields
 
-The V4.3 framework includes comprehensive quality gates to ensure data integrity:
+### Company Stage Distribution (California Export)
+- **Private with SEC Filings**: 313 companies (32.0%)
+- **Private**: 241 companies (24.6%)
+- **Defunct**: 176 companies (18.0%)
+- **Clinical Stage**: 134 companies (13.7%)
+- **Public**: 114 companies (11.7%)
 
-**Quality Gates (All Must Pass)**
-- ✓ All URLs validated (HTTPS or blank)
-- ✓ All locations within Bay Area geofence (9-county + city whitelist)
-- ✓ Zero duplicate domains (excluding allowlist)
-- ✓ Zero aggregator domains (LinkedIn, Crunchbase, etc.)
-- ✓ All companies with addresses have Place IDs
-- ✓ Zero out-of-scope locations (Davis, Sacramento, etc.)
+### Data Quality (V5)
 
-**Confidence Tiers**
-- **Tier 1 (≥0.95)**: BPG + Google confirm same domain - Target: ≥70%
-- **Tier 2 (0.90-0.95)**: BPG ground truth, Google mismatch - Target: ≥10%
-- **Tier 3 (0.75-0.90)**: AI validated (Path B enrichment) - Target: ≤10%
-- **Tier 4 (<0.75)**: Flagged for manual review - Target: 0%
+The V5 framework ensures data integrity through:
 
-**Manual Review Process**
-- 10 random spot-checks from Tier 1/2 companies
-- All Tier 4 companies manually reviewed before promotion
-- Address verification against company websites
+**Multi-Source Validation**
+- ✓ SEC EDGAR data for public/private status verification
+- ✓ ClinicalTrials.gov for clinical stage validation
+- ✓ Google Maps API for address verification
+- ✓ Automated classification with safety flags
 
-**Data Dictionary**: See [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md) for complete column definitions.
+**Classification Logic**
+- **Public**: Has valid ticker symbol on major exchange
+- **Private with SEC Filings**: SEC filings but no ticker
+- **Clinical Stage**: Active trials or completed within 2 years
+- **Private**: No SEC filings or clinical trials
+- **Defunct**: Explicitly marked as closed/inactive
+
+**Data Enrichment Results**
+- Successfully enriched 99% of companies
+- Reduced "Unknown" classifications from 76% to 30%
+- All California companies have verified addresses
+- Clinical trials data for 1,080 companies
+- SEC filings data for 600+ companies
 
 ## Use Cases
 
@@ -88,66 +95,80 @@ This map is designed for:
 
 ## How It Was Created
 
-This map is built using the **V4.3 automated pipeline** with systematic data flow from extraction through validation:
+This dataset is built using an automated Python pipeline with SQL database backend:
 
-**Pipeline Overview (Stages A → F)**
+1. **Discovery**: Extracts companies from BioPharmGuy's directory and Wikipedia categories (2,491 raw entries)
+2. **Database Import**: Stores in SQLite with proper relationships and data integrity
+3. **Multi-Source Enrichment**:
+   - Google Maps API for addresses and coordinates
+   - SEC EDGAR API for public/private status and filing counts
+   - ClinicalTrials.gov API for clinical trial data
+4. **Intelligent Classification**: Rules-based categorization using enrichment data
+5. **California Export**: Filters and exports 978 California companies for mapping
 
-1. **Stage A - Extraction**: BioPharmGuy CA-wide scraping with Website field capture
-2. **Stage B - Merge & Geofence**: eTLD+1 deduplication, late geofencing, aggregator filtering
-3. **Stage C - Enrichment**:
-   - **Path A** (Python + Google Maps): For companies with BPG Website - deterministic validation
-   - **Path B** (Anthropic structured outputs): For companies without Website - AI validation
-4. **Stage D - Classification**: Company stage using methodology decision tree
-5. **Stage E - Focus Extraction**: Factual focus areas from company websites (≤200 chars)
-6. **Stage F - QC & Promotion**:
-   - Automated validators (6 gates)
-   - Manual review queues (spot-checks + Tier 4)
-   - Promotion to final/ (only after all checks pass)
+The pipeline achieves **99% enrichment success** with multiple data sources validated.
 
-**See [METHODOLOGY.md](METHODOLOGY.md) for detailed methodology.**
-**See [docs/V4.3_WORK_PLAN.md](docs/V4.3_WORK_PLAN.md) for complete implementation plan.**
+**Learn More:**
+- **Full Methodology**: See [METHODOLOGY.md](METHODOLOGY.md) for complete pipeline architecture and data collection procedures
+- **Run It Yourself**: See [scripts/README.md](scripts/README.md) for installation and usage instructions
+- **Quality Assurance**: Validated against 80+ Bay Area cities with duplicate detection and URL verification
 
 ## Data Currency
 
-- **Version**: v4.3
-- **Framework**: V4.3 (Staging → Promotion with QC gates)
-- **Last Updated**: See `data/final/last_updated.txt`
-- **Coverage**: 9-county Bay Area (Alameda, Contra Costa, Marin, Napa, San Francisco, San Mateo, Santa Clara, Solano, Sonoma)
-- **Quality**: All companies pass 6 automated validators + manual review
+- **Version**: v5.0 (SQL Database Architecture)
+- **Framework**: V5 (SQL database with multi-source enrichment)
+- **Last Updated**: November 16, 2025
+- **Coverage**: California statewide (978 companies exported)
+- **Database**: 2,491 companies nationwide in SQL database
+- **Quality**: Multi-source validation with SEC and ClinicalTrials data
 
-All company information is from publicly available sources: BioPharmGuy, Wikipedia, Google Maps API, company websites.
+All company information is from publicly available sources: BioPharmGuy, Wikipedia, Google Maps API, SEC EDGAR, ClinicalTrials.gov.
 
-### API Costs
+### API Usage
 
-The V4.3 pipeline uses commercial APIs with cost monitoring:
+The V5 pipeline uses multiple APIs with safety controls:
 
-- **Google Maps API** (Path A enrichment): ~$0.049/company baseline
-  - Text Search: $0.032 per call
-  - Place Details: $0.017 per call
-  - Includes caching to reduce redundant calls
+- **Google Maps API**: Address and coordinate enrichment
+  - Cached to prevent redundant calls
+  - WARNING: Can be expensive at scale (~$220 for full dataset)
+  - Use --limit flag for testing
 
-- **Anthropic Claude** (Path B enrichment): Measured empirically via token usage
-  - Model: Claude Sonnet 4.5
-  - Temperature: 0 (deterministic)
-  - Structured outputs with tool use (Google Places API integration)
+- **SEC EDGAR API**: Public company and filing data
+  - Free API with rate limiting
+  - Cached responses for efficiency
 
-Cost reports generated in `data/working/api_usage_report.txt` and `data/working/anthropic_usage_report.txt`.
+- **ClinicalTrials.gov API**: Clinical trial data
+  - Free API with rate limiting
+  - Cached for performance
+
+All scripts include safety flags (--dry-run, --limit, --test-db) to prevent costly operations.
 
 ## Repository Structure
 
 ```
-BayAreaBiotechMap/
+CaliforniaBiotechMap/
 ├── data/
-│   ├── final/companies.csv          # Production dataset (use this!)
-│   └── working/companies_merged.csv # Working version
-├── scripts/                         # Python data processing scripts
-├── docs/
-│   ├── MAP_SETUP.md                # How to create/update Google My Maps
-│   ├── DATA_DICTIONARY.md          # Column definitions
-│   ├── WORKFLOW.md                 # Data collection procedures
-│   └── EXPANSION_STRATEGY.md       # Future growth plans
-├── index.html                       # GitHub Pages site (full-screen map)
-├── PROJECT_PLAN.md                 # Overall project roadmap
+│   ├── bayarea_biotech_sources.db   # Main SQL database (2,491 companies)
+│   ├── final/
+│   │   └── companies.csv            # California export for Google My Maps (978 companies)
+│   ├── working/                     # Working directory for processing
+│   └── backups/                     # Database backups with timestamps
+├── scripts/
+│   ├── db/                          # Database management scripts
+│   │   ├── db_manager.py           # Database operations
+│   │   └── migrate_with_sources.py  # Data import/migration
+│   ├── enrichment/                  # API enrichment clients
+│   │   ├── sec_edgar_client.py     # SEC EDGAR integration
+│   │   └── clinicaltrials_client.py # ClinicalTrials.gov integration
+│   ├── classify_company_stage_improved.py  # Classification with safety flags
+│   ├── export_california_companies.py      # California-only export
+│   └── parallel_enrichment.py              # Multi-threaded enrichment
+├── config/
+│   └── secure_config.py            # Configuration management
+├── tests/                           # Test suites
+├── index.html                       # GitHub Pages site
+├── GOOGLE_MAPS_IMPORT_NOTES.md     # Import instructions
+├── CLINICAL_STAGE_DEFINITION.md    # Clinical stage logic documentation
 └── README.md                       # This file
 ```
 
@@ -200,7 +221,9 @@ Data in this repository is provided for informational purposes. All company info
 
 ---
 
-**Version**: v3.0
-**Last Updated**: January 8, 2025
+**Version**: v5.0
+**Last Updated**: November 16, 2025
 **Maintainer**: Jaden Shirkey
+**Database**: SQLite with 2,491 companies
+**Export**: 978 California companies
 **Contributions welcome!** 🧬

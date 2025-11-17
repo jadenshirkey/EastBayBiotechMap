@@ -386,14 +386,28 @@ def process_focus_extraction(input_path: Path, output_path: Path) -> Dict[str, i
 
                 company_name = row.get("Company Name", "")
                 website = row.get("Website", "")
+                existing_focus = row.get("Focus_Areas", "") or row.get("Focus Areas", "")
+                description = row.get("Description", "")
 
                 # Log progress every 10 companies
                 if stats["total"] % 10 == 0:
                     logger.info(f"  Processed {stats['total']} companies...")
 
-                # Extract focus areas if website present
+                # Priority order for Focus_Areas:
+                # 1. Keep existing focus areas if already populated (from BPG or previous run)
+                # 2. Try to extract from website if available
+                # 3. Use Wikipedia Description as fallback
+                # 4. Empty string if nothing available
+
                 focus_text = ""
-                if website:
+
+                # Check if we already have focus areas
+                if existing_focus:
+                    focus_text = existing_focus
+                    logger.debug(f"  Using existing focus areas for: {company_name}")
+
+                # Try website extraction if no existing focus areas
+                elif website:
                     stats["with_website"] += 1
                     logger.debug(f"Extracting focus for: {company_name}")
 
@@ -401,10 +415,44 @@ def process_focus_extraction(input_path: Path, output_path: Path) -> Dict[str, i
 
                     if focus_text:
                         stats["extracted"] += 1
-                        logger.debug(f"  ✓ Extracted ({len(focus_text)} chars)")
+                        logger.debug(f"  ✓ Extracted from website ({len(focus_text)} chars)")
                     else:
-                        stats["failed"] += 1
-                        logger.debug(f"  ✗ Extraction failed")
+                        # Website extraction failed, try Description fallback
+                        if description:
+                            # Use Description but truncate to 200 chars to match Focus_Areas format
+                            if len(description) > 200:
+                                # Try to break at sentence boundary
+                                truncated = description[:200]
+                                last_period = truncated.rfind('.')
+                                if last_period > 100:
+                                    focus_text = truncated[:last_period + 1]
+                                else:
+                                    focus_text = truncated.rsplit(' ', 1)[0] + '...'
+                            else:
+                                focus_text = description
+
+                            logger.debug(f"  ⚠ Using Description as fallback ({len(focus_text)} chars)")
+                            stats["extracted"] += 1  # Count as successful extraction
+                        else:
+                            stats["failed"] += 1
+                            logger.debug(f"  ✗ Extraction failed (no fallback)")
+
+                # No website, use Description if available
+                elif description:
+                    # Use Description as focus areas
+                    if len(description) > 200:
+                        # Try to break at sentence boundary
+                        truncated = description[:200]
+                        last_period = truncated.rfind('.')
+                        if last_period > 100:
+                            focus_text = truncated[:last_period + 1]
+                        else:
+                            focus_text = truncated.rsplit(' ', 1)[0] + '...'
+                    else:
+                        focus_text = description
+
+                    logger.debug(f"  Using Description for {company_name} (no website)")
+                    stats["extracted"] += 1
 
                 # Set Focus_Areas field
                 row["Focus_Areas"] = focus_text

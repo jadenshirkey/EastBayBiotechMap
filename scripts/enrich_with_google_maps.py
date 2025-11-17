@@ -102,7 +102,7 @@ PLACE_DETAILS_FIELDS = [
     'name',
     'formatted_address',
     'website',
-    'types',
+    'type',
     'geometry',
     'business_status'
 ]
@@ -412,17 +412,36 @@ def calculate_confidence_score(
         score += name_score
         reasons.append(f"name_sim={similarity:.2f}(+{name_score:.2f})")
 
-    # Website eTLD+1 check (+0.3 match, -0.2 mismatch, +0.1 absent)
+    # Website eTLD+1 check (smarter matching)
     details_website = details.get('website', '')
     if bpg_website and details_website:
         bpg_domain = etld1(bpg_website)
         details_domain = etld1(details_website)
 
         if bpg_domain and details_domain:
+            # Extract base domain without TLD for comparison
+            bpg_base = bpg_domain.rsplit('.', 1)[0] if '.' in bpg_domain else bpg_domain
+            details_base = details_domain.rsplit('.', 1)[0] if '.' in details_domain else details_domain
+
             if bpg_domain == details_domain:
+                # Exact match
                 score += 0.3
                 reasons.append(f"website_match({bpg_domain},+0.3)")
+            elif bpg_base == details_base:
+                # Same base, different TLD (e.g., .com vs .in)
+                score += 0.2
+                reasons.append(f"website_tld_diff({bpg_domain}≈{details_domain},+0.2)")
+            elif bpg_base in details_base or details_base in bpg_base:
+                # One domain contains the other (e.g., cellsighttech vs cellsighttechnologies)
+                # AND name similarity is high
+                if similarity >= 0.90:
+                    score += 0.2
+                    reasons.append(f"website_partial({bpg_base}⊂{details_base},+0.2)")
+                else:
+                    score -= 0.1
+                    reasons.append(f"website_weak_match({bpg_domain}≠{details_domain},-0.1)")
             else:
+                # Complete mismatch
                 score -= 0.2
                 reasons.append(f"website_mismatch({bpg_domain}≠{details_domain},-0.2)")
     elif bpg_website and not details_website:

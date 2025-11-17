@@ -72,26 +72,78 @@ PUBLIC_COMPANIES = {
     "Vir Biotechnology",
     "Allogene Therapeutics",
     "Revolution Medicines",
+    "Natera",
+    "Veracyte",
+    "Nektar Therapeutics",
+    "Atara Biotherapeutics",
+    "Five Prime Therapeutics",
 }
+
+# Public company indicators (when found in descriptions)
+PUBLIC_INDICATORS = [
+    "publicly traded", "public company", "NASDAQ:", "NYSE:",
+    "stock symbol", "ticker symbol", "market cap", "went public",
+    "IPO in", "initial public offering", "shares traded"
+]
 
 # Known acquired companies
 ACQUIRED_COMPANIES = {
     "Flatiron Health",  # Acquired by Roche
     "Juno Therapeutics",  # Acquired by Celgene/BMS
     "Kite Pharma",  # Acquired by Gilead
+    "Stemcentrx",  # Acquired by AbbVie
+    "Pharmacyclics",  # Acquired by AbbVie
+    "Acerta Pharma",  # Acquired by AstraZeneca
 }
+
+# Acquisition indicators
+ACQUIRED_INDICATORS = [
+    "acquired by", "acquisition by", "purchased by", "bought by",
+    "subsidiary of", "part of", "merged with", "acquisition completed",
+    "deal closed", "takeover"
+]
+
+# Private company/funding indicators
+PRIVATE_INDICATORS = [
+    "series a", "series b", "series c", "series d", "series e", "series f",
+    "venture funding", "raised $", "funding round", "venture capital",
+    "private equity", "privately held", "private company", "startup",
+    "seed funding", "angel investment", "pre-ipo"
+]
+
+# Clinical stage indicators
+CLINICAL_INDICATORS = [
+    "phase 1", "phase i", "phase 2", "phase ii", "phase 3", "phase iii",
+    "clinical trials", "clinical development", "clinical-stage",
+    "IND", "NDA", "BLA", "FDA approval pending", "in clinical trials",
+    "first-in-human", "pivotal trial", "registrational trial"
+]
+
+# Research/pre-clinical indicators
+RESEARCH_INDICATORS = [
+    "research institute", "research center", "research foundation",
+    "pre-clinical", "preclinical", "discovery stage", "research stage",
+    "early-stage research", "basic research", "translational research",
+    "academic spin", "university spin", "research focused",
+    "discovery platform", "target discovery", "lead optimization"
+]
 
 # Service provider keywords (CROs, consulting, testing labs)
 SERVICE_KEYWORDS = [
-    "CRO", "contract research", "consulting", "services",
-    "testing lab", "clinical trials", "diagnostics lab",
-    "laboratory services", "bioanalytical", "preclinical services"
+    "CRO", "contract research", "contract development", "contract manufacturing",
+    "CDMO", "CMO", "consulting", "services company", "service provider",
+    "testing lab", "clinical trials management", "diagnostics lab",
+    "laboratory services", "bioanalytical", "preclinical services",
+    "outsourcing", "contract services", "fee-for-service",
+    "analytical services", "manufacturing services"
 ]
 
 # Incubator/accelerator keywords
 INCUBATOR_KEYWORDS = [
-    "incubator", "accelerator", "QB3", "IndieBio",
-    "JLABS", "BioLabs", "co-working", "shared lab space"
+    "incubator", "accelerator", "QB3", "IndieBio", "Y Combinator",
+    "JLABS", "J&J Labs", "BioLabs", "co-working", "shared lab space",
+    "innovation hub", "startup hub", "biotech hub", "life science park",
+    "innovation center", "entrepreneurship center"
 ]
 
 
@@ -100,21 +152,23 @@ INCUBATOR_KEYWORDS = [
 # ============================================================================
 
 def classify_company_stage(company_name: str, website: Optional[str],
-                           notes: Optional[str] = None) -> str:
+                           focus_areas: Optional[str] = None,
+                           description: Optional[str] = None) -> str:
     """
     Classify a company into one of 8 stages using the methodology decision tree.
 
-    This function uses simple heuristics based on name matching and keywords.
-    For a production system, this could be enhanced with:
-    - API calls to Crunchbase/PitchBook for funding data
-    - SEC Edgar lookups for public company filings
-    - Clinical trials database queries
-    - News article analysis
+    Enhanced with Wikipedia description parsing for V4.3 to reduce Unknown classifications.
+    Priority order:
+    1. Known company lists (exact matches)
+    2. Strong indicators in description (acquired, public, etc.)
+    3. Keyword matching in focus areas and description
+    4. Name-based heuristics
 
     Args:
         company_name: Name of the company
         website: Company website (may be None)
-        notes: Optional notes/description field
+        focus_areas: Focus areas/notes field
+        description: Wikipedia description (first paragraph)
 
     Returns:
         One of the 8 stage categories, or "Unknown"
@@ -124,50 +178,116 @@ def classify_company_stage(company_name: str, website: Optional[str],
 
     # Normalize for comparison
     name_lower = company_name.lower()
-    notes_lower = notes.lower() if notes else ""
-    combined_text = f"{name_lower} {notes_lower}"
+    focus_lower = focus_areas.lower() if focus_areas else ""
+    desc_lower = description.lower() if description else ""
+    combined_text = f"{name_lower} {focus_lower} {desc_lower}"
 
-    # Check 1: Public company?
+    # === Priority 1: Known company exact matches ===
+
+    # Check 1: Known public companies
     for public_co in PUBLIC_COMPANIES:
         if public_co.lower() in name_lower:
             logger.debug(f"  → Classified as Public (known ticker holder): {company_name}")
             return STAGE_PUBLIC
 
-    # Check 2: Acquired company?
+    # Check 2: Known acquired companies
     for acquired_co in ACQUIRED_COMPANIES:
         if acquired_co.lower() in name_lower:
             logger.debug(f"  → Classified as Acquired: {company_name}")
             return STAGE_ACQUIRED
 
-    # Check 3: Incubator/accelerator?
+    # === Priority 2: Strong indicators in description ===
+
+    # Check for acquisition indicators (high confidence)
+    for indicator in ACQUIRED_INDICATORS:
+        if indicator in desc_lower:
+            logger.debug(f"  → Classified as Acquired (indicator: {indicator}): {company_name}")
+            return STAGE_ACQUIRED
+
+    # Check for public company indicators
+    for indicator in PUBLIC_INDICATORS:
+        if indicator in desc_lower:
+            logger.debug(f"  → Classified as Public (indicator: {indicator}): {company_name}")
+            return STAGE_PUBLIC
+
+    # === Priority 3: Business model detection ===
+
+    # Check for incubator/accelerator (very specific)
     for keyword in INCUBATOR_KEYWORDS:
         if keyword.lower() in combined_text:
             logger.debug(f"  → Classified as Incubator (keyword: {keyword}): {company_name}")
             return STAGE_INCUBATOR
 
-    # Check 4: Service provider (CRO, consulting)?
-    for keyword in SERVICE_KEYWORDS:
-        if keyword.lower() in combined_text:
-            logger.debug(f"  → Classified as Service (keyword: {keyword}): {company_name}")
-            return STAGE_SERVICE
+    # Check for service provider (CRO, CDMO, consulting)
+    service_score = sum(1 for keyword in SERVICE_KEYWORDS if keyword.lower() in combined_text)
+    if service_score >= 2:  # Need at least 2 service indicators for confidence
+        logger.debug(f"  → Classified as Service (score: {service_score}): {company_name}")
+        return STAGE_SERVICE
 
-    # Check 5: Look for stage indicators in company name
-    # (Some companies include "Clinical" or "Therapeutics" in their name)
-    if "therapeutics" in name_lower or "pharma" in name_lower:
-        # Companies with "Therapeutics" or "Pharma" are likely clinical-stage or private
-        # Default to Private (most common for biotech therapeutics companies)
-        logger.debug(f"  → Classified as Private (therapeutics/pharma in name): {company_name}")
-        return STAGE_PRIVATE
+    # === Priority 4: Development stage detection ===
 
-    # Check 6: Research indicators
-    if "research" in name_lower and "institute" in name_lower:
-        logger.debug(f"  → Classified as Research (research institute): {company_name}")
+    # Check for clinical stage indicators
+    clinical_score = sum(1 for indicator in CLINICAL_INDICATORS if indicator in desc_lower)
+    if clinical_score >= 1:  # Clinical trials are very specific
+        logger.debug(f"  → Classified as Clinical (score: {clinical_score}): {company_name}")
+        return STAGE_CLINICAL
+
+    # Check for research/pre-clinical indicators
+    research_score = sum(1 for indicator in RESEARCH_INDICATORS if indicator in desc_lower)
+    if research_score >= 2:  # Need multiple research indicators
+        logger.debug(f"  → Classified as Research (score: {research_score}): {company_name}")
         return STAGE_RESEARCH
 
-    # Default: Unknown
-    # In a production system, we would default to Unknown unless we have strong signals
-    # This avoids misclassification and allows for manual review
-    logger.debug(f"  → Classified as Unknown (insufficient signals): {company_name}")
+    # Check for private company/funding indicators
+    private_score = sum(1 for indicator in PRIVATE_INDICATORS if indicator in desc_lower)
+    if private_score >= 1:
+        logger.debug(f"  → Classified as Private (funding indicators: {private_score}): {company_name}")
+        return STAGE_PRIVATE
+
+    # === Priority 5: Name-based heuristics ===
+
+    # Therapeutics companies are typically private or clinical stage
+    if "therapeutics" in name_lower or "pharma" in name_lower or "medicines" in name_lower:
+        # If we have description text, lean toward Private (most common)
+        if desc_lower:
+            logger.debug(f"  → Classified as Private (therapeutics/pharma company): {company_name}")
+            return STAGE_PRIVATE
+        else:
+            # Without description, still classify as Private rather than Unknown
+            logger.debug(f"  → Classified as Private (therapeutics in name, no description): {company_name}")
+            return STAGE_PRIVATE
+
+    # Biotechnology/Biosciences companies
+    if "biotech" in name_lower or "bioscience" in name_lower or "bio" in name_lower:
+        if desc_lower:
+            logger.debug(f"  → Classified as Private (biotech company): {company_name}")
+            return STAGE_PRIVATE
+
+    # Research institutes (backup check)
+    if "institute" in name_lower or "foundation" in name_lower or "center" in name_lower:
+        if "research" in name_lower or "medical" in name_lower:
+            logger.debug(f"  → Classified as Research (institute/foundation): {company_name}")
+            return STAGE_RESEARCH
+
+    # Labs (could be service or research)
+    if "laboratories" in name_lower or "labs" in name_lower:
+        if "diagnostic" in combined_text or "testing" in combined_text:
+            logger.debug(f"  → Classified as Service (diagnostic lab): {company_name}")
+            return STAGE_SERVICE
+        else:
+            logger.debug(f"  → Classified as Research (labs): {company_name}")
+            return STAGE_RESEARCH
+
+    # === Final fallback ===
+
+    # If we have any substantial description but couldn't classify,
+    # default to Private (most common for biotech)
+    if len(desc_lower) > 50:
+        logger.debug(f"  → Classified as Private (default for described company): {company_name}")
+        return STAGE_PRIVATE
+
+    # Only use Unknown when we truly have no information
+    logger.debug(f"  → Classified as Unknown (no signals found): {company_name}")
     return STAGE_UNKNOWN
 
 
@@ -223,11 +343,13 @@ def process_classification(input_path: Path, output_path: Path) -> Dict[str, int
                 # Extract fields
                 company_name = row.get("Company Name", "")
                 website = row.get("Website", "")
-                # Try both "Focus Areas" and "Notes" for compatibility
-                notes = row.get("Focus Areas", "") or row.get("Notes", "")
+                # Get focus areas (from enrichment or existing data)
+                focus_areas = row.get("Focus Areas", "") or row.get("Focus_Areas", "") or row.get("Notes", "")
+                # Get description (from Wikipedia extraction)
+                description = row.get("Description", "")
 
-                # Classify
-                stage = classify_company_stage(company_name, website, notes)
+                # Classify using enhanced function with Description support
+                stage = classify_company_stage(company_name, website, focus_areas, description)
 
                 # Add new fields
                 row["Company_Stage"] = stage

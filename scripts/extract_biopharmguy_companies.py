@@ -33,6 +33,11 @@ from pathlib import Path
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
+# Import URL standardizer
+import sys
+sys.path.append(str(Path(__file__).parent.parent))
+from scripts.utils.url_standardizer import standardize_url
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -178,6 +183,8 @@ def extract_companies_from_biopharmguy(soup):
             company_name = links[1].get_text(strip=True)
             # Website is the href from the second link
             website = links[1].get('href', '').strip()
+            # Standardize the URL format
+            website = standardize_url(website) or ''
         else:
             company_name = links[0].get_text(strip=True)
             website = ''

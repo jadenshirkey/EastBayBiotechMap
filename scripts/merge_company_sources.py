@@ -36,7 +36,8 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Import V4.3 modules
-from config.geography import is_in_bay_area_city, is_valid_county, BAY_COUNTIES, CITY_WHITELIST
+# Using CA-wide geography for broader coverage
+from config.geography_ca import is_in_bay_area_city, is_valid_county
 from utils.helpers import etld1, normalize_name, is_aggregator, AGGREGATOR_ETLD1
 
 # ============================================================================
@@ -52,7 +53,7 @@ ALLOWLIST_DOMAINS = {
 # Final schema columns
 FINAL_COLUMNS = [
     'Company Name', 'Website', 'City', 'Address',
-    'Company Stage', 'Focus Areas', 'Validation_Source'
+    'Company Stage', 'Focus Areas', 'Description', 'Validation_Source'
 ]
 
 # ============================================================================
@@ -73,10 +74,15 @@ def load_bpg_companies(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
+            # Clean up city - remove trailing commas and whitespace
+            city = row.get('City', '').strip()
+            if city.endswith(','):
+                city = city[:-1].strip()
+
             companies.append({
                 'Company Name': row['Company Name'].strip(),
                 'Website': row.get('Website', '').strip(),
-                'City': row.get('City', '').strip(),
+                'City': city,
                 'Address': '',
                 'Company Stage': '',
                 'Focus Areas': row.get('Focus Area', '').strip(),
@@ -88,7 +94,7 @@ def load_bpg_companies(filepath):
 
 
 def load_wikipedia_companies(filepath):
-    """Load Wikipedia extractions (minimal data)."""
+    """Load Wikipedia extractions (including descriptions)."""
     companies = []
     if not filepath.exists():
         print(f"Warning: {filepath} not found, skipping Wikipedia source")
@@ -107,11 +113,12 @@ def load_wikipedia_companies(filepath):
 
             companies.append({
                 'Company Name': company_name,
-                'Website': '',
+                'Website': row.get('Website', '').strip(),  # Now we have websites from Wikipedia
                 'City': row.get('City', '').strip(),
                 'Address': '',
                 'Company Stage': '',
                 'Focus Areas': '',
+                'Description': row.get('Description', '').strip(),  # Preserve Wikipedia description
                 'source': 'Wikipedia'
             })
 
@@ -260,11 +267,11 @@ def deduplicate_by_etld1_and_name(companies):
 
 def apply_geofence(companies):
     """
-    Apply Bay Area geofence AFTER deduplication.
+    Apply California geofence AFTER deduplication.
 
     Accept if:
-    - City in CITY_WHITELIST, OR
-    - County in BAY_COUNTIES (if provided)
+    - City appears to be in California, OR
+    - Company is from Wikipedia (no city but still CA-relevant)
 
     Returns: filtered companies, stats
     """
@@ -273,18 +280,22 @@ def apply_geofence(companies):
 
     for company in companies:
         city = company.get('City', '').strip()
+        source = company.get('source', '')
 
-        # Check city whitelist
-        if city and is_in_bay_area_city(city):
+        # Check if in California (using CA-wide geography)
+        if city and is_in_bay_area_city(city):  # This now uses CA-wide check
+            filtered.append(company)
+        # Also accept Wikipedia companies without cities (they're from CA categories)
+        elif source == 'Wikipedia' and not city:
             filtered.append(company)
         else:
             rejected_count += 1
             # Optionally log rejections (can be verbose)
-            # print(f"  Filtered out: '{company['Company Name']}' in {city} (not in Bay Area)")
+            # print(f"  Filtered out: '{company['Company Name']}' in {city} (not in California)")
 
-    print(f"\nGeofence filtering:")
-    print(f"  - Passed geofence: {len(filtered)}")
-    print(f"  - Filtered out: {rejected_count}")
+    print(f"\nGeofence filtering (California-wide + Wikipedia):")
+    print(f"  - Passed CA geofence: {len(filtered)}")
+    print(f"  - Filtered out (non-CA): {rejected_count}")
 
     return filtered
 
@@ -361,6 +372,7 @@ def save_companies(companies, filepath):
                 'Address': company.get('Address', ''),
                 'Company Stage': company.get('Company Stage', ''),
                 'Focus Areas': company.get('Focus Areas', ''),
+                'Description': company.get('Description', ''),  # Include Wikipedia description
                 'Validation_Source': company.get('source', '')
             })
 
@@ -409,8 +421,8 @@ def main():
     deduplicated, domain_conflicts = deduplicate_by_etld1_and_name(all_companies)
     print(f"  After deduplication: {len(deduplicated)} companies")
 
-    # Apply Bay Area geofence (AFTER deduplication)
-    print("\nApplying Bay Area geofence (9-county + city whitelist)...")
+    # Apply California geofence (AFTER deduplication)
+    print("\nApplying California-wide geofence...")
     geofenced = apply_geofence(deduplicated)
 
     # Generate domain reuse report
@@ -429,16 +441,19 @@ def main():
     print(f"  - Existing companies: {len(existing_companies)}")
     print(f"  - Total before dedupe: {len(all_companies)}")
     print(f"  - After deduplication: {len(deduplicated)}")
-    print(f"  - After Bay Area geofence: {len(geofenced)}")
+    print(f"  - After California geofence: {len(geofenced)}")
     print(f"  - Aggregator domains reset: {aggregator_count}")
     print(f"  - Domain conflicts: {len(domain_conflicts)}")
 
     # Coverage stats
-    with_website = sum(1 for c in geofenced if c.get('Website', '').strip())
-    without_website = len(geofenced) - with_website
-    print(f"\n  Coverage:")
-    print(f"    - With Website: {with_website} ({100*with_website/len(geofenced):.1f}%)")
-    print(f"    - Without Website: {without_website} ({100*without_website/len(geofenced):.1f}%)")
+    if len(geofenced) > 0:
+        with_website = sum(1 for c in geofenced if c.get('Website', '').strip())
+        without_website = len(geofenced) - with_website
+        print(f"\n  Coverage:")
+        print(f"    - With Website: {with_website} ({100*with_website/len(geofenced):.1f}%)")
+        print(f"    - Without Website: {without_website} ({100*without_website/len(geofenced):.1f}%)")
+    else:
+        print(f"\n  Coverage: No companies to analyze (all filtered out)")
 
     print("\n" + "="*70)
     print("✓ Merge complete!")
