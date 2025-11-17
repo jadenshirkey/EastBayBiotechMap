@@ -65,21 +65,11 @@ def export_california_companies(
     FROM companies c
     LEFT JOIN company_classifications cc ON c.company_id = cc.company_id AND cc.is_current = 1
     WHERE
-        -- California filter - check if address contains CA or city is in California
-        (
-            (c.google_address LIKE '%, CA %' OR c.google_address LIKE '%, CA,USA%' OR c.google_address LIKE '%, California %')
-            OR c.city IN (
-                'San Francisco', 'San Diego', 'Los Angeles', 'San Jose',
-                'Oakland', 'Berkeley', 'Palo Alto', 'Mountain View',
-                'South San Francisco', 'Emeryville', 'Foster City',
-                'Redwood City', 'Menlo Park', 'Sunnyvale', 'Santa Clara',
-                'Fremont', 'Hayward', 'San Mateo', 'San Rafael',
-                'Thousand Oaks', 'Carlsbad', 'La Jolla', 'Irvine',
-                'Pleasanton', 'San Carlos', 'Brisbane', 'Burlingame',
-                'Alameda', 'Richmond', 'Union City', 'Newark',
-                'Milpitas', 'Cupertino', 'Los Gatos', 'Campbell'
-            )
-        )
+        -- California filter - ONLY check if address contains CA (more reliable than city field)
+        (c.google_address LIKE '%, CA %'
+         OR c.google_address LIKE '%, CA,USA%'
+         OR c.google_address LIKE '%, California %'
+         OR c.google_address LIKE '%, CA, USA%')
         -- Must have an address for Google My Maps
         AND (c.google_address IS NOT NULL OR c.address IS NOT NULL)
         AND (c.google_address != '' OR c.address != '')
@@ -112,10 +102,18 @@ def export_california_companies(
             logger.info(f"    {stage:30s}: {count:4d} ({pct:5.1f}%)")
 
         # Check for non-CA companies that slipped through
-        # Since we're filtering by CA cities and CA addresses, this should be 0
+        # Since we're filtering by CA addresses, this should be 0
         non_ca_count = df[~df['address'].str.contains(', CA ', na=False)].shape[0]
         if non_ca_count > 0:
-            logger.warning(f"  WARNING: Found {non_ca_count} companies without ', CA ' in address!")
+            logger.error(f"  ERROR: Found {non_ca_count} companies without ', CA ' in address!")
+            logger.error("  Export aborted to prevent non-California companies in output.")
+            logger.error("  Please check the database for incorrect city/address data.")
+            # Show examples of problematic companies
+            non_ca = df[~df['address'].str.contains(', CA ', na=False)]
+            for _, row in non_ca.head(5).iterrows():
+                logger.error(f"    - {row['company_name']}: {row['address']}")
+            conn.close()
+            raise ValueError(f"Data validation failed: {non_ca_count} non-California companies detected")
 
     # Clean up data for export
     logger.info("\nPreparing data for export...")
@@ -145,9 +143,8 @@ def export_california_companies(
         'Focus Areas',
         'Description',
         'Clinical Trials',
-        'SEC Filings',
-        'Latitude',
-        'Longitude'
+        'SEC Filings'
+        # Removed Latitude and Longitude for privacy/security
     ]
 
     # Filter to only columns that exist
