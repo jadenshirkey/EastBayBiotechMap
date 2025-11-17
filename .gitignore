@@ -1,3 +1,10 @@
+# SECURITY - Environment variables and secrets - NEVER COMMIT
+.env
+.env.local
+.env.production
+*.key
+*.pem
+
 # Personal files - DO NOT COMMIT
 Resumes/
 ProfessionalSummary.txt
