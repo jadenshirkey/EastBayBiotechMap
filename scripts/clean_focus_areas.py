@@ -105,6 +105,7 @@ def clean_focus_area(focus_area):
 def clean_all_focus_areas(db_path='data/bayarea_biotech_sources.db', dry_run=True):
     """
     Clean all focus areas in the database
+    Move verbose focus areas to company descriptions
     """
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -113,46 +114,64 @@ def clean_all_focus_areas(db_path='data/bayarea_biotech_sources.db', dry_run=Tru
     logger.info("FOCUS AREAS CLEANUP")
     logger.info("=" * 70)
 
-    # Get all focus areas
+    # Get all focus areas with company info
     cursor.execute("""
-        SELECT focus_id, company_id, focus_area
-        FROM company_focus_areas
-        WHERE focus_area IS NOT NULL AND focus_area != ''
-        ORDER BY LENGTH(focus_area) DESC
+        SELECT cfa.focus_id, cfa.company_id, cfa.focus_area, c.description
+        FROM company_focus_areas cfa
+        JOIN companies c ON cfa.company_id = c.company_id
+        WHERE cfa.focus_area IS NOT NULL AND cfa.focus_area != ''
+        ORDER BY LENGTH(cfa.focus_area) DESC
     """)
 
     focus_areas = cursor.fetchall()
     logger.info(f"Found {len(focus_areas)} focus areas to process")
 
-    updates = []
+    focus_updates = []
+    description_updates = []
     verbose_count = 0
 
-    for focus_id, company_id, original in focus_areas:
-        concise, description = clean_focus_area(original)
+    for focus_id, company_id, original, existing_desc in focus_areas:
+        concise, verbose_desc = clean_focus_area(original)
 
         if concise and concise != original:
             verbose_count += 1
-            updates.append((concise, focus_id))
+            focus_updates.append((concise, focus_id))
+
+            # If there's verbose text and no existing description, save it
+            if verbose_desc and (not existing_desc or existing_desc.strip() == ''):
+                description_updates.append((verbose_desc, company_id))
 
             # Log verbose ones
             if len(original) > 50:
                 logger.info(f"\nVerbose focus area found:")
                 logger.info(f"  Original: {original[:100]}...")
                 logger.info(f"  Concise:  {concise}")
+                if verbose_desc and (not existing_desc or existing_desc.strip() == ''):
+                    logger.info(f"  Will save as description")
 
     logger.info(f"\nFound {verbose_count} verbose focus areas to clean")
+    logger.info(f"Will update {len(description_updates)} company descriptions")
 
-    if not dry_run and updates:
-        logger.info(f"Updating {len(updates)} focus areas...")
+    if not dry_run and focus_updates:
+        logger.info(f"Updating {len(focus_updates)} focus areas...")
         cursor.executemany(
             "UPDATE company_focus_areas SET focus_area = ? WHERE focus_id = ?",
-            updates
+            focus_updates
         )
+
+        if description_updates:
+            logger.info(f"Updating {len(description_updates)} company descriptions...")
+            cursor.executemany(
+                "UPDATE companies SET description = ? WHERE company_id = ?",
+                description_updates
+            )
+
         conn.commit()
-        logger.info("✓ Focus areas updated successfully")
+        logger.info("✓ Focus areas and descriptions updated successfully")
     elif dry_run:
         logger.info("\n*** DRY RUN MODE - No changes made ***")
-        logger.info(f"Would update {len(updates)} focus areas")
+        logger.info(f"Would update {len(focus_updates)} focus areas")
+        logger.info(f"Would update {len(description_updates)} descriptions")
 
     # Show statistics
     cursor.execute("""

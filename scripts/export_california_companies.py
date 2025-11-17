@@ -141,9 +141,8 @@ def export_california_companies(
         'Company Stage',
         'Website',
         'Focus Areas',
-        'Description',
-        'Clinical Trials',
-        'SEC Filings'
+        'Clinical Trials'
+        # Removed Description and SEC Filings per user request
         # Removed Latitude and Longitude for privacy/security
     ]
 
