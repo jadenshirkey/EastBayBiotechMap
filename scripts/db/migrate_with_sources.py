@@ -17,6 +17,10 @@ import traceback
 from typing import Dict, List, Optional, Tuple
 import re
 
+# Add path for imports
+sys.path.append(str(Path(__file__).parent.parent.parent))
+from scripts.utils.url_standardizer import standardize_url
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -133,7 +137,7 @@ class EnhancedDatabaseMigrator:
                     ''', (
                         row.get('Company Name', '').strip(),
                         row.get('Source URL', '').strip(),
-                        row.get('Website', '').strip(),
+                        standardize_url(row.get('Website', '').strip()) if row.get('Website', '').strip() else '',
                         row.get('City', '').strip(),
                         row.get('Description', '').strip(),
                         self.import_batch,
@@ -238,6 +242,9 @@ class EnhancedDatabaseMigrator:
             if norm_name in companies_processed:
                 continue
 
+            # Standardize website URL
+            website = standardize_url(website) if website else None
+
             # Check if company already exists
             self.cursor.execute('''
                 SELECT company_id FROM companies WHERE company_name = ?
@@ -296,6 +303,9 @@ class EnhancedDatabaseMigrator:
         for wiki_id, company_name, website, location, description in wiki_companies:
             if not company_name:
                 continue
+
+            # Standardize website URL
+            website = standardize_url(website) if website else None
 
             norm_name = self.normalize_company_name(company_name)
 

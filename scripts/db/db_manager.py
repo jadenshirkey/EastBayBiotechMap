@@ -76,9 +76,19 @@ class DatabaseManager:
         """Get all companies with optional pagination"""
         cursor = self.connection.cursor()
         query = "SELECT * FROM companies ORDER BY company_name"
-        if limit:
-            query += f" LIMIT {limit} OFFSET {offset}"
-        cursor.execute(query)
+        params = []
+
+        if limit is not None:
+            # Validate inputs are integers
+            if not isinstance(limit, int) or not isinstance(offset, int):
+                raise ValueError("Limit and offset must be integers")
+            if limit < 0 or offset < 0:
+                raise ValueError("Limit and offset must be non-negative")
+
+            query += " LIMIT ? OFFSET ?"
+            params = [limit, offset]
+
+        cursor.execute(query, params)
         return [dict(row) for row in cursor.fetchall()]
 
     def get_companies_for_enrichment(self, enrichment_type: str) -> List[Dict]:
